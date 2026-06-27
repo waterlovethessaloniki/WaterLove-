@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Water Love — Διαχείριση Gallery</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --navy:#0D1B2A;--navy2:#1A2E44;
+  --aqua:#89CED1;--aqua-light:#C5E8E9;--aqua-dark:#4DA5A8;
+  --coral:#E07A5F;--coral-dark:#C4614A;
+  --cream:#F7F8F4;--warm:#FDFCF8;
+  --text1:#0D1B2A;--text2:#2E4057;--text3:#5C7A96;
+  --green:#2A7D5C;--green-bg:#E8F5EE;
+  --red:#C0392B;--red-bg:#FDECEA;
+  --amber:#B8860B;--amber-bg:#FFF8E7;
+  --sans:'Inter',system-ui,sans-serif;
+  --serif:'Playfair Display',Georgia,serif;
+}
+body{font-family:var(--sans);background:var(--cream);color:var(--text1);min-height:100vh}
+
+/* LOGIN */
+.login-screen{min-height:100vh;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,var(--navy) 0%,var(--navy2) 100%);padding:2rem}
+.login-box{background:#fff;border-radius:1.5rem;padding:2.5rem 2.8rem;width:100%;max-width:380px;box-shadow:0 20px 60px rgba(0,0,0,.25)}
+.login-logo{font-family:var(--serif);font-size:1.6rem;color:var(--navy);margin-bottom:.3rem}
+.login-logo em{color:var(--aqua-dark);font-style:italic}
+.login-subtitle{font-size:.82rem;color:var(--text3);margin-bottom:2rem}
+.login-label{display:block;font-size:.8rem;font-weight:500;color:var(--text2);margin-bottom:.4rem}
+.login-input{width:100%;padding:.7rem 1rem;border:1px solid rgba(13,27,42,.18);border-radius:.75rem;font-size:.9rem;font-family:var(--sans);color:var(--text1);outline:none;transition:border-color .2s;margin-bottom:1rem;background:var(--cream)}
+.login-input:focus{border-color:var(--aqua-dark)}
+.login-btn{width:100%;padding:.85rem;background:var(--navy);color:#fff;border:none;border-radius:.75rem;font-size:.92rem;font-weight:500;cursor:pointer;font-family:var(--sans);transition:background .2s}
+.login-btn:hover{background:var(--navy2)}
+.login-error{background:var(--red-bg);color:var(--red);border-radius:.5rem;padding:.6rem .9rem;font-size:.8rem;margin-bottom:1rem;display:none}
+.login-error.show{display:block}
+
+/* LAYOUT */
+.admin-layout{display:none;min-height:100vh;flex-direction:column}
+.admin-layout.active{display:flex}
+.admin-nav{background:var(--navy);padding:1rem 2rem;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;flex-wrap:wrap;gap:1rem}
+.admin-logo{font-family:var(--serif);font-size:1.2rem;color:var(--aqua)}
+.admin-logo em{color:rgba(255,255,255,.4);font-style:italic}
+.admin-nav-right{display:flex;align-items:center;gap:1rem}
+.admin-badge{background:rgba(137,206,209,.15);color:var(--aqua);font-size:.75rem;padding:.3rem .8rem;border-radius:2rem;border:1px solid rgba(137,206,209,.25)}
+.logout-btn{background:transparent;color:rgba(255,255,255,.5);border:1px solid rgba(255,255,255,.15);padding:.35rem .9rem;border-radius:.5rem;cursor:pointer;font-size:.78rem;font-family:var(--sans);transition:all .2s}
+.logout-btn:hover{color:#fff;border-color:rgba(255,255,255,.4)}
+.admin-body{flex:1;padding:2rem;max-width:1200px;margin:0 auto;width:100%}
+
+/* HEADER */
+.section-head{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:1.5rem;flex-wrap:wrap;gap:1rem}
+.section-title{font-size:1.3rem;font-weight:600;color:var(--navy);font-family:var(--serif)}
+.section-desc{font-size:.85rem;color:var(--text3);margin-top:.2rem}
+
+/* BUTTONS */
+.btn{padding:.6rem 1.2rem;border-radius:.6rem;border:none;cursor:pointer;font-family:var(--sans);font-size:.84rem;font-weight:500;transition:all .2s;display:inline-flex;align-items:center;gap:.4rem;text-decoration:none}
+.btn-primary{background:var(--navy);color:#fff}
+.btn-primary:hover{background:var(--navy2)}
+.btn-coral{background:var(--coral);color:#fff}
+.btn-coral:hover{background:var(--coral-dark)}
+.btn-outline{background:transparent;color:var(--text2);border:1px solid rgba(13,27,42,.2)}
+.btn-outline:hover{background:rgba(13,27,42,.05)}
+.btn-danger{background:var(--red-bg);color:var(--red);border:1px solid rgba(192,57,43,.2)}
+.btn-danger:hover{background:rgba(192,57,43,.1)}
+.btn-sm{padding:.4rem .8rem;font-size:.78rem}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+
+/* UPLOAD CARD */
+.upload-card{background:#fff;border-radius:1.25rem;padding:1.5rem;margin-bottom:2rem;border:1px solid rgba(13,27,42,.08)}
+.upload-row{display:grid;grid-template-columns:1fr 1fr;gap:1.2rem}
+.form-group{margin-bottom:0}
+.form-label{display:block;font-size:.78rem;font-weight:500;color:var(--text2);margin-bottom:.4rem}
+.form-input,.form-select{width:100%;padding:.65rem .9rem;border:1px solid rgba(13,27,42,.18);border-radius:.65rem;font-size:.88rem;font-family:var(--sans);color:var(--text1);outline:none;transition:border-color .2s;background:var(--cream)}
+.form-input:focus,.form-select:focus{border-color:var(--aqua-dark)}
+.upload-zone{border:2px dashed rgba(13,27,42,.18);border-radius:.75rem;padding:2rem;text-align:center;cursor:pointer;transition:all .2s;background:var(--cream);position:relative;margin-top:1.2rem}
+.upload-zone:hover,.upload-zone.drag{border-color:var(--aqua-dark);background:rgba(137,206,209,.05)}
+.upload-zone input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%}
+.upload-zone-icon{font-size:2.2rem;margin-bottom:.5rem;display:block}
+.upload-zone p{font-size:.85rem;color:var(--text3)}
+.upload-zone strong{color:var(--aqua-dark)}
+
+/* PROGRESS */
+.progress-wrap{display:none;margin-top:1.2rem}
+.progress-wrap.show{display:block}
+.progress-info{display:flex;justify-content:space-between;font-size:.8rem;color:var(--text3);margin-bottom:.4rem}
+.progress-bar-bg{width:100%;height:8px;background:rgba(13,27,42,.1);border-radius:4px;overflow:hidden}
+.progress-bar{height:100%;background:var(--aqua-dark);border-radius:4px;width:0%;transition:width .3s}
+
+/* STATS */
+.stats-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:1rem;margin-bottom:2rem}
+.stat-box{background:#fff;border-radius:1rem;padding:1.2rem 1.4rem;border:1px solid rgba(13,27,42,.08)}
+.stat-box .num{font-size:1.8rem;font-weight:600;color:var(--navy);font-family:var(--serif);line-height:1}
+.stat-box .lbl{font-size:.75rem;color:var(--text3);margin-top:.3rem}
+
+/* FILTER */
+.filter-row{display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:1.5rem}
+.filter-btn{padding:.4rem 1rem;border-radius:2rem;border:1px solid rgba(13,27,42,.18);background:transparent;font-size:.8rem;cursor:pointer;color:var(--text2);transition:all .2s;font-family:var(--sans)}
+.filter-btn:hover,.filter-btn.active{background:var(--navy);color:#fff;border-color:var(--navy)}
+
+/* GALLERY GRID */
+.gallery-admin-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:1.2rem}
+.gallery-card{background:#fff;border-radius:1rem;overflow:hidden;border:1px solid rgba(13,27,42,.08);transition:box-shadow .2s}
+.gallery-card:hover{box-shadow:0 6px 24px rgba(13,27,42,.1)}
+.gallery-card-img{height:160px;position:relative;background:#eaeaea;overflow:hidden}
+.gallery-card-img img{width:100%;height:100%;object-fit:cover;display:block}
+.gallery-card-body{padding:.9rem}
+.cat-tag{display:inline-block;background:var(--aqua-light);color:var(--aqua-dark);font-size:.68rem;padding:.2rem .6rem;border-radius:2rem;margin-bottom:.6rem;font-weight:500}
+.caption-display{font-size:.84rem;color:var(--text2);margin-bottom:.8rem;line-height:1.4;min-height:1.1rem}
+.gallery-card-actions{display:flex;gap:.5rem}
+
+/* MODAL */
+.edit-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:500;align-items:center;justify-content:center;padding:1rem}
+.edit-overlay.open{display:flex}
+.edit-modal{background:#fff;border-radius:1.25rem;padding:2rem;width:100%;max-width:480px;max-height:90vh;overflow-y:auto}
+.edit-modal h3{font-size:1.05rem;font-weight:600;color:var(--navy);margin-bottom:1.3rem;font-family:var(--serif)}
+.edit-preview{width:100%;height:200px;object-fit:cover;border-radius:.75rem;margin-bottom:1.2rem;background:var(--cream)}
+.modal-actions{display:flex;gap:.7rem;justify-content:flex-end;margin-top:1.5rem;padding-top:1rem;border-top:1px solid rgba(13,27,42,.08)}
+
+/* TOAST */
+.toast{position:fixed;top:1.5rem;right:1.5rem;background:var(--navy);color:#fff;padding:.8rem 1.2rem;border-radius:.75rem;font-size:.84rem;z-index:9999;transform:translateY(-10px);opacity:0;transition:all .3s;pointer-events:none;max-width:340px}
+.toast.show{transform:translateY(0);opacity:1}
+.toast.success{background:var(--green)}
+.toast.error{background:var(--red)}
+
+/* SPINNER */
+.spinner{display:none;justify-content:center;padding:3rem}
+.spinner.show{display:flex}
+.spinner-circle{width:36px;height:36px;border:3px solid rgba(13,27,42,.1);border-top-color:var(--aqua-dark);border-radius:50%;animation:spin .8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* EMPTY */
+.empty-state{text-align:center;padding:3rem;color:var(--text3)}
+.empty-state .es-icon{font-size:3rem;margin-bottom:.8rem}
+
+/* INFO BOX */
+.info-box{background:var(--amber-bg);border:1px solid rgba(184,134,11,.25);border-radius:.75rem;padding:1rem 1.2rem;font-size:.83rem;color:var(--text2);line-height:1.6;margin-bottom:1.5rem;display:flex;gap:.6rem;align-items:flex-start}
+
+@media(max-width:600px){
+  .admin-body{padding:1.2rem}
+  .upload-row{grid-template-columns:1fr}
+  .gallery-admin-grid{grid-template-columns:1fr 1fr}
+  .stats-row{grid-template-columns:1fr 1fr}
+}
+</style>
+</head>
+<body>
+
+<div class="toast" id="toast"></div>
+
+<!-- LOGIN -->
+<div class="login-screen" id="loginScreen">
+  <div class="login-box">
+    <div class="login-logo">Water <em>Love</em></div>
+    <p class="login-subtitle">Πίνακας Διαχείρισης Gallery</p>
+    <div class="login-error" id="loginError">Λάθος κωδικός. Δοκιμάστε ξανά.</div>
+    <label class="login-label" for="passInput">Κωδικός πρόσβασης</label>
+    <input class="login-input" type="password" id="passInput" placeholder="Εισάγετε κωδικό..."/>
+    <button class="login-btn" onclick="doLogin()">Είσοδος</button>
+    <p style="font-size:.72rem;color:var(--text3);margin-top:1.2rem;text-align:center">Μόνο για τη διαχειρίστρια του Water Love</p>
+  </div>
+</div>
+
+<!-- ADMIN -->
+<div class="admin-layout" id="adminLayout">
+  <nav class="admin-nav">
+    <div class="admin-logo">Water <em>Love</em> — Admin</div>
+    <div class="admin-nav-right">
+      <span class="admin-badge">🐠 Λαμπρινή Μπιζίκη</span>
+      <a href="index.html" class="logout-btn" style="text-decoration:none">Στο site</a>
+      <button class="logout-btn" onclick="doLogout()">Έξοδος</button>
+    </div>
+  </nav>
+
+  <div class="admin-body">
+    <div class="stats-row">
+      <div class="stat-box"><div class="num" id="statTotal">0</div><div class="lbl">Σύνολο φωτογραφιών</div></div>
+      <div class="stat-box"><div class="num" id="statFish">0</div><div class="lbl">Ψάρια & Θαλάσσιο</div></div>
+      <div class="stat-box"><div class="num" id="statPlants">0</div><div class="lbl">Φυτά & Ενυδρεία</div></div>
+      <div class="stat-box"><div class="num" id="statOther">0</div><div class="lbl">Άλλες</div></div>
+    </div>
+
+    <div class="info-box">
+      <span style="font-size:1.1rem">☁️</span>
+      <span>Οι φωτογραφίες ανεβαίνουν στο <strong>Cloudinary</strong> και αποθηκεύονται στο <strong>GitHub</strong>. Οι αλλαγές εμφανίζονται αυτόματα στο website για όλους τους επισκέπτες, από οποιαδήποτε συσκευή.</span>
+    </div>
+
+    <!-- UPLOAD -->
+    <div class="upload-card">
+      <div class="section-head" style="margin-bottom:1rem">
+        <div>
+          <div class="section-title" style="font-size:1.05rem">Ανέβασμα νέας φωτογραφίας</div>
+          <div class="section-desc">Επιλέξτε κατηγορία, προσθέστε τίτλο, ανεβάστε εικόνα</div>
+        </div>
+      </div>
+      <div class="upload-row">
+        <div class="form-group">
+          <label class="form-label" for="upCategory">Κατηγορία</label>
+          <select class="form-select" id="upCategory">
+            <option value="fish">🐠 Ψάρια</option>
+            <option value="marine">🌊 Θαλάσσιο</option>
+            <option value="tanks">🪸 Ενυδρεία</option>
+            <option value="plants">🌿 Φυτά</option>
+            <option value="accessories">⚙️ Αξεσουάρ</option>
+            <option value="other">📦 Άλλο</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="upCaption">Τίτλος / Περιγραφή</label>
+          <input class="form-input" type="text" id="upCaption" placeholder="π.χ. Betta splendens — halfmoon"/>
+        </div>
+      </div>
+      <div class="upload-zone" id="uploadZone">
+        <input type="file" accept="image/*" id="fileInput" multiple/>
+        <span class="upload-zone-icon">📁</span>
+        <p>Σύρετε φωτογραφίες ή <strong>κάντε κλικ</strong> για επιλογή</p>
+        <p style="margin-top:.3rem;font-size:.75rem">Μπορείτε να επιλέξετε πολλές μαζί · JPG, PNG, WEBP</p>
+      </div>
+      <div class="progress-wrap" id="progressWrap">
+        <div class="progress-info"><span id="progressLabel">Ανέβασμα...</span><span id="progressCount">0 / 0</span></div>
+        <div class="progress-bar-bg"><div class="progress-bar" id="progressBar"></div></div>
+      </div>
+    </div>
+
+    <!-- GALLERY -->
+    <div class="section-head">
+      <div>
+        <div class="section-title">Συλλογή φωτογραφιών</div>
+        <div class="section-desc">Επεξεργαστείτε τίτλους ή διαγράψτε φωτογραφίες</div>
+      </div>
+      <button class="btn btn-outline btn-sm" onclick="reload()">🔄 Ανανέωση</button>
+    </div>
+
+    <div class="filter-row" id="filterRow">
+      <button class="filter-btn active" onclick="setFilter('all',this)">Όλα</button>
+      <button class="filter-btn" onclick="setFilter('fish',this)">🐠 Ψάρια</button>
+      <button class="filter-btn" onclick="setFilter('marine',this)">🌊 Θαλάσσιο</button>
+      <button class="filter-btn" onclick="setFilter('tanks',this)">🪸 Ενυδρεία</button>
+      <button class="filter-btn" onclick="setFilter('plants',this)">🌿 Φυτά</button>
+      <button class="filter-btn" onclick="setFilter('accessories',this)">⚙️ Αξεσουάρ</button>
+      <button class="filter-btn" onclick="setFilter('other',this)">📦 Άλλο</button>
+    </div>
+
+    <div class="spinner" id="spinner"><div class="spinner-circle"></div></div>
+    <div class="empty-state" id="emptyState" style="display:none">
+      <div class="es-icon">🐠</div>
+      <p>Δεν υπάρχουν φωτογραφίες ακόμα. Ανεβάστε την πρώτη σας!</p>
+    </div>
+    <div class="gallery-admin-grid" id="galleryGrid"></div>
+  </div>
+</div>
+
+<!-- EDIT MODAL -->
+<div class="edit-overlay" id="editOverlay" onclick="closeModal(event)">
+  <div class="edit-modal">
+    <h3>Επεξεργασία Φωτογραφίας</h3>
+    <img class="edit-preview" id="editPreview" src="" alt="Preview"/>
+    <div class="form-group" style="margin-bottom:1rem">
+      <label class="form-label" for="editCaption">Τίτλος / Περιγραφή</label>
+      <input class="form-input" type="text" id="editCaption"/>
+    </div>
+    <div class="form-group">
+      <label class="form-label" for="editCategory">Κατηγορία</label>
+      <select class="form-select" id="editCategory">
+        <option value="fish">🐠 Ψάρια</option>
+        <option value="marine">🌊 Θαλάσσιο</option>
+        <option value="tanks">🪸 Ενυδρεία</option>
+        <option value="plants">🌿 Φυτά</option>
+        <option value="accessories">⚙️ Αξεσουάρ</option>
+        <option value="other">📦 Άλλο</option>
+      </select>
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-outline" onclick="closeModal()">Ακύρωση</button>
+      <button class="btn btn-coral" id="saveEditBtn" onclick="saveEdit()">💾 Αποθήκευση</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ═══════════════════════════════════════════════════════
+// CONFIG — Water Love
+// ═══════════════════════════════════════════════════════
+const ADMIN_PASS = 'waterlove2024';        // ← Αλλάξτε τον κωδικό εδώ
+const CLOUDINARY_CLOUD = 'dwhsqj03w';
+const CLOUDINARY_PRESET = 'waterlove_preset';
+const WORKER_URL = 'https://waterlove-worker.waterlovethessaloniki.workers.dev';
+const GH_OWNER = 'waterlovethessaloniki';
+const GH_REPO = 'WaterLove-';
+const GH_FILE = 'gallery-data.json';
+const GH_RAW = `https://raw.githubusercontent.com/${GH_OWNER}/${GH_REPO}/main/${GH_FILE}`;
+
+const CAT_LABELS = {fish:'🐠 Ψάρια',marine:'🌊 Θαλάσσιο',tanks:'🪸 Ενυδρεία',plants:'🌿 Φυτά',accessories:'⚙️ Αξεσουάρ',other:'📦 Άλλο'};
+
+let gallery = [];
+let currentFilter = 'all';
+let editId = null;
+
+// ─── AUTH ───
+function doLogin() {
+  const val = document.getElementById('passInput').value;
+  if(val === ADMIN_PASS) {
+    sessionStorage.setItem('wl_auth','1');
+    document.getElementById('loginScreen').style.display = 'none';
+    document.getElementById('adminLayout').classList.add('active');
+    reload();
+  } else {
+    const err = document.getElementById('loginError');
+    err.classList.add('show');
+    document.getElementById('passInput').value = '';
+    setTimeout(()=>err.classList.remove('show'), 3000);
+  }
+}
+function doLogout() {
+  sessionStorage.removeItem('wl_auth');
+  location.reload();
+}
+document.getElementById('passInput').addEventListener('keydown', e=>{ if(e.key==='Enter') doLogin(); });
+if(sessionStorage.getItem('wl_auth')==='1') {
+  document.getElementById('loginScreen').style.display='none';
+  document.getElementById('adminLayout').classList.add('active');
+}
+
+// ─── LOAD GALLERY FROM GITHUB ───
+async function loadGallery() {
+  try {
+    const res = await fetch(GH_RAW + '?t=' + Date.now());
+    if(!res.ok) return [];
+    const data = await res.json();
+    return Array.isArray(data) ? data : [];
+  } catch(e) {
+    showToast('Δεν φορτώθηκε η συλλογή — ελέγξτε σύνδεση', 'error');
+    return [];
+  }
+}
+
+async function reload() {
+  document.getElementById('spinner').classList.add('show');
+  document.getElementById('galleryGrid').innerHTML = '';
+  document.getElementById('emptyState').style.display = 'none';
+  gallery = await loadGallery();
+  document.getElementById('spinner').classList.remove('show');
+  render();
+  updateStats();
+}
+
+// ─── RENDER ───
+function render() {
+  const grid = document.getElementById('galleryGrid');
+  const empty = document.getElementById('emptyState');
+  const filtered = currentFilter==='all' ? gallery : gallery.filter(g=>g.category===currentFilter);
+  if(gallery.length === 0) { empty.style.display='block'; grid.innerHTML=''; return; }
+  empty.style.display = 'none';
+  grid.innerHTML = filtered.map(item => `
+    <div class="gallery-card">
+      <div class="gallery-card-img"><img src="${item.image_url}" alt="${esc(item.caption||'')}" loading="lazy"/></div>
+      <div class="gallery-card-body">
+        <span class="cat-tag">${CAT_LABELS[item.category]||item.category}</span>
+        <div class="caption-display">${esc(item.caption||'—')}</div>
+        <div class="gallery-card-actions">
+          <button class="btn btn-outline btn-sm" onclick="openEdit('${item.id}')">✏️ Επεξεργασία</button>
+          <button class="btn btn-danger btn-sm" onclick="deleteItem('${item.id}')">🗑️</button>
+        </div>
+      </div>
+    </div>`).join('');
+}
+
+function esc(s){ return String(s).replace(/[&<>"']/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+
+function updateStats() {
+  document.getElementById('statTotal').textContent = gallery.length;
+  document.getElementById('statFish').textContent = gallery.filter(g=>g.category==='fish'||g.category==='marine').length;
+  document.getElementById('statPlants').textContent = gallery.filter(g=>g.category==='plants'||g.category==='tanks').length;
+  document.getElementById('statOther').textContent = gallery.filter(g=>!['fish','marine','plants','tanks'].includes(g.category)).length;
+}
+
+function setFilter(cat, btn) {
+  currentFilter = cat;
+  document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  render();
+}
+
+// ─── CLOUDINARY UPLOAD ───
+async function uploadToCloudinary(file) {
+  const fd = new FormData();
+  fd.append('file', file);
+  fd.append('upload_preset', CLOUDINARY_PRESET);
+  const res = await fetch(`https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD}/image/upload`, { method:'POST', body:fd });
+  if(!res.ok){ const e=await res.json().catch(()=>({})); throw new Error(e.error?.message||'Cloudinary upload failed'); }
+  return (await res.json()).secure_url;
+}
+
+// ─── WORKER (GitHub write) ───
+async function workerCall(payload) {
+  const res = await fetch(WORKER_URL, {
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body: JSON.stringify(payload)
+  });
+  const data = await res.json().catch(()=>({}));
+  if(!res.ok || data.error) throw new Error(data.error || data.detail || 'Worker error');
+  return data;
+}
+
+// ─── FILE UPLOAD HANDLER ───
+const fileInput = document.getElementById('fileInput');
+fileInput.addEventListener('change', handleUpload);
+
+async function handleUpload(e) {
+  const files = Array.from(e.target.files);
+  if(!files.length) return;
+  const category = document.getElementById('upCategory').value;
+  const baseCaption = document.getElementById('upCaption').value.trim();
+
+  const wrap = document.getElementById('progressWrap');
+  const bar = document.getElementById('progressBar');
+  const cnt = document.getElementById('progressCount');
+  const lbl = document.getElementById('progressLabel');
+  wrap.classList.add('show');
+  cnt.textContent = `0 / ${files.length}`;
+  bar.style.width = '0%';
+  let done = 0;
+
+  for(const file of files) {
+    try {
+      lbl.textContent = 'Ανέβασμα στο Cloudinary...';
+      const url = await uploadToCloudinary(file);
+      lbl.textContent = 'Αποθήκευση στο GitHub...';
+      const item = {
+        id: 'img_' + Date.now() + '_' + Math.random().toString(36).slice(2,9),
+        created_date: new Date().toISOString(),
+        category,
+        caption: baseCaption || '',
+        image_url: url
+      };
+      await workerCall({ action:'add', item });
+      gallery.push(item);
+      done++;
+      cnt.textContent = `${done} / ${files.length}`;
+      bar.style.width = `${Math.round(done/files.length*100)}%`;
+    } catch(err) {
+      showToast('Σφάλμα: ' + err.message, 'error');
+    }
+  }
+
+  fileInput.value = '';
+  document.getElementById('upCaption').value = '';
+  setTimeout(()=>wrap.classList.remove('show'), 1200);
+  render();
+  updateStats();
+  showToast(`✓ Ανέβηκαν ${done} φωτογραφίες`, 'success');
+}
+
+// Drag & drop on zone
+const uz = document.getElementById('uploadZone');
+uz.addEventListener('dragover', e=>{ e.preventDefault(); uz.classList.add('drag'); });
+uz.addEventListener('dragleave', ()=>uz.classList.remove('drag'));
+uz.addEventListener('drop', e=>{
+  e.preventDefault(); uz.classList.remove('drag');
+  if(e.dataTransfer.files.length){ fileInput.files = e.dataTransfer.files; handleUpload({target:{files:e.dataTransfer.files}}); }
+});
+
+// ─── EDIT ───
+function openEdit(id) {
+  const item = gallery.find(g=>g.id===id);
+  if(!item) return;
+  editId = id;
+  document.getElementById('editPreview').src = item.image_url;
+  document.getElementById('editCaption').value = item.caption || '';
+  document.getElementById('editCategory').value = item.category || 'fish';
+  document.getElementById('editOverlay').classList.add('open');
+}
+function closeModal(e) {
+  if(e && e.target !== document.getElementById('editOverlay')) return;
+  document.getElementById('editOverlay').classList.remove('open');
+  editId = null;
+}
+async function saveEdit() {
+  if(!editId) return;
+  const btn = document.getElementById('saveEditBtn');
+  const item = gallery.find(g=>g.id===editId);
+  if(!item) return;
+  item.caption = document.getElementById('editCaption').value.trim();
+  item.category = document.getElementById('editCategory').value;
+  btn.disabled = true; btn.textContent = 'Αποθήκευση...';
+  try {
+    await workerCall({ action:'replace', data: gallery });
+    showToast('✓ Αποθηκεύτηκε', 'success');
+    document.getElementById('editOverlay').classList.remove('open');
+    render(); updateStats();
+  } catch(err) {
+    showToast('Σφάλμα: ' + err.message, 'error');
+  } finally {
+    btn.disabled = false; btn.textContent = '💾 Αποθήκευση';
+  }
+}
+
+// ─── DELETE ───
+async function deleteItem(id) {
+  const item = gallery.find(g=>g.id===id);
+  if(!item) return;
+  if(!confirm(`Διαγραφή φωτογραφίας;\n"${item.caption||'(χωρίς τίτλο)'}"\n\nΔεν αναιρείται.`)) return;
+  try {
+    await workerCall({ action:'delete', id });
+    gallery = gallery.filter(g=>g.id!==id);
+    render(); updateStats();
+    showToast('🗑️ Διαγράφηκε', 'success');
+  } catch(err) {
+    showToast('Σφάλμα: ' + err.message, 'error');
+  }
+}
+
+// ─── TOAST ───
+function showToast(msg, type='') {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = 'toast show' + (type?' '+type:'');
+  clearTimeout(t._timer);
+  t._timer = setTimeout(()=>t.classList.remove('show'), 3000);
+}
+
+// ─── INIT ───
+if(sessionStorage.getItem('wl_auth')==='1') reload();
+</script>
+</body>
+</html>
