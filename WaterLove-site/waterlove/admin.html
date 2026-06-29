@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Water Love - Διαχείριση</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --navy:#0D1B2A;--navy2:#1A2E44;
+  --aqua:#89CED1;--aqua-light:#C5E8E9;--aqua-dark:#4DA5A8;
+  --coral:#E07A5F;--coral-dark:#C4614A;
+  --cream:#F7F8F4;--warm:#FDFCF8;
+  --text1:#0D1B2A;--text2:#2E4057;--text3:#5C7A96;
+  --green:#2A7D5C;--green-bg:#E8F5EE;
+  --red:#C0392B;--red-bg:#FDECEA;
+  --amber:#B8860B;--amber-bg:#FFF8E7;
+  --sans:'Inter',system-ui,sans-serif;
+  --serif:'Playfair Display',Georgia,serif;
+}
+body{font-family:var(--sans);background:var(--cream);color:var(--text1);min-height:100vh}
+
+/* LOGIN */
+.login-screen{min-height:100vh;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,var(--navy) 0%,var(--navy2) 100%);padding:2rem}
+.login-box{background:#fff;border-radius:1.5rem;padding:2.5rem 2.8rem;width:100%;max-width:380px;box-shadow:0 20px 60px rgba(0,0,0,.25)}
+.login-logo{font-family:var(--serif);font-size:1.6rem;color:var(--navy);margin-bottom:.3rem}
+.login-logo em{color:var(--aqua-dark);font-style:italic}
+.login-subtitle{font-size:.82rem;color:var(--text3);margin-bottom:2rem}
+.login-label{display:block;font-size:.8rem;font-weight:500;color:var(--text2);margin-bottom:.4rem}
+.login-input{width:100%;padding:.7rem 1rem;border:1px solid rgba(13,27,42,.18);border-radius:.75rem;font-size:.9rem;font-family:var(--sans);color:var(--text1);outline:none;transition:border-color .2s;margin-bottom:1rem;background:var(--cream)}
+.login-input:focus{border-color:var(--aqua-dark)}
+.login-btn{width:100%;padding:.85rem;background:var(--navy);color:#fff;border:none;border-radius:.75rem;font-size:.92rem;font-weight:500;cursor:pointer;font-family:var(--sans);transition:background .2s}
+.login-btn:hover{background:var(--navy2)}
+.login-error{background:var(--red-bg);color:var(--red);border-radius:.5rem;padding:.6rem .9rem;font-size:.8rem;margin-bottom:1rem;display:none}
+.login-error.show{display:block}
+
+/* LAYOUT */
+.admin-layout{display:none;min-height:100vh;flex-direction:column}
+.admin-layout.active{display:flex}
+.admin-nav{background:var(--navy);padding:1rem 2rem;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;flex-wrap:wrap;gap:1rem}
+.admin-logo{font-family:var(--serif);font-size:1.2rem;color:var(--aqua)}
+.admin-logo em{color:rgba(255,255,255,.4);font-style:italic}
+.admin-nav-right{display:flex;align-items:center;gap:1rem}
+.admin-badge{background:rgba(137,206,209,.15);color:var(--aqua);font-size:.75rem;padding:.3rem .8rem;border-radius:2rem;border:1px solid rgba(137,206,209,.25)}
+.logout-btn{background:transparent;color:rgba(255,255,255,.5);border:1px solid rgba(255,255,255,.15);padding:.35rem .9rem;border-radius:.5rem;cursor:pointer;font-size:.78rem;font-family:var(--sans);transition:all .2s;text-decoration:none}
+.logout-btn:hover{color:#fff;border-color:rgba(255,255,255,.4)}
+.admin-body{flex:1;padding:2rem;max-width:1200px;margin:0 auto;width:100%}
+
+/* TABS */
+.main-tabs{display:flex;gap:.5rem;margin-bottom:2rem;border-bottom:1px solid rgba(13,27,42,.1)}
+.main-tab{padding:.8rem 1.5rem;background:transparent;border:none;border-bottom:2px solid transparent;cursor:pointer;font-family:var(--sans);font-size:.92rem;color:var(--text3);transition:all .2s;margin-bottom:-1px;font-weight:500}
+.main-tab:hover{color:var(--navy)}
+.main-tab.active{color:var(--navy);border-bottom-color:var(--aqua-dark)}
+.tab-content{display:none}
+.tab-content.active{display:block}
+
+/* HEADER */
+.section-head{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:1.5rem;flex-wrap:wrap;gap:1rem}
+.section-title{font-size:1.3rem;font-weight:600;color:var(--navy);font-family:var(--serif)}
+.section-desc{font-size:.85rem;color:var(--text3);margin-top:.2rem}
+
+/* BUTTONS */
+.btn{padding:.6rem 1.2rem;border-radius:.6rem;border:none;cursor:pointer;font-family:var(--sans);font-size:.84rem;font-weight:500;transition:all .2s;display:inline-flex;align-items:center;gap:.4rem;text-decoration:none}
+.btn-primary{background:var(--navy);color:#fff}
+.btn-primary:hover{background:var(--navy2)}
+.btn-coral{background:var(--coral);color:#fff}
+.btn-coral:hover{background:var(--coral-dark)}
+.btn-outline{background:transparent;color:var(--text2);border:1px solid rgba(13,27,42,.2)}
+.btn-outline:hover{background:rgba(13,27,42,.05)}
+.btn-danger{background:var(--red-bg);color:var(--red);border:1px solid rgba(192,57,43,.2)}
+.btn-danger:hover{background:rgba(192,57,43,.1)}
+.btn-sm{padding:.4rem .8rem;font-size:.78rem}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+
+/* UPLOAD CARD */
+.upload-card{background:#fff;border-radius:1.25rem;padding:1.5rem;margin-bottom:2rem;border:1px solid rgba(13,27,42,.08)}
+.upload-row{display:grid;grid-template-columns:1fr 1fr;gap:1.2rem}
+.form-group{margin-bottom:0}
+.form-label{display:block;font-size:.78rem;font-weight:500;color:var(--text2);margin-bottom:.4rem}
+.form-input,.form-select,.form-textarea{width:100%;padding:.65rem .9rem;border:1px solid rgba(13,27,42,.18);border-radius:.65rem;font-size:.88rem;font-family:var(--sans);color:var(--text1);outline:none;transition:border-color .2s;background:var(--cream)}
+.form-input:focus,.form-select:focus,.form-textarea:focus{border-color:var(--aqua-dark)}
+.form-textarea{min-height:70px;resize:vertical}
+.upload-zone{border:2px dashed rgba(13,27,42,.18);border-radius:.75rem;padding:2rem;text-align:center;cursor:pointer;transition:all .2s;background:var(--cream);position:relative;margin-top:1.2rem}
+.upload-zone:hover,.upload-zone.drag{border-color:var(--aqua-dark);background:rgba(137,206,209,.05)}
+.upload-zone input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%}
+.upload-zone-icon{font-size:2.2rem;margin-bottom:.5rem;display:block}
+.upload-zone p{font-size:.85rem;color:var(--text3)}
+.upload-zone strong{color:var(--aqua-dark)}
+
+/* PROGRESS */
+.progress-wrap{display:none;margin-top:1.2rem}
+.progress-wrap.show{display:block}
+.progress-info{display:flex;justify-content:space-between;font-size:.8rem;color:var(--text3);margin-bottom:.4rem}
+.progress-bar-bg{width:100%;height:8px;background:rgba(13,27,42,.1);border-radius:4px;overflow:hidden}
+.progress-bar{height:100%;background:var(--aqua-dark);border-radius:4px;width:0%;transition:width .3s}
+
+/* STATS */
+.stats-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:1rem;margin-bottom:2rem}
+.stat-box{background:#fff;border-radius:1rem;padding:1.2rem 1.4rem;border:1px solid rgba(13,27,42,.08)}
+.stat-box .num{font-size:1.8rem;font-weight:600;color:var(--navy);font-family:var(--serif);line-height:1}
+.stat-box .lbl{font-size:.75rem;color:var(--text3);margin-top:.3rem}
+
+/* FILTER */
+.filter-row{display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:1.5rem}
+.filter-btn{padding:.4rem 1rem;border-radius:2rem;border:1px solid rgba(13,27,42,.18);background:transparent;font-size:.8rem;cursor:pointer;color:var(--text2);transition:all .2s;font-family:var(--sans)}
+.filter-btn:hover,.filter-btn.active{background:var(--navy);color:#fff;border-color:var(--navy)}
+
+/* GRID */
+.card-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:1.2rem}
+.item-card{background:#fff;border-radius:1rem;overflow:hidden;border:1px solid rgba(13,27,42,.08);transition:box-shadow .2s}
+.item-card:hover{box-shadow:0 6px 24px rgba(13,27,42,.1)}
+.item-card-img{height:160px;position:relative;background:#eaeaea;overflow:hidden;display:flex;align-items:center;justify-content:center}
+.item-card-img img{width:100%;height:100%;object-fit:cover;display:block}
+.item-card-img .ph{font-size:2.5rem;opacity:.4}
+.item-card-body{padding:.9rem}
+.cat-tag{display:inline-block;background:var(--aqua-light);color:var(--aqua-dark);font-size:.68rem;padding:.2rem .6rem;border-radius:2rem;margin-bottom:.6rem;font-weight:500}
+.item-name{font-size:.9rem;color:var(--navy);font-weight:600;margin-bottom:.3rem}
+.caption-display{font-size:.8rem;color:var(--text2);margin-bottom:.8rem;line-height:1.4;min-height:1rem}
+.item-actions{display:flex;gap:.5rem}
+
+/* MODAL */
+.edit-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:500;align-items:center;justify-content:center;padding:1rem}
+.edit-overlay.open{display:flex}
+.edit-modal{background:#fff;border-radius:1.25rem;padding:2rem;width:100%;max-width:480px;max-height:90vh;overflow-y:auto}
+.edit-modal h3{font-size:1.05rem;font-weight:600;color:var(--navy);margin-bottom:1.3rem;font-family:var(--serif)}
+.edit-preview{width:100%;height:180px;object-fit:cover;border-radius:.75rem;margin-bottom:1.2rem;background:var(--cream)}
+.upload-zone-sm{border:2px dashed rgba(13,27,42,.18);border-radius:.65rem;padding:1rem;text-align:center;cursor:pointer;position:relative;background:var(--cream);margin-bottom:1rem;font-size:.82rem;color:var(--text3)}
+.upload-zone-sm input{position:absolute;inset:0;opacity:0;cursor:pointer}
+.upload-zone-sm strong{color:var(--aqua-dark)}
+.modal-actions{display:flex;gap:.7rem;justify-content:flex-end;margin-top:1.5rem;padding-top:1rem;border-top:1px solid rgba(13,27,42,.08)}
+
+/* TOAST */
+.toast{position:fixed;top:1.5rem;right:1.5rem;background:var(--navy);color:#fff;padding:.8rem 1.2rem;border-radius:.75rem;font-size:.84rem;z-index:9999;transform:translateY(-10px);opacity:0;transition:all .3s;pointer-events:none;max-width:340px}
+.toast.show{transform:translateY(0);opacity:1}
+.toast.success{background:var(--green)}
+.toast.error{background:var(--red)}
+
+/* SPINNER */
+.spinner{display:none;justify-content:center;padding:3rem}
+.spinner.show{display:flex}
+.spinner-circle{width:36px;height:36px;border:3px solid rgba(13,27,42,.1);border-top-color:var(--aqua-dark);border-radius:50%;animation:spin .8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* EMPTY */
+.empty-state{text-align:center;padding:3rem;color:var(--text3)}
+.empty-state .es-icon{font-size:3rem;margin-bottom:.8rem}
+
+/* INFO */
+.info-box{background:var(--amber-bg);border:1px solid rgba(184,134,11,.25);border-radius:.75rem;padding:1rem 1.2rem;font-size:.83rem;color:var(--text2);line-height:1.6;margin-bottom:1.5rem;display:flex;gap:.6rem;align-items:flex-start}
+
+@media(max-width:600px){
+  .admin-body{padding:1.2rem}
+  .upload-row{grid-template-columns:1fr}
+  .card-grid{grid-template-columns:1fr 1fr}
+  .stats-row{grid-template-columns:1fr 1fr}
+  .admin-nav{padding:.9rem 1rem;gap:.6rem}
+  .admin-logo{font-size:1.05rem;width:100%}
+  .admin-nav-right{width:100%;gap:.5rem;flex-wrap:wrap}
+  .admin-badge{font-size:.7rem;padding:.3rem .7rem;order:3;flex:1;text-align:center}
+  .logout-btn{font-size:.74rem;padding:.4rem .8rem;flex:1;text-align:center;justify-content:center;display:flex}
+  .main-tab{padding:.7rem .6rem;font-size:.82rem;flex:1;text-align:center}
+  .main-tabs{gap:0}
+  .section-title{font-size:1.1rem}
+  .filter-row{gap:.4rem;overflow-x:auto;flex-wrap:nowrap;padding-bottom:.5rem;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+  .filter-row::-webkit-scrollbar{display:none}
+  .filter-btn{white-space:nowrap;flex-shrink:0}
+  .edit-modal{padding:1.5rem;border-radius:1rem 1rem 0 0;position:fixed;bottom:0;left:0;right:0;max-width:100%;max-height:92vh;animation:slideUp .3s ease}
+  .edit-overlay{align-items:flex-end}
+  @keyframes slideUp{from{transform:translateY(100%)}to{transform:translateY(0)}}
+  .item-actions{flex-direction:column}
+  .item-actions .btn{width:100%;justify-content:center}
+  .card-grid{grid-template-columns:1fr}
+  .upload-zone{padding:1.5rem}
+}
+@media(max-width:380px){
+  .stats-row{grid-template-columns:1fr 1fr}
+  .main-tab{font-size:.76rem;padding:.6rem .3rem}
+}
+</style>
+</head>
+<body>
+
+<div class="toast" id="toast"></div>
+
+<!-- LOGIN -->
+<div class="login-screen" id="loginScreen">
+  <div class="login-box">
+    <div class="login-logo">Water <em>Love</em></div>
+    <p class="login-subtitle">Πίνακας Διαχείρισης</p>
+    <div class="login-error" id="loginError">Λάθος κωδικός. Δοκιμάστε ξανά.</div>
+    <label class="login-label" for="passInput">Κωδικός πρόσβασης</label>
+    <input class="login-input" type="password" id="passInput" placeholder="Εισάγετε κωδικό..."/>
+    <button class="login-btn" onclick="doLogin()">Είσοδος</button>
+    <p style="font-size:.72rem;color:var(--text3);margin-top:1.2rem;text-align:center">Μόνο για τη διαχειρίστρια του Water Love</p>
+  </div>
+</div>
+
+<!-- ADMIN -->
+<div class="admin-layout" id="adminLayout">
+  <nav class="admin-nav">
+    <div class="admin-logo">Water <em>Love</em> · Admin</div>
+    <div class="admin-nav-right">
+      <span class="admin-badge">🐠 Λαμπρινή Μπιζίκη</span>
+      <a href="index.html" target="_blank" rel="noopener" class="logout-btn">👁 Προβολή site</a>
+      <button class="logout-btn" onclick="doLogout()">Έξοδος</button>
+    </div>
+  </nav>
+
+  <div class="admin-body">
+    <div class="info-box">
+      <span style="font-size:1.1rem">☁️</span>
+      <span>Οι φωτογραφίες ανεβαίνουν στο <strong>Cloudinary</strong> και αποθηκεύονται στο <strong>GitHub</strong>. Οι αλλαγές εμφανίζονται αυτόματα στο website, από οποιαδήποτε συσκευή.</span>
+    </div>
+
+    <!-- MAIN TABS -->
+    <div class="main-tabs">
+      <button class="main-tab active" onclick="switchMainTab('gallery',this)">📸 Συλλογή Φωτογραφιών</button>
+      <button class="main-tab" onclick="switchMainTab('products',this)">🛍️ Προϊόντα</button>
+    </div>
+
+    <!-- ════════════ GALLERY TAB ════════════ -->
+    <div class="tab-content active" id="main-gallery">
+      <div class="stats-row">
+        <div class="stat-box"><div class="num" id="gStatTotal">0</div><div class="lbl">Σύνολο φωτογραφιών</div></div>
+        <div class="stat-box"><div class="num" id="gStatFish">0</div><div class="lbl">Ψάρια & Θαλάσσιο</div></div>
+        <div class="stat-box"><div class="num" id="gStatPlants">0</div><div class="lbl">Φυτά & Ενυδρεία</div></div>
+        <div class="stat-box"><div class="num" id="gStatOther">0</div><div class="lbl">Άλλες</div></div>
+      </div>
+
+      <div class="upload-card">
+        <div class="section-head" style="margin-bottom:1rem">
+          <div>
+            <div class="section-title" style="font-size:1.05rem">Ανέβασμα φωτογραφίας στη συλλογή</div>
+            <div class="section-desc">Επιλέξτε κατηγορία, προσθέστε τίτλο, ανεβάστε εικόνα</div>
+          </div>
+        </div>
+        <div class="upload-row">
+          <div class="form-group">
+            <label class="form-label">Κατηγορία</label>
+            <select class="form-select" id="gCategory">
+              <option value="fish">🐠 Ψάρια</option>
+              <option value="marine">🌊 Θαλάσσιο</option>
+              <option value="tanks">🪸 Ενυδρεία</option>
+              <option value="plants">🌿 Φυτά</option>
+              <option value="accessories">⚙️ Αξεσουάρ</option>
+              <option value="other">📦 Άλλο</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Τίτλος / Περιγραφή</label>
+            <input class="form-input" type="text" id="gCaption" placeholder="π.χ. Betta splendens, halfmoon"/>
+          </div>
+        </div>
+        <div class="upload-zone" id="gUploadZone">
+          <input type="file" accept="image/*" id="gFileInput" multiple/>
+          <span class="upload-zone-icon">📁</span>
+          <p>Σύρετε φωτογραφίες ή <strong>κάντε κλικ</strong> για επιλογή</p>
+          <p style="margin-top:.3rem;font-size:.75rem">Πολλές μαζί · JPG, PNG, WEBP</p>
+        </div>
+        <div class="progress-wrap" id="gProgress">
+          <div class="progress-info"><span id="gProgLabel">Ανέβασμα...</span><span id="gProgCount">0 / 0</span></div>
+          <div class="progress-bar-bg"><div class="progress-bar" id="gProgBar"></div></div>
+        </div>
+      </div>
+
+      <div class="section-head">
+        <div><div class="section-title">Συλλογή φωτογραφιών</div><div class="section-desc">Επεξεργαστείτε ή διαγράψτε</div></div>
+        <button class="btn btn-outline btn-sm" onclick="reloadGallery()">🔄 Ανανέωση</button>
+      </div>
+      <div class="filter-row" id="gFilterRow">
+        <button class="filter-btn active" onclick="setGFilter('all',this)">Όλα</button>
+        <button class="filter-btn" onclick="setGFilter('fish',this)">🐠 Ψάρια</button>
+        <button class="filter-btn" onclick="setGFilter('marine',this)">🌊 Θαλάσσιο</button>
+        <button class="filter-btn" onclick="setGFilter('tanks',this)">🪸 Ενυδρεία</button>
+        <button class="filter-btn" onclick="setGFilter('plants',this)">🌿 Φυτά</button>
+        <button class="filter-btn" onclick="setGFilter('accessories',this)">⚙️ Αξεσουάρ</button>
+        <button class="filter-btn" onclick="setGFilter('other',this)">📦 Άλλο</button>
+      </div>
+      <div class="spinner" id="gSpinner"><div class="spinner-circle"></div></div>
+      <div class="empty-state" id="gEmpty" style="display:none"><div class="es-icon">🐠</div><p>Δεν υπάρχουν φωτογραφίες ακόμα.</p></div>
+      <div class="card-grid" id="gGrid"></div>
+    </div>
+
+    <!-- ════════════ PRODUCTS TAB ════════════ -->
+    <div class="tab-content" id="main-products">
+      <div class="stats-row">
+        <div class="stat-box"><div class="num" id="pStatTotal">0</div><div class="lbl">Σύνολο προϊόντων</div></div>
+        <div class="stat-box"><div class="num" id="pStatPhotos">0</div><div class="lbl">Με φωτογραφία</div></div>
+        <div class="stat-box"><div class="num" id="pStatNoPhotos">0</div><div class="lbl">Χωρίς φωτογραφία</div></div>
+        <div class="stat-box"><div class="num" id="pStatCats">0</div><div class="lbl">Κατηγορίες</div></div>
+      </div>
+
+      <div class="upload-card">
+        <div class="section-head" style="margin-bottom:1rem">
+          <div>
+            <div class="section-title" style="font-size:1.05rem">Προσθήκη νέου προϊόντος</div>
+            <div class="section-desc">Όνομα, κατηγορία, περιγραφή και φωτογραφία</div>
+          </div>
+        </div>
+        <div class="upload-row" style="margin-bottom:1rem">
+          <div class="form-group">
+            <label class="form-label">Όνομα προϊόντος</label>
+            <input class="form-input" type="text" id="pName" placeholder="π.χ. Tropical Ψάρια"/>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Κατηγορία</label>
+            <select class="form-select" id="pCategory">
+              <option value="fish">🐠 Ψάρια</option>
+              <option value="marine">🌊 Θαλάσσιο</option>
+              <option value="tanks">🪸 Ενυδρεία</option>
+              <option value="plants">🌿 Φυτά</option>
+              <option value="accessories">⚙️ Αξεσουάρ</option>
+              <option value="chemistry">🧪 Χημεία</option>
+              <option value="medicine">💊 Φαρμακευτικά</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group" style="margin-bottom:1rem">
+          <label class="form-label">Περιγραφή</label>
+          <textarea class="form-textarea" id="pDesc" placeholder="Σύντομη περιγραφή του προϊόντος..."></textarea>
+        </div>
+        <div class="upload-zone" id="pUploadZone">
+          <input type="file" accept="image/*" id="pFileInput"/>
+          <span class="upload-zone-icon">📁</span>
+          <p>Σύρετε φωτογραφία ή <strong>κάντε κλικ</strong> (προαιρετικό)</p>
+        </div>
+        <div class="progress-wrap" id="pProgress">
+          <div class="progress-info"><span id="pProgLabel">Αποθήκευση...</span><span></span></div>
+          <div class="progress-bar-bg"><div class="progress-bar" id="pProgBar"></div></div>
+        </div>
+        <div style="margin-top:1.2rem;text-align:right">
+          <button class="btn btn-coral" id="pAddBtn" onclick="addProduct()">+ Προσθήκη προϊόντος</button>
+        </div>
+      </div>
+
+      <div class="section-head">
+        <div><div class="section-title">Προϊόντα</div><div class="section-desc">Επεξεργαστείτε ή διαγράψτε</div></div>
+        <button class="btn btn-outline btn-sm" onclick="reloadProducts()">🔄 Ανανέωση</button>
+      </div>
+      <div class="filter-row" id="pFilterRow">
+        <button class="filter-btn active" onclick="setPFilter('all',this)">Όλα</button>
+        <button class="filter-btn" onclick="setPFilter('fish',this)">🐠 Ψάρια</button>
+        <button class="filter-btn" onclick="setPFilter('marine',this)">🌊 Θαλάσσιο</button>
+        <button class="filter-btn" onclick="setPFilter('tanks',this)">🪸 Ενυδρεία</button>
+        <button class="filter-btn" onclick="setPFilter('plants',this)">🌿 Φυτά</button>
+        <button class="filter-btn" onclick="setPFilter('accessories',this)">⚙️ Αξεσουάρ</button>
+        <button class="filter-btn" onclick="setPFilter('chemistry',this)">🧪 Χημεία</button>
+        <button class="filter-btn" onclick="setPFilter('medicine',this)">💊 Φαρμακευτικά</button>
+      </div>
+      <div class="spinner" id="pSpinner"><div class="spinner-circle"></div></div>
+      <div class="empty-state" id="pEmpty" style="display:none"><div class="es-icon">🛍️</div><p>Δεν υπάρχουν προϊόντα ακόμα.</p></div>
+      <div class="card-grid" id="pGrid"></div>
+    </div>
+  </div>
+</div>
+
+<!-- GALLERY EDIT MODAL -->
+<div class="edit-overlay" id="gEditOverlay" onclick="closeGModal(event)">
+  <div class="edit-modal">
+    <h3>Επεξεργασία Φωτογραφίας</h3>
+    <img class="edit-preview" id="gEditPreview" src="" alt=""/>
+    <div class="form-group" style="margin-bottom:1rem">
+      <label class="form-label">Τίτλος / Περιγραφή</label>
+      <input class="form-input" type="text" id="gEditCaption"/>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Κατηγορία</label>
+      <select class="form-select" id="gEditCategory">
+        <option value="fish">🐠 Ψάρια</option><option value="marine">🌊 Θαλάσσιο</option>
+        <option value="tanks">🪸 Ενυδρεία</option><option value="plants">🌿 Φυτά</option>
+        <option value="accessories">⚙️ Αξεσουάρ</option><option value="other">📦 Άλλο</option>
+      </select>
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-outline" onclick="closeGModal()">Ακύρωση</button>
+      <button class="btn btn-coral" id="gSaveBtn" onclick="saveGEdit()">💾 Αποθήκευση</button>
+    </div>
+  </div>
+</div>
+
+<!-- PRODUCT EDIT MODAL -->
+<div class="edit-overlay" id="pEditOverlay" onclick="closePModal(event)">
+  <div class="edit-modal">
+    <h3>Επεξεργασία Προϊόντος</h3>
+    <img class="edit-preview" id="pEditPreview" src="" alt=""/>
+    <div class="upload-zone-sm" id="pEditUploadZone">
+      <input type="file" accept="image/*" id="pEditFileInput"/>
+      Αλλαγή φωτογραφίας · <strong>κάντε κλικ</strong>
+    </div>
+    <div class="form-group" style="margin-bottom:1rem">
+      <label class="form-label">Όνομα</label>
+      <input class="form-input" type="text" id="pEditName"/>
+    </div>
+    <div class="form-group" style="margin-bottom:1rem">
+      <label class="form-label">Κατηγορία</label>
+      <select class="form-select" id="pEditCategory">
+        <option value="fish">🐠 Ψάρια</option><option value="marine">🌊 Θαλάσσιο</option>
+        <option value="tanks">🪸 Ενυδρεία</option><option value="plants">🌿 Φυτά</option>
+        <option value="accessories">⚙️ Αξεσουάρ</option><option value="chemistry">🧪 Χημεία</option>
+        <option value="medicine">💊 Φαρμακευτικά</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Περιγραφή</label>
+      <textarea class="form-textarea" id="pEditDesc"></textarea>
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-outline" onclick="closePModal()">Ακύρωση</button>
+      <button class="btn btn-coral" id="pSaveBtn" onclick="savePEdit()">💾 Αποθήκευση</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ═══════════════════════════════════════════════════════
+// CONFIG - Water Love
+// ═══════════════════════════════════════════════════════
+const ADMIN_PASS = 'waterlove2024';        // Αλλάξτε τον κωδικό εδώ
+const CLOUDINARY_CLOUD = 'dwhsqj03w';
+const CLOUDINARY_PRESET = 'waterlove_preset';
+const WORKER_URL = 'https://waterlove-worker.waterlovethessaloniki.workers.dev';
+const GH_OWNER = 'waterlovethessaloniki';
+const GH_REPO = 'WaterLove-';
+const GALLERY_RAW = `https://raw.githubusercontent.com/${GH_OWNER}/${GH_REPO}/main/gallery-data.json`;
+const PRODUCTS_RAW = `https://raw.githubusercontent.com/${GH_OWNER}/${GH_REPO}/main/products-data.json`;
+
+const CAT_LABELS = {fish:'🐠 Ψάρια',marine:'🌊 Θαλάσσιο',tanks:'🪸 Ενυδρεία',plants:'🌿 Φυτά',accessories:'⚙️ Αξεσουάρ',chemistry:'🧪 Χημεία',medicine:'💊 Φαρμακευτικά',other:'📦 Άλλο'};
+
+let gallery = [], products = [];
+let gFilter = 'all', pFilter = 'all';
+let gEditId = null, pEditId = null, pEditNewImg = null;
+
+// ─── AUTH ───
+function doLogin() {
+  if(document.getElementById('passInput').value === ADMIN_PASS) {
+    sessionStorage.setItem('wl_auth','1');
+    document.getElementById('loginScreen').style.display='none';
+    document.getElementById('adminLayout').classList.add('active');
+    reloadGallery(); reloadProducts();
+  } else {
+    const err = document.getElementById('loginError');
+    err.classList.add('show');
+    document.getElementById('passInput').value='';
+    setTimeout(()=>err.classList.remove('show'),3000);
+  }
+}
+function doLogout(){ sessionStorage.removeItem('wl_auth'); location.reload(); }
+document.getElementById('passInput').addEventListener('keydown',e=>{if(e.key==='Enter')doLogin();});
+if(sessionStorage.getItem('wl_auth')==='1'){
+  document.getElementById('loginScreen').style.display='none';
+  document.getElementById('adminLayout').classList.add('active');
+}
+
+// ─── TABS ───
+function switchMainTab(name, btn) {
+  document.querySelectorAll('.main-tab').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.tab-content').forEach(c=>c.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('main-'+name).classList.add('active');
+}
+
+// ─── HELPERS ───
+function esc(s){ return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+
+async function uploadToCloudinary(file) {
+  const fd = new FormData();
+  fd.append('file', file);
+  fd.append('upload_preset', CLOUDINARY_PRESET);
+  const res = await fetch(`https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD}/image/upload`,{method:'POST',body:fd});
+  if(!res.ok){ const e=await res.json().catch(()=>({})); throw new Error(e.error?.message||'Cloudinary upload failed'); }
+  return (await res.json()).secure_url;
+}
+async function workerCall(payload) {
+  const res = await fetch(WORKER_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
+  const data = await res.json().catch(()=>({}));
+  if(!res.ok || data.error) throw new Error(data.error || data.detail || 'Worker error');
+  return data;
+}
+function showToast(msg,type=''){
+  const t=document.getElementById('toast');
+  t.textContent=msg; t.className='toast show'+(type?' '+type:'');
+  clearTimeout(t._t); t._t=setTimeout(()=>t.classList.remove('show'),3000);
+}
+
+// ═══════════════ GALLERY ═══════════════
+async function loadGalleryData(){ try{const r=await fetch(GALLERY_RAW+'?t='+Date.now());if(!r.ok)return[];const d=await r.json();return Array.isArray(d)?d:[];}catch(e){return[];} }
+
+async function reloadGallery() {
+  document.getElementById('gSpinner').classList.add('show');
+  document.getElementById('gGrid').innerHTML='';
+  document.getElementById('gEmpty').style.display='none';
+  gallery = await loadGalleryData();
+  document.getElementById('gSpinner').classList.remove('show');
+  renderGallery(); updateGStats();
+}
+function renderGallery() {
+  const grid=document.getElementById('gGrid'), empty=document.getElementById('gEmpty');
+  const filtered = gFilter==='all'?gallery:gallery.filter(g=>g.category===gFilter);
+  if(gallery.length===0){ empty.style.display='block'; grid.innerHTML=''; return; }
+  empty.style.display='none';
+  grid.innerHTML = filtered.map(item=>`
+    <div class="item-card">
+      <div class="item-card-img"><img src="${item.image_url}" alt="${esc(item.caption||'')}" loading="lazy"/></div>
+      <div class="item-card-body">
+        <span class="cat-tag">${CAT_LABELS[item.category]||item.category}</span>
+        <div class="caption-display">${esc(item.caption||'-')}</div>
+        <div class="item-actions">
+          <button class="btn btn-outline btn-sm" onclick="openGEdit('${item.id}')">✏️ Επεξεργασία</button>
+          <button class="btn btn-danger btn-sm" onclick="deleteGItem('${item.id}')">🗑️</button>
+        </div>
+      </div>
+    </div>`).join('');
+}
+function updateGStats(){
+  document.getElementById('gStatTotal').textContent=gallery.length;
+  document.getElementById('gStatFish').textContent=gallery.filter(g=>g.category==='fish'||g.category==='marine').length;
+  document.getElementById('gStatPlants').textContent=gallery.filter(g=>g.category==='plants'||g.category==='tanks').length;
+  document.getElementById('gStatOther').textContent=gallery.filter(g=>!['fish','marine','plants','tanks'].includes(g.category)).length;
+}
+function setGFilter(cat,btn){ gFilter=cat; document.querySelectorAll('#gFilterRow .filter-btn').forEach(b=>b.classList.remove('active')); btn.classList.add('active'); renderGallery(); }
+
+// Gallery upload
+const gFileInput=document.getElementById('gFileInput');
+gFileInput.addEventListener('change',handleGUpload);
+async function handleGUpload(e){
+  const files=Array.from(e.target.files); if(!files.length)return;
+  const category=document.getElementById('gCategory').value;
+  const caption=document.getElementById('gCaption').value.trim();
+  const wrap=document.getElementById('gProgress'),bar=document.getElementById('gProgBar'),cnt=document.getElementById('gProgCount'),lbl=document.getElementById('gProgLabel');
+  wrap.classList.add('show'); cnt.textContent=`0 / ${files.length}`; bar.style.width='0%';
+  let done=0;
+  for(const file of files){
+    try{
+      lbl.textContent='Ανέβασμα στο Cloudinary...';
+      const url=await uploadToCloudinary(file);
+      lbl.textContent='Αποθήκευση στο GitHub...';
+      const item={id:'img_'+Date.now()+'_'+Math.random().toString(36).slice(2,9),created_date:new Date().toISOString(),category,caption:caption||'',image_url:url};
+      await workerCall({target:'gallery',action:'add',item});
+      gallery.push(item); done++;
+      cnt.textContent=`${done} / ${files.length}`; bar.style.width=`${Math.round(done/files.length*100)}%`;
+    }catch(err){ showToast('Σφάλμα: '+err.message,'error'); }
+  }
+  gFileInput.value=''; document.getElementById('gCaption').value='';
+  setTimeout(()=>wrap.classList.remove('show'),1200);
+  renderGallery(); updateGStats();
+  showToast(`✓ Ανέβηκαν ${done} φωτογραφίες`,'success');
+}
+const gUz=document.getElementById('gUploadZone');
+gUz.addEventListener('dragover',e=>{e.preventDefault();gUz.classList.add('drag');});
+gUz.addEventListener('dragleave',()=>gUz.classList.remove('drag'));
+gUz.addEventListener('drop',e=>{e.preventDefault();gUz.classList.remove('drag');if(e.dataTransfer.files.length){gFileInput.files=e.dataTransfer.files;handleGUpload({target:{files:e.dataTransfer.files}});}});
+
+function openGEdit(id){
+  const item=gallery.find(g=>g.id===id); if(!item)return;
+  gEditId=id;
+  document.getElementById('gEditPreview').src=item.image_url;
+  document.getElementById('gEditCaption').value=item.caption||'';
+  document.getElementById('gEditCategory').value=item.category||'fish';
+  document.getElementById('gEditOverlay').classList.add('open');
+}
+function closeGModal(e){ if(e&&e.target!==document.getElementById('gEditOverlay'))return; document.getElementById('gEditOverlay').classList.remove('open'); gEditId=null; }
+async function saveGEdit(){
+  if(!gEditId)return;
+  const btn=document.getElementById('gSaveBtn'), item=gallery.find(g=>g.id===gEditId); if(!item)return;
+  item.caption=document.getElementById('gEditCaption').value.trim();
+  item.category=document.getElementById('gEditCategory').value;
+  btn.disabled=true; btn.textContent='Αποθήκευση...';
+  try{ await workerCall({target:'gallery',action:'replace',data:gallery}); showToast('✓ Αποθηκεύτηκε','success'); document.getElementById('gEditOverlay').classList.remove('open'); renderGallery(); updateGStats(); }
+  catch(err){ showToast('Σφάλμα: '+err.message,'error'); }
+  finally{ btn.disabled=false; btn.textContent='💾 Αποθήκευση'; }
+}
+async function deleteGItem(id){
+  const item=gallery.find(g=>g.id===id); if(!item)return;
+  if(!confirm(`Διαγραφή φωτογραφίας;\n"${item.caption||'(χωρίς τίτλο)'}"`))return;
+  try{ await workerCall({target:'gallery',action:'delete',id}); gallery=gallery.filter(g=>g.id!==id); renderGallery(); updateGStats(); showToast('🗑️ Διαγράφηκε','success'); }
+  catch(err){ showToast('Σφάλμα: '+err.message,'error'); }
+}
+
+// ═══════════════ PRODUCTS ═══════════════
+async function loadProductsData(){ try{const r=await fetch(PRODUCTS_RAW+'?t='+Date.now());if(!r.ok)return[];const d=await r.json();return Array.isArray(d)?d:[];}catch(e){return[];} }
+
+async function reloadProducts() {
+  document.getElementById('pSpinner').classList.add('show');
+  document.getElementById('pGrid').innerHTML='';
+  document.getElementById('pEmpty').style.display='none';
+  products = await loadProductsData();
+  document.getElementById('pSpinner').classList.remove('show');
+  renderProducts(); updatePStats();
+}
+function renderProducts() {
+  const grid=document.getElementById('pGrid'), empty=document.getElementById('pEmpty');
+  const filtered = pFilter==='all'?products:products.filter(p=>p.category===pFilter);
+  if(products.length===0){ empty.style.display='block'; grid.innerHTML=''; return; }
+  empty.style.display='none';
+  grid.innerHTML = filtered.map(item=>{
+    const img = item.image_url ? `<img src="${item.image_url}" alt="${esc(item.name)}" loading="lazy"/>` : `<span class="ph">${item.icon||'🛍️'}</span>`;
+    return `<div class="item-card">
+      <div class="item-card-img">${img}</div>
+      <div class="item-card-body">
+        <span class="cat-tag">${CAT_LABELS[item.category]||item.category}</span>
+        <div class="item-name">${item.icon||''} ${esc(item.name)}</div>
+        <div class="caption-display">${esc(item.desc||'-')}</div>
+        <div class="item-actions">
+          <button class="btn btn-outline btn-sm" onclick="openPEdit('${item.id}')">✏️ Επεξεργασία</button>
+          <button class="btn btn-danger btn-sm" onclick="deletePItem('${item.id}')">🗑️</button>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+}
+function updatePStats(){
+  document.getElementById('pStatTotal').textContent=products.length;
+  document.getElementById('pStatPhotos').textContent=products.filter(p=>p.image_url).length;
+  document.getElementById('pStatNoPhotos').textContent=products.filter(p=>!p.image_url).length;
+  document.getElementById('pStatCats').textContent=new Set(products.map(p=>p.category)).size;
+}
+function setPFilter(cat,btn){ pFilter=cat; document.querySelectorAll('#pFilterRow .filter-btn').forEach(b=>b.classList.remove('active')); btn.classList.add('active'); renderProducts(); }
+
+// Add product
+let pNewImg = null;
+const pFileInput=document.getElementById('pFileInput');
+pFileInput.addEventListener('change',ev=>{
+  const f=ev.target.files[0]; if(!f)return;
+  const r=new FileReader(); r.onload=e=>{ pNewImg=f; showToast('✓ Φωτογραφία επιλέχθηκε'); }; r.readAsDataURL(f);
+});
+const pUz=document.getElementById('pUploadZone');
+pUz.addEventListener('dragover',e=>{e.preventDefault();pUz.classList.add('drag');});
+pUz.addEventListener('dragleave',()=>pUz.classList.remove('drag'));
+pUz.addEventListener('drop',e=>{e.preventDefault();pUz.classList.remove('drag');if(e.dataTransfer.files.length){pNewImg=e.dataTransfer.files[0];showToast('✓ Φωτογραφία επιλέχθηκε');}});
+
+async function addProduct(){
+  const name=document.getElementById('pName').value.trim();
+  const category=document.getElementById('pCategory').value;
+  const desc=document.getElementById('pDesc').value.trim();
+  if(!name){ showToast('Προσθέστε όνομα προϊόντος','error'); return; }
+  const btn=document.getElementById('pAddBtn'), wrap=document.getElementById('pProgress'), bar=document.getElementById('pProgBar');
+  btn.disabled=true; btn.textContent='Αποθήκευση...'; wrap.classList.add('show'); bar.style.width='30%';
+  try{
+    let url='';
+    if(pNewImg){ document.getElementById('pProgLabel').textContent='Ανέβασμα φωτογραφίας...'; url=await uploadToCloudinary(pNewImg); bar.style.width='70%'; }
+    document.getElementById('pProgLabel').textContent='Αποθήκευση στο GitHub...';
+    const icons={fish:'🐠',marine:'🌊',tanks:'🪸',plants:'🌿',accessories:'⚙️',chemistry:'🧪',medicine:'💊'};
+    const item={id:'prod_'+Date.now()+'_'+Math.random().toString(36).slice(2,7),category,icon:icons[category]||'🛍️',name,desc,image_url:url};
+    await workerCall({target:'products',action:'add',item});
+    products.push(item); bar.style.width='100%';
+    document.getElementById('pName').value=''; document.getElementById('pDesc').value=''; pNewImg=null; pFileInput.value='';
+    renderProducts(); updatePStats();
+    showToast('✓ Προστέθηκε το προϊόν','success');
+  }catch(err){ showToast('Σφάλμα: '+err.message,'error'); }
+  finally{ btn.disabled=false; btn.textContent='+ Προσθήκη προϊόντος'; setTimeout(()=>wrap.classList.remove('show'),1200); }
+}
+
+function openPEdit(id){
+  const item=products.find(p=>p.id===id); if(!item)return;
+  pEditId=id; pEditNewImg=null;
+  document.getElementById('pEditPreview').src=item.image_url||'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="400" height="180"><rect width="100%" height="100%" fill="%23C5E8E9"/><text x="50%" y="50%" text-anchor="middle" dy=".3em" font-size="50">🛍️</text></svg>';
+  document.getElementById('pEditName').value=item.name||'';
+  document.getElementById('pEditCategory').value=item.category||'fish';
+  document.getElementById('pEditDesc').value=item.desc||'';
+  document.getElementById('pEditFileInput').value='';
+  document.getElementById('pEditOverlay').classList.add('open');
+}
+document.getElementById('pEditFileInput').addEventListener('change',ev=>{
+  const f=ev.target.files[0]; if(!f)return;
+  pEditNewImg=f;
+  const r=new FileReader(); r.onload=e=>document.getElementById('pEditPreview').src=e.target.result; r.readAsDataURL(f);
+});
+function closePModal(e){ if(e&&e.target!==document.getElementById('pEditOverlay'))return; document.getElementById('pEditOverlay').classList.remove('open'); pEditId=null; }
+async function savePEdit(){
+  if(!pEditId)return;
+  const btn=document.getElementById('pSaveBtn'), item=products.find(p=>p.id===pEditId); if(!item)return;
+  btn.disabled=true; btn.textContent='Αποθήκευση...';
+  try{
+    if(pEditNewImg){ const url=await uploadToCloudinary(pEditNewImg); item.image_url=url; }
+    item.name=document.getElementById('pEditName').value.trim();
+    item.category=document.getElementById('pEditCategory').value;
+    item.desc=document.getElementById('pEditDesc').value.trim();
+    const icons={fish:'🐠',marine:'🌊',tanks:'🪸',plants:'🌿',accessories:'⚙️',chemistry:'🧪',medicine:'💊'};
+    item.icon=icons[item.category]||'🛍️';
+    await workerCall({target:'products',action:'replace',data:products});
+    showToast('✓ Αποθηκεύτηκε','success');
+    document.getElementById('pEditOverlay').classList.remove('open');
+    renderProducts(); updatePStats();
+  }catch(err){ showToast('Σφάλμα: '+err.message,'error'); }
+  finally{ btn.disabled=false; btn.textContent='💾 Αποθήκευση'; }
+}
+async function deletePItem(id){
+  const item=products.find(p=>p.id===id); if(!item)return;
+  if(!confirm(`Διαγραφή προϊόντος;\n"${item.name}"`))return;
+  try{ await workerCall({target:'products',action:'delete',id}); products=products.filter(p=>p.id!==id); renderProducts(); updatePStats(); showToast('🗑️ Διαγράφηκε','success'); }
+  catch(err){ showToast('Σφάλμα: '+err.message,'error'); }
+}
+
+// ─── INIT ───
+if(sessionStorage.getItem('wl_auth')==='1'){ reloadGallery(); reloadProducts(); }
+</script>
+</body>
+</html>
