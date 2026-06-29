@@ -1,49 +1,63 @@
-# Water Love — Website
+# Water Love - Website
 
-Ιστοσελίδα για το κατάστημα ενυδρείων **Water Love** (Λαμπρινή Μπιζίκη, Θεσσαλονίκη).
+Πολυσέλιδη ιστοσελίδα για το κατάστημα ενυδρείων Water Love (Λαμπρινή Μπιζίκη, Θεσσαλονίκη).
 
-## Αρχεία
+## Αρχεία site (ανέβασμα στο GitHub)
 
-| Αρχείο | Τι κάνει |
+| Αρχείο | Τι είναι |
 |--------|----------|
-| `index.html` | Το κύριο website (5 σελίδες: Αρχική, Σχετικά, Προϊόντα, FAQ, Επικοινωνία) |
-| `admin.html` | Πίνακας διαχείρισης — ανέβασμα/επεξεργασία/διαγραφή φωτογραφιών gallery |
-| `gallery-data.json` | Η "βάση δεδομένων" της gallery (ξεκινά άδεια `[]`) |
-| `worker.js` | Ο κώδικας του Cloudflare Worker (αναφορά/backup) |
+| `index.html` | Αρχική σελίδα (hero, σύντομο σχετικά, κατηγορίες, gallery) |
+| `about.html` | Σχετικά - η ιστορία της Λαμπρινής + gallery |
+| `products.html` | Προϊόντα (φορτώνονται live από GitHub) |
+| `faq.html` | Συχνές ερωτήσεις |
+| `contact.html` | Επικοινωνία, χάρτης, ώρες |
+| `admin.html` | Πίνακας διαχείρισης (Gallery + Προϊόντα) |
+| `styles.css` | Κοινό στυλ όλων των σελίδων |
+| `app.js` | Κοινός κώδικας όλων των σελίδων |
+| `gallery-data.json` | "Βάση" της gallery (ξεκινά `[]`) |
+| `products-data.json` | "Βάση" των προϊόντων (22 αρχικά προϊόντα) |
+| `worker.js` | Κώδικας Cloudflare Worker (αναφορά) |
 
-## Πώς δουλεύει η gallery
+## Δομή - ξεχωριστές σελίδες
+
+Κάθε σελίδα είναι ξεχωριστό αρχείο HTML, μοιράζονται το ίδιο `styles.css` και `app.js`.
+Το navigation menu συνδέει τις σελίδες με κανονικά links.
+
+## Πώς δουλεύει η διαχείριση
 
 ```
-Admin ανεβάζει φωτό → Cloudinary (αποθήκευση εικόνας)
-                    → Cloudflare Worker (κρατά το GitHub token κρυφό)
-                    → gallery-data.json στο GitHub
-                    → index.html διαβάζει live → εμφανίζεται σε όλους
+Admin (admin.html) ανεβάζει → Cloudinary (φωτογραφία)
+                            → Cloudflare Worker (κρατά token κρυφό)
+                            → gallery-data.json ή products-data.json στο GitHub
+                            → οι σελίδες διαβάζουν live → εμφανίζονται σε όλους
 ```
 
-Η Λαμπρινή μπορεί να ανεβάζει/αλλάζει φωτογραφίες **από οποιαδήποτε συσκευή**
-(κινητό, tablet, υπολογιστή) μέσω του `admin.html`.
+Η Λαμπρινή διαχειρίζεται **δύο** πράγματα από το admin:
+1. **Συλλογή Φωτογραφιών** (gallery) - οι φωτογραφίες στην αρχική & σχετικά
+2. **Προϊόντα** - τα προϊόντα στη σελίδα Προϊόντα (όνομα, κατηγορία, περιγραφή, φωτό)
+
+Λειτουργεί από **οποιαδήποτε συσκευή**.
 
 ## Ανέβασμα στο GitHub
 
-Ανέβασε **όλα** τα αρχεία (εκτός του README αν θες) στο repo:
-`waterlovethessaloniki/WaterLove-`
+Ανέβασε όλα τα αρχεία στο repo `waterlovethessaloniki/WaterLove-`.
+ΠΡΟΣΟΧΗ: το `gallery-data.json` υπάρχει ήδη - μην το αντικαταστήσεις αν έχει δεδομένα.
+Το `products-data.json` πρέπει να ανέβει (έχει τα 22 αρχικά προϊόντα).
 
-Drag & drop στο GitHub → Commit. Το site γίνεται live στο:
-`https://waterlovethessaloniki.github.io/WaterLove-/`
+Site: `https://waterlovethessaloniki.github.io/WaterLove-/`
+Admin: `https://waterlovethessaloniki.github.io/WaterLove-/admin.html`
 
-Ο πίνακας διαχείρισης:
-`https://waterlovethessaloniki.github.io/WaterLove-/admin.html`
+## Worker - σημαντικό
+
+Ο νέος `worker.js` υποστηρίζει **δύο** αρχεία (gallery + products).
+Πρέπει να αντιγράψεις τον νέο κώδικα στο Cloudflare Worker και να κάνεις Deploy ξανά.
 
 ## Στοιχεία υποδομής
 
-- **Cloudinary cloud:** `dwhsqj03w` · preset `waterlove_preset` (unsigned)
-- **Worker URL:** `https://waterlove-worker.waterlovethessaloniki.workers.dev`
-- **GitHub:** `waterlovethessaloniki/WaterLove-` (branch `main`)
+- Cloudinary: `dwhsqj03w` / preset `waterlove_preset`
+- Worker: `https://waterlove-worker.waterlovethessaloniki.workers.dev`
+- GitHub: `waterlovethessaloniki/WaterLove-` (branch main)
 
 ## Κωδικός Admin
 
-Προεπιλογή: `waterlove2024`
-Αλλάζει στη γραμμή `const ADMIN_PASS` μέσα στο `admin.html`.
-
-> ⚠️ Ο κωδικός admin είναι client-side — εμποδίζει απλούς χρήστες, αλλά δεν είναι
-> κρυπτογραφικά ασφαλής. Η πραγματική ασφάλεια (το GitHub token) είναι στο Worker.
+Προεπιλογή: `waterlove2024` (αλλάζει στη γραμμή `const ADMIN_PASS` στο admin.html)
