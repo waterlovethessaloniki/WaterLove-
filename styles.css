@@ -314,6 +314,7 @@ html,body{max-width:100%;overflow-x:hidden}
   .bottom-nav{
     display:flex;
     position:fixed;
+    top:auto;
     bottom:0;left:0;right:0;
     z-index:400;
     background:rgba(13,27,42,0.94);
