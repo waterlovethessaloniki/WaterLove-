@@ -30,26 +30,87 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:cen
 .page{display:block;min-height:100vh;padding-top:64px}
 
 
-/* ── HERO PAGE ── */
-.hero{position:relative;min-height:100vh;background:var(--navy);overflow:hidden;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:5rem 5% 3rem}
-.hero-slides{position:absolute;inset:0;z-index:0}
-.hero-slide{position:absolute;inset:0;background-size:cover;background-position:center;opacity:0;transition:opacity 1.4s ease}
-.hero-slide.active{opacity:1}
-.hero-overlay{position:absolute;inset:0;background:linear-gradient(180deg,rgba(13,27,42,.72) 0%,rgba(13,27,42,.55) 50%,rgba(13,27,42,.88) 100%);z-index:1}
-.hero-content{position:relative;z-index:2}
-.hero-eye{font-size:.75rem;letter-spacing:.22em;text-transform:uppercase;color:var(--aqua);font-weight:500;margin-bottom:1rem;opacity:.9}
-.hero-title{font-family:var(--serif);font-size:clamp(3.2rem,9vw,6.5rem);color:#fff;line-height:1.02;margin-bottom:.2rem}
-.hero-title em{color:var(--aqua);font-style:italic}
-.hero-sub{font-family:var(--serif);font-size:clamp(1rem,2.5vw,1.4rem);color:rgba(255,255,255,.5);font-style:italic;margin-bottom:1.6rem}
-.hero-desc{max-width:500px;margin:0 auto 2.2rem;color:rgba(255,255,255,.72);font-size:.97rem;line-height:1.8}
-.hero-btns{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap}
-.btn-p{background:var(--coral);color:#fff;padding:.85rem 1.8rem;border-radius:2rem;text-decoration:none;font-weight:500;font-size:.92rem;border:none;cursor:pointer;transition:background .2s,transform .15s;display:inline-flex;align-items:center;gap:.4rem}
-.btn-p:hover{background:var(--coral-dark);transform:translateY(-2px)}
-.btn-g{background:transparent;color:rgba(255,255,255,.85);padding:.85rem 1.8rem;border-radius:2rem;border:1px solid rgba(137,206,209,.35);text-decoration:none;font-weight:400;font-size:.92rem;cursor:pointer;transition:all .2s}
-.btn-g:hover{border-color:var(--aqua);color:var(--aqua);background:rgba(137,206,209,.07)}
-.hero-dots{position:absolute;bottom:2rem;left:50%;transform:translateX(-50%);z-index:2;display:flex;gap:.5rem}
-.hero-dot{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.3);border:none;cursor:pointer;padding:0;transition:background .3s,width .3s}
-.hero-dot.active{background:var(--aqua);width:20px;border-radius:3px}
+/* ── HERO PAGE (light aqua, decorated) ── */
+.hero{
+  /* hero-scoped light palette, does not affect the rest of the site */
+  --hd-deep:#0E4D5C;--hd-ocean:#1A7A8C;--hd-aqua:#5FC4CE;--hd-aqua-soft:#A8E0E6;
+  --hd-foam:#E4F5F6;--hd-sky:#C3EBEF;--hd-ink:#0B3A45;--hd-coral:#FF7E5F;--hd-coral-dark:#F25C3B;
+  position:relative;min-height:100svh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;
+  padding:5.5rem 1.5rem 4rem;overflow:hidden;
+  background:linear-gradient(180deg,var(--hd-foam) 0%,var(--hd-sky) 42%,var(--hd-aqua-soft) 100%)
+}
+
+/* cross-fading product/gallery photo backdrop */
+.hd-photos{position:absolute;inset:0;z-index:0;overflow:hidden}
+.hd-slide{position:absolute;inset:0;background-size:cover;background-position:center;opacity:0;transition:opacity 2.2s ease;transform:scale(1.05);filter:saturate(.9) brightness(1.04)}
+.hd-slide.active{opacity:.28;animation:hdKenburns 8s ease-out forwards}
+@keyframes hdKenburns{0%{transform:scale(1.05)}100%{transform:scale(1.14)}}
+.hd-photos::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(228,245,246,.6) 0%,rgba(195,235,239,.4) 50%,rgba(168,224,230,.6) 100%)}
+
+/* soft light from above */
+.hd-caustics{position:absolute;inset:-20% 0 auto 0;height:65%;pointer-events:none;opacity:.45;z-index:1;background:radial-gradient(60% 80% at 25% 0%,rgba(255,255,255,.85),transparent 60%),radial-gradient(50% 70% at 70% 0%,rgba(255,255,255,.65),transparent 55%);mix-blend-mode:screen;animation:hdShimmer 8s ease-in-out infinite alternate}
+@keyframes hdShimmer{0%{transform:translateX(-3%) scale(1.05);opacity:.35}100%{transform:translateX(3%) scale(1.1);opacity:.55}}
+
+/* rising bubbles */
+.hd-bubbles{position:absolute;inset:0;pointer-events:none;overflow:hidden;z-index:2}
+.hd-bubbles i{position:absolute;bottom:-30px;border-radius:50%;background:radial-gradient(circle at 30% 30%,rgba(255,255,255,.95),rgba(255,255,255,.2) 60%,transparent 72%);border:1px solid rgba(255,255,255,.55);animation:hdRise linear infinite}
+@keyframes hdRise{0%{transform:translateY(0) translateX(0);opacity:0}12%{opacity:.9}88%{opacity:.65}100%{transform:translateY(-112svh) translateX(14px);opacity:0}}
+
+/* static decorative underwater elements (do NOT move) */
+.hd-decor{position:absolute;inset:0;pointer-events:none;z-index:1;overflow:hidden}
+.hd-decor .d{position:absolute;opacity:.5}
+.hd-decor .d.faint{opacity:.28}
+.hd-decor .d.soft{opacity:.4}
+/* corals/plants anchored to bottom */
+.hd-decor .bl{bottom:0;left:-10px}
+.hd-decor .bl2{bottom:0;left:14%}
+.hd-decor .br{bottom:0;right:-6px}
+.hd-decor .br2{bottom:0;right:16%}
+.hd-decor .bml{bottom:0;left:24%}
+.hd-decor .bmr{bottom:0;right:27%}
+.hd-decor .coral3{bottom:0;left:38%}
+/* shells / starfish / snail low on the sand */
+.hd-decor .shell1{bottom:18px;left:12%}
+.hd-decor .shell2{bottom:10px;right:14%}
+.hd-decor .star1{bottom:26px;left:44%}
+.hd-decor .star2{bottom:14px;right:34%}
+.hd-decor .snail{bottom:12px;left:30%}
+.hd-decor .bubclu{bottom:30px;right:8%}
+/* faint static fish silhouettes high up */
+.hd-decor .fishsil1{top:16%;left:9%}
+.hd-decor .fishsil2{top:23%;right:11%}
+.hd-decor .fishsil3{top:38%;right:7%}
+
+/* seabed */
+.hd-seabed{position:absolute;left:0;right:0;bottom:0;height:110px;pointer-events:none;opacity:.85;z-index:2}
+.hd-seabed svg{position:absolute;bottom:0;width:100%;height:100%}
+
+/* content */
+.hd-inner{position:relative;z-index:5;max-width:600px;width:100%;display:flex;flex-direction:column;align-items:center;animation:hdEmerge 1.1s cubic-bezier(.2,.7,.2,1) both}
+@keyframes hdEmerge{0%{opacity:0;transform:translateY(26px)}100%{opacity:1;transform:translateY(0)}}
+.hd-title{font-family:var(--serif);font-size:clamp(3.6rem,16vw,6.5rem);line-height:.95;color:var(--hd-ink);letter-spacing:-.01em;margin-bottom:.6rem}
+.hd-title em{font-style:italic;color:var(--hd-ocean)}
+.hd-title .l1{display:block;animation:hdFadeUp 1s .2s both}
+.hd-title .l2{display:block;animation:hdFadeUp 1s .35s both}
+.hd-tagline{font-family:var(--serif);font-style:italic;font-size:clamp(1.1rem,4.5vw,1.55rem);color:var(--hd-deep);margin-bottom:1.5rem;animation:hdFadeUp 1s .5s both}
+.hd-subtitle{font-size:clamp(.95rem,3.5vw,1.05rem);color:var(--hd-deep);line-height:1.6;max-width:430px;margin-bottom:1.8rem;animation:hdFadeUp 1s .65s both}
+.hd-subtitle strong{color:var(--hd-ocean);font-weight:600}
+.hd-trust{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:.5rem 1rem;margin-bottom:2.2rem;animation:hdFadeUp 1s .8s both}
+.hd-trust .item{display:inline-flex;align-items:center;gap:.4rem;font-size:.82rem;color:var(--hd-deep);font-weight:500}
+.hd-trust .stars{color:#FFB23E;letter-spacing:1px}
+.hd-trust .sep{width:4px;height:4px;border-radius:50%;background:var(--hd-aqua);opacity:.7}
+.hd-cta{display:flex;flex-direction:column;gap:.7rem;width:100%;max-width:380px;animation:hdFadeUp 1s .95s both}
+.hd-btn{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;padding:1.05rem 1.8rem;border-radius:2rem;font-size:1rem;font-weight:600;text-decoration:none;cursor:pointer;border:none;transition:transform .15s,box-shadow .2s,background .2s}
+.hd-btn-primary{background:var(--hd-coral);color:#fff;box-shadow:0 8px 24px rgba(255,126,95,.42)}
+.hd-btn-primary:hover{background:var(--hd-coral-dark);transform:translateY(-2px);box-shadow:0 12px 30px rgba(255,126,95,.5)}
+.hd-btn-secondary{background:rgba(255,255,255,.8);color:var(--hd-ocean);border:1.5px solid rgba(95,196,206,.6);backdrop-filter:blur(6px)}
+.hd-btn-secondary:hover{background:#fff;transform:translateY(-2px)}
+.hd-scroll{position:absolute;bottom:1.2rem;left:50%;transform:translateX(-50%);z-index:5;display:flex;flex-direction:column;align-items:center;gap:.3rem;background:none;border:none;cursor:pointer;color:var(--hd-ocean);font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;opacity:.75;font-family:var(--sans);animation:hdFadeUp 1s 1.15s both,hdBob 2.4s ease-in-out 1.15s infinite}
+.hd-scroll .chev{width:16px;height:16px;border-right:2px solid var(--hd-ocean);border-bottom:2px solid var(--hd-ocean);transform:rotate(45deg)}
+@keyframes hdBob{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(5px)}}
+@keyframes hdFadeUp{0%{opacity:0;transform:translateY(16px)}100%{opacity:1;transform:translateY(0)}}
+@media(min-width:721px){.hd-cta{flex-direction:row;max-width:none;justify-content:center}.hd-btn{padding:1.05rem 2.2rem}}
+@media(prefers-reduced-motion:reduce){.hd-slide.active{animation:none}.hd-caustics,.hd-bubbles i,.hd-scroll{animation:none}}
 
 /* BUBBLES */
 .bubbles{position:absolute;inset:0;pointer-events:none;z-index:1}
@@ -322,22 +383,16 @@ html,body{max-width:100%;overflow-x:hidden}
   .page{padding-top:56px}
 
   /* ─── HERO ─── */
-  .hero{min-height:auto;padding:5rem 7% 3.5rem}
-  .hero-content{width:100%;max-width:100%}
-  .hero-eye{font-size:.6rem;letter-spacing:.12em;margin-bottom:1rem;line-height:1.6}
-  .hero-title{font-size:clamp(2.8rem,15vw,4rem);line-height:1.05;margin-bottom:.4rem}
-  .hero-sub{font-size:1.05rem;margin-bottom:1.4rem}
-  .hero-desc{font-size:.95rem;max-width:100%;margin-bottom:2rem}
-  .hero-btns{flex-direction:column;width:100%;gap:.7rem}
-  .hero-btns .btn-p,.hero-btns .btn-g{width:100%;justify-content:center;padding:1rem 1.5rem;font-size:.95rem}
-  .hero-dots{bottom:1rem}
+  .hero{min-height:100svh;padding:5rem 1.25rem 3.5rem}
+  .hd-inner{max-width:100%}
+  .hd-subtitle{max-width:100%}
+  .hd-cta{width:100%;max-width:340px}
 
   /* ─── SECTIONS ─── */
   section{padding:3.5rem 7%}
   .sec-title{font-size:clamp(1.7rem,7vw,2.2rem);line-height:1.25}
 
   /* Contrast fix: labels/titles on dark backgrounds */
-  .hero-eye{color:var(--aqua);opacity:1}
   #products .sec-label{color:var(--aqua)}
   #products .sec-title{color:#fff}
   #products .sec-title em{color:var(--aqua)}
@@ -422,7 +477,7 @@ html,body{max-width:100%;overflow-x:hidden}
 }
 
 @media(max-width:430px){
-  .hero-title{font-size:clamp(2.5rem,14vw,3.4rem)}
+  .hd-title{font-size:clamp(3.2rem,15vw,4.4rem)}
   .sec-title{font-size:clamp(1.55rem,6.5vw,2rem)}
   .home-stats-inline > div > div:first-child{font-size:1.9rem !important}
   .bottom-nav a{font-size:.56rem}

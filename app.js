@@ -60,40 +60,63 @@ function initBubbles() {
   }
 }
 
-// ─── HERO SLIDESHOW ───
-let heroIdx = 0, heroTimer;
+// ─── HERO (light, decorated) ───
+let heroTimer;
 function initHero() {
-  const container = document.getElementById('heroSlides');
-  const dotsContainer = document.getElementById('heroDots');
-  if(!container) return;
-  container.innerHTML = ''; dotsContainer.innerHTML = '';
-  // Use gallery images; fall back to product images that have URLs
-  let source = GALLERY.filter(g=>g.image_url);
-  if(source.length === 0) source = PRODUCTS.filter(p=>p.image_url);
-  const pick = source.slice(0, 6);
-  if(pick.length === 0){ container.style.background = 'var(--navy)'; return; }
-  pick.forEach((img,i) => {
-    const slide = document.createElement('div');
-    slide.className = 'hero-slide' + (i===0?' active':'');
-    slide.style.backgroundImage = `url(${img.image_url})`;
-    container.appendChild(slide);
-    const dot = document.createElement('button');
-    dot.className = 'hero-dot' + (i===0?' active':'');
-    dot.setAttribute('aria-label', `Εικόνα ${i+1}`);
-    dot.onclick = () => goHeroSlide(i);
-    dotsContainer.appendChild(dot);
-  });
-  heroIdx = 0; clearInterval(heroTimer);
-  heroTimer = setInterval(() => goHeroSlide((heroIdx+1) % pick.length), 5000);
-}
-function goHeroSlide(n) {
-  const slides = document.querySelectorAll('.hero-slide');
-  const dots = document.querySelectorAll('.hero-dot');
-  slides.forEach(s=>s.classList.remove('active'));
-  dots.forEach(d=>d.classList.remove('active'));
-  if(slides[n]) slides[n].classList.add('active');
-  if(dots[n]) dots[n].classList.add('active');
-  heroIdx = n;
+  const hero = document.querySelector('.hero');
+  if(!hero) return;
+
+  // Cross-fading photo backdrop: combine product + gallery image_urls.
+  // If none exist, the light aqua gradient stays as fallback (no broken images).
+  const photoLayer = document.getElementById('heroPhotos');
+  if(photoLayer){
+    photoLayer.innerHTML = '';
+    const seen = new Set();
+    const photos = [];
+    [...PRODUCTS, ...GALLERY].forEach(x => {
+      const url = x && x.image_url;
+      if(url && !seen.has(url)){ seen.add(url); photos.push(url); }
+    });
+    const pick = photos.slice(0, 8);
+    if(pick.length){
+      pick.forEach((url,i) => {
+        const slide = document.createElement('div');
+        slide.className = 'hd-slide' + (i===0?' active':'');
+        slide.style.backgroundImage = `url("${url}")`;
+        photoLayer.appendChild(slide);
+      });
+      if(pick.length > 1){
+        const slides = photoLayer.querySelectorAll('.hd-slide');
+        let pi = 0;
+        clearInterval(heroTimer);
+        heroTimer = setInterval(() => {
+          slides[pi].classList.remove('active');
+          pi = (pi + 1) % slides.length;
+          slides[pi].classList.add('active');
+        }, 5000);
+      }
+    }
+  }
+
+  // Rising bubbles
+  const bc = document.getElementById('heroBubbles');
+  if(bc && !bc.childElementCount){
+    for(let i=0;i<16;i++){
+      const b = document.createElement('i');
+      const s = 4 + Math.random()*13;
+      b.style.cssText = `width:${s}px;height:${s}px;left:${Math.random()*100}%;animation-duration:${7+Math.random()*9}s;animation-delay:${Math.random()*9}s`;
+      bc.appendChild(b);
+    }
+  }
+
+  // Scroll cue jumps to the next section
+  const cue = document.getElementById('heroScroll');
+  if(cue){
+    cue.onclick = () => {
+      const top = Math.max(hero.offsetHeight - 1, window.innerHeight * 0.9);
+      window.scrollTo({ top, behavior:'smooth' });
+    };
+  }
 }
 
 // ─── GALLERY RENDER ───
