@@ -42,9 +42,9 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:cen
 
 /* cross-fading product/gallery photo backdrop */
 .hd-photos{position:absolute;inset:0;z-index:0;overflow:hidden}
-.hd-slide{position:absolute;inset:0;background-size:cover;background-position:center;opacity:0;transition:opacity 2.2s ease;transform:scale(1.05);filter:saturate(.9) brightness(1.04)}
-.hd-slide.active{opacity:.28;animation:hdKenburns 8s ease-out forwards}
-@keyframes hdKenburns{0%{transform:scale(1.05)}100%{transform:scale(1.14)}}
+.hd-slide{position:absolute;inset:0;background-size:cover;background-position:center;opacity:0;transition:opacity 2.2s ease;transform:scale(1.08);filter:saturate(.9) brightness(1.04)}
+.hd-slide.active{opacity:.28;animation:hdKenburns 6s ease-out forwards}
+@keyframes hdKenburns{0%{transform:scale(1)}100%{transform:scale(1.08)}}
 .hd-photos::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(228,245,246,.6) 0%,rgba(195,235,239,.4) 50%,rgba(168,224,230,.6) 100%)}
 
 /* soft light from above */
@@ -83,7 +83,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:cen
 
 /* seabed */
 .hd-seabed{position:absolute;left:0;right:0;bottom:0;height:110px;pointer-events:none;opacity:.85;z-index:2}
-.hd-seabed svg{position:absolute;bottom:0;width:100%;height:100%}
+.hd-seabed svg{position:absolute;bottom:0;left:0;width:100%;height:100%}
 
 /* content */
 .hd-inner{position:relative;z-index:5;max-width:600px;width:100%;display:flex;flex-direction:column;align-items:center;animation:hdEmerge 1.1s cubic-bezier(.2,.7,.2,1) both}
