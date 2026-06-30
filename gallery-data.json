@@ -1,93 +1,178 @@
 [
   {
-    "id": "img_1782836047417_1ve4mi7",
-    "created_date": "2026-06-30T16:14:07.417Z",
+    "id": "prod_001",
     "category": "fish",
-    "caption": "",
-    "image_url": "https://res.cloudinary.com/dwhsqj03w/image/upload/v1782836046/f6cwzxpifaeeufmcg27r.png"
+    "icon": "🐠",
+    "name": "Tropical Ψάρια",
+    "desc": "Guppies, mollies, platies, tetras, barbs, cichlids, angelfish · ζωντανά και υγιή.",
+    "image_url": "https://res.cloudinary.com/dwhsqj03w/image/upload/v1782863363/rznbu31gljs3zytorqo5.png"
   },
   {
-    "id": "img_1782836055401_jtdc0ia",
-    "created_date": "2026-06-30T16:14:15.401Z",
+    "id": "prod_002",
     "category": "fish",
-    "caption": "",
-    "image_url": "https://res.cloudinary.com/dwhsqj03w/image/upload/v1782836054/drt4cnxhzaipvgxhsqzs.png"
+    "icon": "🐟",
+    "name": "Goldfish",
+    "desc": "Oranda, ryukin, ranchu, shubunkin · επιλεγμένα goldfish κάθε είδους.",
+    "image_url": ""
   },
   {
-    "id": "img_1782836068044_hi2b6hm",
-    "created_date": "2026-06-30T16:14:28.044Z",
+    "id": "prod_003",
     "category": "fish",
-    "caption": "",
-    "image_url": "https://res.cloudinary.com/dwhsqj03w/image/upload/v1782836067/plxjaaaclnzilvkkaytn.png"
+    "icon": "🔵",
+    "name": "Betta Splendens",
+    "desc": "Halfmoon, crowntail, plakat · εκπληκτικά betta σε πλούσιες ποικιλίες χρωμάτων.",
+    "image_url": ""
   },
   {
-    "id": "img_1782836069795_awwsuot",
-    "created_date": "2026-06-30T16:14:29.795Z",
+    "id": "prod_004",
     "category": "fish",
-    "caption": "",
-    "image_url": "https://res.cloudinary.com/dwhsqj03w/image/upload/v1782836069/bduit0pr8tno9p5d9uvw.png"
+    "icon": "🐡",
+    "name": "Χρυσόψαρα & Koi",
+    "desc": "Κλασικά χρυσόψαρα και ποικιλίες koi για εσωτερικά και εξωτερικά ενυδρεία.",
+    "image_url": ""
   },
   {
-    "id": "img_1782836080682_gunrbdx",
-    "created_date": "2026-06-30T16:14:40.682Z",
-    "category": "fish",
-    "caption": "",
-    "image_url": "https://res.cloudinary.com/dwhsqj03w/image/upload/v1782836080/yixhn24gpxgnsuo8fqab.png"
-  },
-  {
-    "id": "img_1782836103764_nz4ukgk",
-    "created_date": "2026-06-30T16:15:03.764Z",
-    "category": "tanks",
-    "caption": "",
-    "image_url": "https://res.cloudinary.com/dwhsqj03w/image/upload/v1782836103/mzezcngo1tfj7dle5x0v.png"
-  },
-  {
-    "id": "img_1782836112937_2w63dyb",
-    "created_date": "2026-06-30T16:15:12.937Z",
-    "category": "tanks",
-    "caption": "",
-    "image_url": "https://res.cloudinary.com/dwhsqj03w/image/upload/v1782836112/bm8ppvymnwyn2slsvsw1.png"
-  },
-  {
-    "id": "img_1782836126355_kgsmc7i",
-    "created_date": "2026-06-30T16:15:26.355Z",
+    "id": "prod_005",
     "category": "marine",
-    "caption": "",
-    "image_url": "https://res.cloudinary.com/dwhsqj03w/image/upload/v1782836125/buwwxc02sdbunwtg7lcg.png"
+    "icon": "🌊",
+    "name": "Θαλάσσια Ψάρια",
+    "desc": "Blue tang, yellow tang, clownfish, damselfish · ό,τι χρειάζεται το reef tank σας.",
+    "image_url": ""
   },
   {
-    "id": "img_1782836132224_u47q0bj",
-    "created_date": "2026-06-30T16:15:32.224Z",
+    "id": "prod_006",
     "category": "marine",
-    "caption": "",
-    "image_url": "https://res.cloudinary.com/dwhsqj03w/image/upload/v1782836131/ojtiifd8vi4byovx3tou.png"
+    "icon": "🪸",
+    "name": "Ζωντανές Πέτρες",
+    "desc": "Live rock με coralline algae · η βάση κάθε θαλάσσιου ενυδρείου.",
+    "image_url": ""
   },
   {
-    "id": "img_1782836140226_vz3txhz",
-    "created_date": "2026-06-30T16:15:40.226Z",
-    "category": "other",
-    "caption": "",
-    "image_url": "https://res.cloudinary.com/dwhsqj03w/image/upload/v1782836139/kgbpcm7eriyobqql8bnd.png"
+    "id": "prod_007",
+    "category": "marine",
+    "icon": "🐚",
+    "name": "Κοράλλια & Anemones",
+    "desc": "Επιλεγμένα κοράλλια και anemones για το θαλάσσιο σύστημά σας.",
+    "image_url": ""
   },
   {
-    "id": "img_1782836154794_uptc5yu",
-    "created_date": "2026-06-30T16:15:54.794Z",
-    "category": "plants",
-    "caption": "",
-    "image_url": "https://res.cloudinary.com/dwhsqj03w/image/upload/v1782836154/wdzaglhvw0eyjzanbixj.png"
-  },
-  {
-    "id": "img_1782836168350_mj90y3y",
-    "created_date": "2026-06-30T16:16:08.350Z",
+    "id": "prod_008",
     "category": "tanks",
-    "caption": "",
-    "image_url": "https://res.cloudinary.com/dwhsqj03w/image/upload/v1782836167/jdzhncynif4rifpznqks.png"
+    "icon": "🪸",
+    "name": "Ενυδρεία Corner",
+    "desc": "Corner aquaria σε ξύλινα έπιπλα · 100L έως 200L με πλήρη εξοπλισμό.",
+    "image_url": ""
   },
   {
-    "id": "img_1782836175882_ks4semn",
-    "created_date": "2026-06-30T16:16:15.882Z",
+    "id": "prod_009",
+    "category": "tanks",
+    "icon": "⬡",
+    "name": "Hexagonal Ενυδρεία",
+    "desc": "Εξαγωνικά ενυδρεία AQUAEL · ιδανικά για μικρούς χώρους, εντυπωσιακή παρουσία.",
+    "image_url": ""
+  },
+  {
+    "id": "prod_010",
+    "category": "tanks",
+    "icon": "🟦",
+    "name": "Classic Ενυδρεία",
+    "desc": "Ορθογώνιες δεξαμενές από 30L έως 500L για κάθε ανάγκη.",
+    "image_url": ""
+  },
+  {
+    "id": "prod_011",
     "category": "plants",
-    "caption": "",
-    "image_url": "https://res.cloudinary.com/dwhsqj03w/image/upload/v1782836175/tf5bdursparg82praqlr.png"
+    "icon": "🌿",
+    "name": "Ζωντανά Φυτά",
+    "desc": "Anubias, java fern, cryptocoryne, vallisneria, ludwigia, bucephalandra και πολλά άλλα.",
+    "image_url": ""
+  },
+  {
+    "id": "prod_012",
+    "category": "plants",
+    "icon": "🌱",
+    "name": "Tissue Culture Φυτά",
+    "desc": "Φυτά in-vitro · χωρίς παράσιτα, ιδανικά για νέα ενυδρεία.",
+    "image_url": ""
+  },
+  {
+    "id": "prod_013",
+    "category": "accessories",
+    "icon": "⚙️",
+    "name": "Φίλτρα & Αντλίες",
+    "desc": "External, internal, sump · φίλτρα για κάθε μέγεθος ενυδρείου.",
+    "image_url": ""
+  },
+  {
+    "id": "prod_014",
+    "category": "accessories",
+    "icon": "💡",
+    "name": "Φωτισμός LED",
+    "desc": "Φωτιστικά για planted tanks, FOWLR και reef · spectrum για κάθε εφαρμογή.",
+    "image_url": ""
+  },
+  {
+    "id": "prod_015",
+    "category": "accessories",
+    "icon": "🐌",
+    "name": "Nerite & Mystery Snails",
+    "desc": "Zebra nerite, horned nerite, mystery snails · καθαρίζουν φύκια, διακοσμούν.",
+    "image_url": ""
+  },
+  {
+    "id": "prod_016",
+    "category": "accessories",
+    "icon": "🌡️",
+    "name": "Αξεσουάρ & Εξοπλισμός",
+    "desc": "Θερμόμετρα, αερατέρ, timers, gravel cleaners, nets και ό,τι άλλο χρειαστείτε.",
+    "image_url": ""
+  },
+  {
+    "id": "prod_017",
+    "category": "chemistry",
+    "icon": "🧪",
+    "name": "Test Kits",
+    "desc": "pH, ammonia, nitrite, nitrate, KH, GH, phosphate · tests για τέλεια χημεία.",
+    "image_url": ""
+  },
+  {
+    "id": "prod_018",
+    "category": "chemistry",
+    "icon": "💧",
+    "name": "Water Conditioners",
+    "desc": "Dechlorinators, slime coat, bacteria starters · στρες ψαριών μηδέν.",
+    "image_url": ""
+  },
+  {
+    "id": "prod_019",
+    "category": "chemistry",
+    "icon": "🧂",
+    "name": "Αλάτι Θαλάσσιου",
+    "desc": "Reef salt mixes και marine salts για θαλάσσια ενυδρεία.",
+    "image_url": ""
+  },
+  {
+    "id": "prod_020",
+    "category": "chemistry",
+    "icon": "🌱",
+    "name": "Λιπάσματα Φυτών",
+    "desc": "Liquid & substrate fertilizers · για πλούσια ανάπτυξη φυτών.",
+    "image_url": ""
+  },
+  {
+    "id": "prod_021",
+    "category": "medicine",
+    "icon": "💊",
+    "name": "Αντιβακτηριδιακά",
+    "desc": "Θεραπείες για bacterial infections · fin rot, columnaris, ulcers.",
+    "image_url": ""
+  },
+  {
+    "id": "prod_022",
+    "category": "medicine",
+    "icon": "🩺",
+    "name": "Αντιπαρασιτικά",
+    "desc": "Θεραπείες για ich, velvet, flukes, worms · ασφαλείς και αποτελεσματικές.",
+    "image_url": ""
   }
 ]
