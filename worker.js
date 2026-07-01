@@ -1,7 +1,8 @@
 // ═══════════════════════════════════════════════════════
 // Water Love - Cloudflare Worker
 // Κρατάει το GitHub token κρυφό. Διαβάζει (action:'read') και γράφει (add/replace/
-// delete) στα αρχεία δεδομένων (products-data.json, gallery-data.json) ανάλογα με το
+// delete) στα αρχεία δεδομένων (products-data.json, gallery-data.json,
+// inquiries-data.json) ανάλογα με το
 // πεδίο target. Το read περνάει από το GitHub API, ώστε να είναι πάντα φρέσκο.
 //
 // SETUP:
@@ -22,6 +23,7 @@ const GITHUB_BRANCH = 'main';
 const ALLOWED_FILES = {
   gallery: 'gallery-data.json',
   products: 'products-data.json',
+  inquiries: 'inquiries-data.json',
 };
 
 const CORS_HEADERS = {

@@ -98,7 +98,29 @@ const I18N = {
     'ct.chFb':'Water Love · Στείλτε μήνυμα',
     'ct.chMapsAddr':'Λεων. Ιασωνίδου 15',
     'ct.chMapsCity':'Θεσσαλονίκη 546 35 · Google Maps',
-    'ct.mapInfo':'Λεων. Ιασωνίδου 15, Θεσσαλονίκη 546 35'
+    'ct.mapInfo':'Λεων. Ιασωνίδου 15, Θεσσαλονίκη 546 35',
+    // ── contact form ──
+    'cf.secLabel':'Φόρμα επικοινωνίας',
+    'cf.title':'Στείλτε μας μήνυμα',
+    'cf.sub':'Συμπληρώστε τα στοιχεία σας και θα επικοινωνήσουμε μαζί σας το συντομότερο.',
+    'cf.nameLabel':'Όνομα',
+    'cf.namePh':'Το όνομά σας',
+    'cf.phoneLabel':'Τηλέφωνο',
+    'cf.phonePh':'π.χ. 69XXXXXXXX',
+    'cf.interestLabel':'Τι σας ενδιαφέρει (προαιρετικό)',
+    'cf.interestOpt0':'- Επιλέξτε -',
+    'cf.interestFilter':'Φίλτρο',
+    'cf.interestInstall':'Εγκατάσταση φίλτρου',
+    'cf.interestNewTank':'Στήσιμο νέου ενυδρείου',
+    'cf.interestProduct':'Κάποιο προϊόν',
+    'cf.interestOther':'Άλλο',
+    'cf.msgLabel':'Μήνυμα',
+    'cf.msgPh':'Πείτε μας πώς μπορούμε να βοηθήσουμε...',
+    'cf.submit':'Αποστολή μηνύματος',
+    'cf.sending':'Αποστολή...',
+    'cf.success':'Λάβαμε το μήνυμά σας, θα επικοινωνήσουμε σύντομα!',
+    'cf.error':'Κάτι πήγε στραβά. Δοκιμάστε ξανά ή καλέστε μας στο 6906 461 622.',
+    'cf.errRequired':'Συμπληρώστε όνομα, τηλέφωνο και μήνυμα.'
   },
   en: {
     'nav.home':'Home','nav.about':'About','nav.products':'Products','nav.faq':'FAQ','nav.contact':'Contact',
@@ -171,7 +193,29 @@ const I18N = {
     'ct.chFb':'Water Love · Send a message',
     'ct.chMapsAddr':'15 Leon. Iasonidou St',
     'ct.chMapsCity':'Thessaloniki 546 35 · Google Maps',
-    'ct.mapInfo':'15 Leon. Iasonidou St, Thessaloniki 546 35'
+    'ct.mapInfo':'15 Leon. Iasonidou St, Thessaloniki 546 35',
+    // ── contact form ──
+    'cf.secLabel':'Contact form',
+    'cf.title':'Send us a message',
+    'cf.sub':'Fill in your details and we will get back to you as soon as possible.',
+    'cf.nameLabel':'Name',
+    'cf.namePh':'Your name',
+    'cf.phoneLabel':'Phone',
+    'cf.phonePh':'e.g. 69XXXXXXXX',
+    'cf.interestLabel':"What you're interested in (optional)",
+    'cf.interestOpt0':'- Select -',
+    'cf.interestFilter':'Filter',
+    'cf.interestInstall':'Filter installation',
+    'cf.interestNewTank':'Setting up a new aquarium',
+    'cf.interestProduct':'A product',
+    'cf.interestOther':'Other',
+    'cf.msgLabel':'Message',
+    'cf.msgPh':'Tell us how we can help...',
+    'cf.submit':'Send message',
+    'cf.sending':'Sending...',
+    'cf.success':'We received your message, we will contact you soon!',
+    'cf.error':'Something went wrong. Please try again or call us at 6906 461 622.',
+    'cf.errRequired':'Please fill in name, phone and message.'
   }
 };
 
@@ -195,6 +239,11 @@ function setLang(lang) {
   document.querySelectorAll('[data-i18n]').forEach(el => {
     const key = el.getAttribute('data-i18n');
     if(dict[key] != null) el.innerHTML = dict[key];
+  });
+  // Placeholder attributes (inputs/textareas) translate separately from innerHTML.
+  document.querySelectorAll('[data-i18n-ph]').forEach(el => {
+    const key = el.getAttribute('data-i18n-ph');
+    if(dict[key] != null) el.setAttribute('placeholder', dict[key]);
   });
   document.querySelectorAll('.ls-opt').forEach(b => {
     b.classList.toggle('active', b.getAttribute('data-setlang') === lang);
@@ -235,6 +284,56 @@ async function loadProductsData() {
     const d = await res.json();
     return Array.isArray(d) ? d : [];
   } catch(e){ return []; }
+}
+
+// ─── CONTACT FORM (lead capture) ───
+// Posts a new inquiry to the Worker (target:'inquiries', action:'add'). The
+// Worker reads inquiries-data.json fresh, appends the item and writes it back,
+// the same read-fresh-then-add flow products use. Stored fields stay stable
+// (interest value is always the Greek label) so the Greek-only admin reads clean.
+function initContactForm() {
+  const form = document.getElementById('contactForm');
+  if(!form) return;
+  const statusEl = document.getElementById('cfStatus');
+  const btn = document.getElementById('cfSubmit');
+  function setStatus(type, key){
+    if(!statusEl) return;
+    statusEl.textContent = t(key);
+    statusEl.className = 'cf-status show ' + type;
+  }
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const name = document.getElementById('cfName').value.trim();
+    const phone = document.getElementById('cfPhone').value.trim();
+    const interest = document.getElementById('cfInterest').value;
+    const message = document.getElementById('cfMessage').value.trim();
+    if(!name || !phone || !message){ setStatus('error', 'cf.errRequired'); return; }
+    btn.disabled = true;
+    const restore = t('cf.submit');
+    btn.textContent = t('cf.sending');
+    if(statusEl) statusEl.className = 'cf-status';
+    const item = {
+      id: 'inq_' + Date.now() + '_' + Math.random().toString(36).slice(2,7),
+      name, phone, interest, message,
+      timestamp: new Date().toISOString(),
+    };
+    try {
+      const res = await fetch(WORKER_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ target: 'inquiries', action: 'add', item }),
+      });
+      const data = await res.json().catch(() => ({}));
+      if(!res.ok || data.error) throw new Error(data.error || data.detail || 'Worker error');
+      form.reset();
+      setStatus('success', 'cf.success');
+    } catch(err) {
+      setStatus('error', 'cf.error');
+    } finally {
+      btn.disabled = false;
+      btn.textContent = restore;
+    }
+  });
 }
 
 // ─── NAV (mobile) ───
@@ -467,6 +566,7 @@ async function initPage(opts={}) {
   highlightToday();
   initFadeUp();
   if(opts.faq) renderFaq('all');
+  if(opts.contact) initContactForm();
   // Load remote data as needed
   const needProducts = opts.products || opts.hero;
   if(needProducts) PRODUCTS = await loadProductsData();

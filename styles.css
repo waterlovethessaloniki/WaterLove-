@@ -237,6 +237,29 @@ section{padding:5rem 5%}
 .map-info-bar strong{display:block;color:#fff;font-size:.88rem}
 .map-info-bar span{color:rgba(255,255,255,.5);font-size:.78rem}
 
+/* CONTACT FORM (lead capture) */
+.cf-section{max-width:720px;margin:0 auto;padding:0 5% 4rem}
+.cf-card{background:#fff;border:1px solid rgba(77,165,168,.18);border-radius:1.5rem;padding:2.4rem;box-shadow:0 8px 32px rgba(13,27,42,.07);background:linear-gradient(180deg,#F3FBFB 0%,#fff 55%)}
+.cf-title{font-family:var(--serif);font-size:clamp(1.4rem,3vw,1.9rem);color:#0B3A45;margin:.2rem 0 .5rem}
+.cf-sub{color:var(--text2);font-size:.9rem;margin-bottom:1.8rem;line-height:1.6}
+.cf-row{display:grid;grid-template-columns:1fr 1fr;gap:1.1rem}
+.cf-field{margin-bottom:1.1rem}
+.cf-label{display:block;font-size:.8rem;font-weight:600;color:var(--text2);margin-bottom:.4rem}
+.cf-input{width:100%;padding:.75rem 1rem;border:1px solid rgba(13,27,42,.15);border-radius:.75rem;font-size:.9rem;font-family:var(--sans);color:var(--text1);background:#fff;outline:none;transition:border-color .2s,box-shadow .2s}
+.cf-input:focus{border-color:var(--aqua-dark);box-shadow:0 0 0 3px rgba(137,206,209,.25)}
+.cf-select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%234DA5A8' d='M1 1l5 5 5-5'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 1rem center;padding-right:2.4rem;cursor:pointer}
+.cf-textarea{min-height:120px;resize:vertical;line-height:1.6}
+.cf-status{display:none;border-radius:.75rem;padding:.8rem 1rem;font-size:.86rem;margin-bottom:1.1rem;line-height:1.5}
+.cf-status.show{display:block}
+.cf-status.success{background:#E6F6EE;color:#1E7A50;border:1px solid rgba(30,122,80,.25)}
+.cf-status.error{background:#FDECEA;color:#C0392B;border:1px solid rgba(192,57,43,.25)}
+.cf-section .hd-btn{width:100%}
+@media(max-width:600px){
+  .cf-card{padding:1.6rem}
+  .cf-row{grid-template-columns:1fr;gap:0}
+  .cf-section{padding:0 5% 3rem}
+}
+
 /* AI CHAT */
 .chat-section{background:var(--sand);padding:4rem 5%}
 .chat-section .sec-title{margin-bottom:.5rem}

@@ -149,6 +149,20 @@ body{font-family:var(--sans);background:var(--cream);color:var(--text1);min-heig
 /* INFO */
 .info-box{background:var(--amber-bg);border:1px solid rgba(184,134,11,.25);border-radius:.75rem;padding:1rem 1.2rem;font-size:.83rem;color:var(--text2);line-height:1.6;margin-bottom:1.5rem;display:flex;gap:.6rem;align-items:flex-start}
 
+/* INQUIRIES */
+.inq-list{display:flex;flex-direction:column;gap:1rem}
+.inq-card{background:#fff;border:1px solid rgba(13,27,42,.08);border-radius:1rem;padding:1.1rem 1.3rem;transition:box-shadow .2s}
+.inq-card:hover{box-shadow:0 6px 24px rgba(13,27,42,.08)}
+.inq-top{display:flex;align-items:flex-start;justify-content:space-between;gap:1rem;flex-wrap:wrap;margin-bottom:.5rem}
+.inq-name{font-size:1rem;font-weight:600;color:var(--navy)}
+.inq-time{font-size:.75rem;color:var(--text3);white-space:nowrap}
+.inq-meta{display:flex;flex-wrap:wrap;gap:.5rem .9rem;margin-bottom:.7rem;font-size:.82rem}
+.inq-phone{color:var(--aqua-dark);font-weight:600;text-decoration:none}
+.inq-phone:hover{text-decoration:underline}
+.inq-interest{display:inline-block;background:var(--aqua-light);color:var(--aqua-dark);padding:.15rem .6rem;border-radius:2rem;font-size:.74rem;font-weight:500}
+.inq-msg{font-size:.88rem;color:var(--text2);line-height:1.6;white-space:pre-wrap;background:var(--cream);border-radius:.6rem;padding:.7rem .9rem;margin-bottom:.8rem}
+.inq-actions{display:flex;justify-content:flex-end}
+
 @media(max-width:600px){
   .admin-body{padding:1.2rem}
   .upload-row{grid-template-columns:1fr}
@@ -208,13 +222,17 @@ body{font-family:var(--sans);background:var(--cream);color:var(--text1);min-heig
   </nav>
 
   <div class="admin-body">
-    <div class="info-box">
-      <span style="font-size:1.1rem">☁️</span>
-      <span>Οι φωτογραφίες ανεβαίνουν στο <strong>Cloudinary</strong> και αποθηκεύονται στο <strong>GitHub</strong>. Οι αλλαγές εμφανίζονται αυτόματα στο website, από οποιαδήποτε συσκευή.</span>
+    <div class="main-tabs">
+      <button class="main-tab active" data-tab="products" onclick="switchTab('products')">🛍️ Προϊόντα</button>
+      <button class="main-tab" data-tab="inquiries" onclick="switchTab('inquiries')">✉️ Μηνύματα / Ενδιαφέρον</button>
     </div>
 
     <!-- ════════════ PRODUCTS ════════════ -->
     <div class="tab-content active" id="main-products">
+      <div class="info-box">
+        <span style="font-size:1.1rem">☁️</span>
+        <span>Οι φωτογραφίες ανεβαίνουν στο <strong>Cloudinary</strong> και αποθηκεύονται στο <strong>GitHub</strong>. Οι αλλαγές εμφανίζονται αυτόματα στο website, από οποιαδήποτε συσκευή.</span>
+      </div>
       <div class="stats-row">
         <div class="stat-box"><div class="num" id="pStatTotal">0</div><div class="lbl">Σύνολο προϊόντων</div></div>
         <div class="stat-box"><div class="num" id="pStatPhotos">0</div><div class="lbl">Με φωτογραφία</div></div>
@@ -278,6 +296,20 @@ body{font-family:var(--sans);background:var(--cream);color:var(--text1);min-heig
       <div class="spinner" id="pSpinner"><div class="spinner-circle"></div></div>
       <div class="empty-state" id="pEmpty" style="display:none"><div class="es-icon">🛍️</div><p>Δεν υπάρχουν προϊόντα ακόμα.</p></div>
       <div class="card-grid" id="pGrid"></div>
+    </div>
+
+    <!-- ════════════ INQUIRIES ════════════ -->
+    <div class="tab-content" id="main-inquiries">
+      <div class="stats-row">
+        <div class="stat-box"><div class="num" id="iStatTotal">0</div><div class="lbl">Σύνολο μηνυμάτων</div></div>
+      </div>
+      <div class="section-head">
+        <div><div class="section-title">Μηνύματα / Ενδιαφέρον</div><div class="section-desc">Αιτήματα επικοινωνίας από τη φόρμα, νεότερα πρώτα</div></div>
+        <button class="btn btn-outline btn-sm" onclick="reloadInquiries()">🔄 Ανανέωση</button>
+      </div>
+      <div class="spinner" id="iSpinner"><div class="spinner-circle"></div></div>
+      <div class="empty-state" id="iEmpty" style="display:none"><div class="es-icon">✉️</div><p>Δεν υπάρχουν μηνύματα ακόμα.</p></div>
+      <div class="inq-list" id="iList"></div>
     </div>
   </div>
 </div>
@@ -529,6 +561,80 @@ async function deletePItem(id){
   const item=products.find(p=>p.id===id); if(!item)return;
   if(!confirm(`Διαγραφή προϊόντος;\n"${item.name}"`))return;
   try{ await workerCall({target:'products',action:'delete',id}); await reloadProducts(); showToast('🗑️ Διαγράφηκε','success'); }
+  catch(err){ showToast('Σφάλμα: '+err.message,'error'); }
+}
+
+// ═══════════════ INQUIRIES ═══════════════
+const INQUIRIES_RAW = `https://raw.githubusercontent.com/${GH_OWNER}/${GH_REPO}/main/inquiries-data.json`;
+let inquiries = [];
+let inquiriesLoaded = false;
+
+// Tab switching. Loads inquiries lazily the first time that tab is opened.
+function switchTab(tab){
+  document.querySelectorAll('.main-tab').forEach(b=>b.classList.toggle('active', b.getAttribute('data-tab')===tab));
+  document.querySelectorAll('.tab-content').forEach(c=>c.classList.remove('active'));
+  document.getElementById('main-'+tab).classList.add('active');
+  if(tab==='inquiries' && !inquiriesLoaded) reloadInquiries();
+}
+
+async function loadInquiriesData(){
+  // Fresh Worker read (GitHub API server-side); fall back to raw CDN on error.
+  try{
+    const r=await fetch(WORKER_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({action:'read',target:'inquiries'})});
+    if(r.ok){ const d=await r.json(); if(d&&d.success&&Array.isArray(d.data)) return d.data; }
+  }catch(e){}
+  try{const r=await fetch(INQUIRIES_RAW+'?t='+Date.now());if(!r.ok)return[];const d=await r.json();return Array.isArray(d)?d:[];}catch(e){return[];}
+}
+
+async function reloadInquiries(){
+  inquiriesLoaded = true;
+  document.getElementById('iSpinner').classList.add('show');
+  document.getElementById('iList').innerHTML='';
+  document.getElementById('iEmpty').style.display='none';
+  inquiries = await loadInquiriesData();
+  document.getElementById('iSpinner').classList.remove('show');
+  renderInquiries();
+}
+
+function fmtTime(ts){
+  if(!ts) return '';
+  const d=new Date(ts); if(isNaN(d)) return esc(ts);
+  try{ return d.toLocaleString('el-GR',{day:'2-digit',month:'2-digit',year:'numeric',hour:'2-digit',minute:'2-digit'}); }
+  catch(e){ return d.toLocaleString(); }
+}
+
+function renderInquiries(){
+  const list=document.getElementById('iList'), empty=document.getElementById('iEmpty');
+  document.getElementById('iStatTotal').textContent=inquiries.length;
+  if(inquiries.length===0){ empty.style.display='block'; list.innerHTML=''; return; }
+  empty.style.display='none';
+  // Newest first: sort by timestamp descending (falls back to insertion order).
+  const sorted=[...inquiries].sort((a,b)=>String(b.timestamp||'').localeCompare(String(a.timestamp||'')));
+  list.innerHTML=sorted.map(item=>{
+    const phone=esc(item.phone||'');
+    const telHref=String(item.phone||'').replace(/[^0-9+]/g,'');
+    const interest=item.interest ? `<span class="inq-interest">${esc(item.interest)}</span>` : '';
+    return `<div class="inq-card">
+      <div class="inq-top">
+        <div class="inq-name">${esc(item.name||'-')}</div>
+        <div class="inq-time">${fmtTime(item.timestamp)}</div>
+      </div>
+      <div class="inq-meta">
+        <a class="inq-phone" href="tel:${esc(telHref)}">📞 ${phone}</a>
+        ${interest}
+      </div>
+      <div class="inq-msg">${esc(item.message||'')}</div>
+      <div class="inq-actions">
+        <button class="btn btn-danger btn-sm" onclick="deleteInquiry('${item.id}')">🗑️ Διαγραφή</button>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+async function deleteInquiry(id){
+  const item=inquiries.find(x=>x.id===id); if(!item)return;
+  if(!confirm(`Διαγραφή μηνύματος;\n"${item.name||''}"`))return;
+  try{ await workerCall({target:'inquiries',action:'delete',id}); await reloadInquiries(); showToast('🗑️ Διαγράφηκε','success'); }
   catch(err){ showToast('Σφάλμα: '+err.message,'error'); }
 }
 
