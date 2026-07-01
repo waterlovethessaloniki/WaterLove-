@@ -83,10 +83,6 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:cen
 .hd-decor .star2{bottom:14px;right:34%}
 .hd-decor .snail{bottom:12px;left:30%}
 .hd-decor .bubclu{bottom:30px;right:8%}
-/* faint static fish silhouettes high up */
-.hd-decor .fishsil1{top:16%;left:9%}
-.hd-decor .fishsil2{top:23%;right:11%}
-.hd-decor .fishsil3{top:38%;right:7%}
 
 /* seabed */
 .hd-seabed{position:absolute;left:0;right:0;bottom:0;height:110px;pointer-events:none;opacity:.85;z-index:2}
