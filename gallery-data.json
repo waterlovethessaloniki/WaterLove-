@@ -58,10 +58,10 @@
   {
     "id": "prod_009",
     "category": "tanks",
-    "icon": "⬡",
+    "icon": "🪸",
     "name": "Hexagonal Ενυδρεία",
     "desc": "Εξαγωνικά ενυδρεία AQUAEL · ιδανικά για μικρούς χώρους, εντυπωσιακή παρουσία.",
-    "image_url": ""
+    "image_url": "https://res.cloudinary.com/dwhsqj03w/image/upload/v1782902298/gzwtjjdjznzscqm9entr.jpg"
   },
   {
     "id": "prod_010",
