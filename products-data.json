@@ -61,15 +61,15 @@
     "icon": "🪸",
     "name": "Ενυδρεία Corner",
     "desc": "Corner aquaria σε ξύλινα έπιπλα · 100L έως 200L με πλήρη εξοπλισμό.",
-    "image_url": "https://res.cloudinary.com/dwhsqj03w/image/upload/v1782918718/dfkuv0utsepyyzielej5.jpg"
+    "image_url": ""
   },
   {
     "id": "prod_009",
     "category": "tanks",
-    "icon": "⬡",
+    "icon": "🪸",
     "name": "Hexagonal Ενυδρεία",
     "desc": "Εξαγωνικά ενυδρεία AQUAEL · ιδανικά για μικρούς χώρους, εντυπωσιακή παρουσία.",
-    "image_url": ""
+    "image_url": "https://res.cloudinary.com/dwhsqj03w/image/upload/v1782918730/nbjkgxzkgldfprc1wzrq.jpg"
   },
   {
     "id": "prod_010",
