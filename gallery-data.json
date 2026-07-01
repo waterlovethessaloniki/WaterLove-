@@ -182,5 +182,13 @@
     "name": "TESTT",
     "desc": "TEST",
     "image_url": "https://res.cloudinary.com/dwhsqj03w/image/upload/v1782903098/tr3bm2ngxjgestgvxfmu.jpg"
+  },
+  {
+    "id": "prod_1782903115489_439e2",
+    "category": "fish",
+    "icon": "🐠",
+    "name": "tost",
+    "desc": "tsts",
+    "image_url": "https://res.cloudinary.com/dwhsqj03w/image/upload/v1782903115/yyh6mzyenrh1brfgvput.jpg"
   }
 ]
