@@ -182,5 +182,13 @@
     "name": "testfix",
     "desc": "testfix",
     "image_url": "https://res.cloudinary.com/dwhsqj03w/image/upload/v1782907944/k3h4djrwgeyll03rpc1u.jpg"
+  },
+  {
+    "id": "prod_1782907964513_4wokd",
+    "category": "fish",
+    "icon": "🐠",
+    "name": "testfix",
+    "desc": "testfix",
+    "image_url": "https://res.cloudinary.com/dwhsqj03w/image/upload/v1782907964/cqq81pdkfjwkvubip8lg.jpg"
   }
 ]
