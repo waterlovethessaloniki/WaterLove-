@@ -101,8 +101,8 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:cen
 .hd-trust .sep{width:4px;height:4px;border-radius:50%;background:var(--hd-aqua);opacity:.7}
 .hd-cta{display:flex;flex-direction:column;gap:.7rem;width:100%;max-width:380px;animation:hdFadeUp 1s .95s both}
 .hd-btn{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;padding:1.05rem 1.8rem;border-radius:2rem;font-size:1rem;font-weight:600;text-decoration:none;cursor:pointer;border:none;transition:transform .15s,box-shadow .2s,background .2s}
-.hd-btn-primary{background:var(--hd-coral);color:#fff;box-shadow:0 8px 24px rgba(255,126,95,.42)}
-.hd-btn-primary:hover{background:var(--hd-coral-dark);transform:translateY(-2px);box-shadow:0 12px 30px rgba(255,126,95,.5)}
+.hd-btn-primary{background:var(--hd-coral,#FF7E5F);color:#fff;box-shadow:0 8px 24px rgba(255,126,95,.42)}
+.hd-btn-primary:hover{background:var(--hd-coral-dark,#F25C3B);transform:translateY(-2px);box-shadow:0 12px 30px rgba(255,126,95,.5)}
 .hd-btn-secondary{background:rgba(255,255,255,.8);color:var(--hd-ocean);border:1.5px solid rgba(95,196,206,.6);backdrop-filter:blur(6px)}
 .hd-btn-secondary:hover{background:#fff;transform:translateY(-2px)}
 .hd-scroll{position:absolute;bottom:1.2rem;left:50%;transform:translateX(-50%);z-index:5;display:flex;flex-direction:column;align-items:center;gap:.3rem;background:none;border:none;cursor:pointer;color:var(--hd-ocean);font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;opacity:.75;font-family:var(--sans);animation:hdFadeUp 1s 1.15s both,hdBob 2.4s ease-in-out 1.15s infinite}
