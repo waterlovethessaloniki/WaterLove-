@@ -112,14 +112,6 @@
     "image_url": ""
   },
   {
-    "id": "prod_021",
-    "category": "medicine",
-    "icon": "💊",
-    "name": "Αντιβακτηριδιακά",
-    "desc": "Θεραπείες για bacterial infections · fin rot, columnaris, ulcers.",
-    "image_url": ""
-  },
-  {
     "id": "prod_022",
     "category": "medicine",
     "icon": "🩺",
