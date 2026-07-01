@@ -8,83 +8,126 @@
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
-<link rel="stylesheet" href="styles.css?v=10"/>
+<link rel="stylesheet" href="styles.css?v=11"/>
 
 </head>
 <body>
 <nav id="navbar">
   <a class="nav-logo" href="index.html">Water <span>Love</span></a>
   <ul class="nav-links" role="list">
-    <li><a href="index.html">Αρχική</a></li>
-    <li><a href="about.html">Σχετικά</a></li>
-    <li><a href="products.html">Προϊόντα</a></li>
-    <li><a href="faq.html" class="active">Συχνές Ερωτήσεις</a></li>
-    <li><a href="contact.html" class="nav-cta">Επικοινωνία</a></li>
+    <li><a href="index.html" data-i18n="nav.home">Αρχική</a></li>
+    <li><a href="about.html" data-i18n="nav.about">Σχετικά</a></li>
+    <li><a href="products.html" data-i18n="nav.products">Προϊόντα</a></li>
+    <li><a href="faq.html" class="active" data-i18n="nav.faq">Συχνές Ερωτήσεις</a></li>
+    <li><a href="contact.html" class="nav-cta" data-i18n="nav.contact">Επικοινωνία</a></li>
   </ul>
+  <div class="lang-switch" id="langSwitch" role="group" aria-label="Γλώσσα / Language">
+    <button type="button" class="ls-opt active" data-setlang="el">GR</button>
+    <button type="button" class="ls-opt" data-setlang="en">EN</button>
+  </div>
   <button class="hamburger" id="menuBtn" aria-label="Μενού"><span></span><span></span><span></span></button>
 </nav>
 <div class="page" id="page-faq">
 
   <div class="faq-hero">
-    <h1>Συχνές <em>Ερωτήσεις</em></h1>
-    <p>Οι πιο συνηθισμένες απορίες για ψάρια, ενυδρεία και φυτά · με απαντήσεις από 20 χρόνια εμπειρίας</p>
+    <h1 data-i18n="fq.heroTitle">Συχνές <em>Ερωτήσεις</em></h1>
+    <p data-i18n="fq.heroSub">Οι πιο συνηθισμένες απορίες για ψάρια, ενυδρεία και φυτά · με απαντήσεις από 20 χρόνια εμπειρίας</p>
   </div>
   <div class="faq-cats">
-    <button class="faq-cat active" onclick="filterFaq('all',this)">Όλα</button>
-    <button class="faq-cat" onclick="filterFaq('water',this)">💧 Νερό & Χημεία</button>
-    <button class="faq-cat" onclick="filterFaq('fish',this)">🐠 Ψάρια</button>
-    <button class="faq-cat" onclick="filterFaq('plants',this)">🌿 Φυτά</button>
-    <button class="faq-cat" onclick="filterFaq('setup',this)">🪸 Εγκατάσταση</button>
-    <button class="faq-cat" onclick="filterFaq('health',this)">💊 Υγεία</button>
+    <button class="faq-cat active" onclick="filterFaq('all',this)" data-i18n="fq.catAll">Όλα</button>
+    <button class="faq-cat" onclick="filterFaq('water',this)" data-i18n="fq.catWater">💧 Νερό & Χημεία</button>
+    <button class="faq-cat" onclick="filterFaq('fish',this)" data-i18n="fq.catFish">🐠 Ψάρια</button>
+    <button class="faq-cat" onclick="filterFaq('plants',this)" data-i18n="fq.catPlants">🌿 Φυτά</button>
+    <button class="faq-cat" onclick="filterFaq('setup',this)" data-i18n="fq.catSetup">🪸 Εγκατάσταση</button>
+    <button class="faq-cat" onclick="filterFaq('health',this)" data-i18n="fq.catHealth">💊 Υγεία</button>
   </div>
   <div class="faq-list" id="faqList"></div>
   <div style="text-align:center;padding:0 5% 4rem">
-    <p style="color:var(--text2);font-size:.93rem;margin-bottom:1.2rem">Δεν βρήκατε την απάντηση που ψάχνετε;</p>
-    <button class="btn-p" onclick="location.href='contact.html'">Ρωτήστε τη Λαμπρινή →</button>
+    <p style="color:var(--text2);font-size:.93rem;margin-bottom:1.2rem" data-i18n="fq.notFound">Δεν βρήκατε την απάντηση που ψάχνετε;</p>
+    <button class="btn-p" onclick="location.href='contact.html'" data-i18n="fq.askBtn">Ρωτήστε τη Λαμπρινή →</button>
   </div>
 </div>
 <footer>
   <div class="f-logo">Water <em>Love</em></div>
-  <p class="f-tag">Ενυδρεία · Ψάρια · Ζωντανά Φυτά · Αξεσουάρ · Θεσσαλονίκη</p>
+  <p class="f-tag" data-i18n="footer.tag">Ενυδρεία · Ψάρια · Ζωντανά Φυτά · Αξεσουάρ · Θεσσαλονίκη</p>
   <div class="f-social">
     <a href="https://www.facebook.com/p/Water-Love-Μπιζίκη-Λαμπρινή-Ενυδρεία-100054607127508/" target="_blank" rel="noopener" aria-label="Facebook">f</a>
   </div>
   <div class="f-links">
-    <a href="index.html">Αρχική</a>
-    <a href="about.html">Σχετικά</a>
-    <a href="products.html">Προϊόντα</a>
-    <a href="faq.html">FAQ</a>
-    <a href="contact.html">Επικοινωνία</a>
+    <a href="index.html" data-i18n="footer.linkHome">Αρχική</a>
+    <a href="about.html" data-i18n="footer.linkAbout">Σχετικά</a>
+    <a href="products.html" data-i18n="footer.linkProducts">Προϊόντα</a>
+    <a href="faq.html" data-i18n="footer.linkFaq">FAQ</a>
+    <a href="contact.html" data-i18n="footer.linkContact">Επικοινωνία</a>
   </div>
-  <p class="f-copy">© 2026 Water Love · Λαμπρινή Μπιζίκη · Λεων. Ιασωνίδου 15, Θεσσαλονίκη · 6906 461 622</p>
+  <p class="f-copy" data-i18n="footer.copy">© 2026 Water Love · Λαμπρινή Μπιζίκη · Λεων. Ιασωνίδου 15, Θεσσαλονίκη · 6906 461 622</p>
 </footer>
 
-<script src="app.js?v=10"></script>
+<script src="app.js?v=11"></script>
 <script>const FAQS = [
-  {cat:'water',q:'Πόσο συχνά πρέπει να αλλάζω το νερό στο ενυδρείο;',a:'Γενικά συνιστάται αλλαγή 20-30% του νερού κάθε εβδομάδα. Σε πυκνοκατοικημένα ενυδρεία ίσως χρειαστεί πιο συχνά. Το σημαντικό είναι να μετράτε τακτικά αμμωνία, νιτρώδη και νιτρικά.',tip:'Χρησιμοποιείτε πάντα conditioner για να αφαιρέσετε το χλώριο από το νέο νερό.'},
-  {cat:'water',q:'Τι pH χρειάζονται τα περισσότερα τροπικά ψάρια;',a:'Τα περισσότερα τροπικά γλυκού νερού ευδοκιμούν σε pH 6.5-7.5. Cichlids Αφρικής προτιμούν 7.8-8.5, ενώ τα discus 6.0-7.0. Σημαντικό είναι να μην αλλάζει απότομα · σταθερότητα πάνω από ακρίβεια.',tip:'Μετράτε το pH κάθε εβδομάδα, πριν και μετά την αλλαγή νερού.'},
-  {cat:'water',q:'Τι είναι το cycling του ενυδρείου και γιατί είναι σημαντικό;',a:'Το cycling (ή nitrogen cycle) είναι η διαδικασία ανάπτυξης ωφέλιμων βακτηρίων που μετατρέπουν την τοξική αμμωνία σε νιτρώδη και μετά σε λιγότερο επικίνδυνα νιτρικά. Διαρκεί 4-8 εβδομάδες. Χωρίς cycling, τα ψάρια κινδυνεύουν.',tip:'Μπορείτε να επιταχύνετε το cycling με βακτηριακά supplements (π.χ. Seachem Prime + Stability).'},
-  {cat:'fish',q:'Ποια ψάρια είναι κατάλληλα για αρχάριους;',a:'Εξαιρετικές επιλογές για αρχάριους: guppies (ανθεκτικά, πολύχρωμα), platies, mollies, zebra danios, corydoras (καθαριστές πυθμένα), και βέβαια goldfish για ψυχρό νερό. Αποφύγετε αρχικά discus, arrowana και marine ψάρια.',tip:'Ξεκινήστε με 5-6 ψάρια για ένα 60L ενυδρείο και περιμένετε να σταθεροποιηθεί πριν προσθέσετε άλλα.'},
-  {cat:'fish',q:'Πόσα ψάρια χωράνε σε ένα ενυδρείο 60 λίτρων;',a:'Ο γενικός κανόνας είναι 1cm ψαριού ανά λίτρο νερού, αλλά αυτό είναι υπεραπλούστευση. Για 60L με tropical ψάρια, 10-15 μικρά ψάρια (3-4cm) είναι λογικό ξεκίνημα. Πάντα σε συνδυασμό με καλό φίλτρο.',tip:'Πυκνοκατοίκηση αυξάνει άμεσα τη νιτρική επιβάρυνση · μετράτε πιο συχνά.'},
-  {cat:'fish',q:'Γιατί ψάρι μου ανεβαίνει στην επιφάνεια και αναπνέει;',a:'Αυτό είναι σημάδι χαμηλού οξυγόνου ή αμμωνίας/νιτρωδών. Ελέγξτε αμέσως τη χημεία. Αυξήστε αερισμό, κάντε μερική αλλαγή νερού (25-30%) και ελέγξτε αν το φίλτρο λειτουργεί σωστά.',tip:'Μετράτε αμμωνία πρώτα · είναι ο πιο συνηθισμένος ένοχος.'},
-  {cat:'plants',q:'Τι φωτισμό χρειάζονται τα φυτά ενυδρείου;',a:'Τα περισσότερα φυτά χρειάζονται 8-10 ώρες φωτισμού ανά ημέρα. Για χαμηλές απαιτήσεις (anubias, java fern) αρκεί απλό LED. Για demanding φυτά (HC Cuba, glosso) χρειάζεστε high-par φωτιστικό. Χρησιμοποιείτε timer για σταθερό πρόγραμμα.',tip:'Υπερβολικό φως χωρίς CO2 προκαλεί φύκια · ισορροπία είναι το κλειδί.'},
-  {cat:'plants',q:'Χρειάζεται CO2 για φυτά ενυδρείου;',a:'Εξαρτάται. Anubias, java fern, vallisneria, cryptocoryne ευδοκιμούν χωρίς CO2. Για demanding φυτά (ludwigia, rotala, HC Cuba) το CO2 κάνει τεράστια διαφορά. Υπάρχουν επίσης liquid carbon ως εναλλακτική.',tip:'Αν αρχίσετε με easy plants χωρίς CO2, μπορείτε να αναβαθμίσετε αργότερα.'},
-  {cat:'plants',q:'Γιατί τα φυτά μου κιτρινίζουν;',a:'Κίτρινα φύλλα συνήθως σημαίνουν έλλειψη σιδήρου (iron deficiency) ή azote. Δοκιμάστε liquid fertilizer με σίδηρο. Μπορεί επίσης να είναι έλλειψη φωτός ή CO2. Ελέγξτε πρώτα το φωτισμό.',tip:'Χρησιμοποιείτε all-in-one fertilizer (π.χ. Seachem Flourish Comprehensive) για εύκολη λύση.'},
-  {cat:'setup',q:'Πώς να στήσω το πρώτο μου ενυδρείο;',a:'1. Επιλέξτε μέγεθος (τουλάχιστον 60L για αρχάριους). 2. Τοποθετήστε substrate. 3. Εγκαταστήστε φίλτρο, θερμαντήρα, φωτισμό. 4. Γεμίστε με conditioned νερό. 5. Κάντε cycling 4-6 εβδομάδες. 6. Μόλις η αμμωνία=0, νιτρώδη=0, προσθέστε ψάρια σταδιακά.',tip:'Μη βιαστείτε στο cycling · είναι η πιο σημαντική φάση!'},
-  {cat:'setup',q:'Τι substrate να επιλέξω για planted tank;',a:'Για φυτά: active substrate (ADA Amazonia, Fluval Stratum, Tropica Soil) είναι άριστα · χαμηλώνουν pH και θρέφουν ρίζες. Για απλά decorative aquaria: fine gravel ή sand. Για θαλάσσιο: aragonite sand.',tip:'Για planted tank με demanding φυτά, επενδύστε σε καλό substrate · η διαφορά είναι τεράστια.'},
-  {cat:'health',q:'Τι να κάνω αν ψάρι μου αρρωστήσει;',a:'Πρώτα: απομονώστε το άρρωστο ψάρι σε quarantine tank αν έχετε. Δεύτερο: ελέγξτε water quality · πολλές "αρρώστιες" είναι στην πραγματικότητα stress από κακή χημεία. Τρίτο: αναγνωρίστε τα συμπτώματα και επιλέξτε κατάλληλη θεραπεία.',tip:'Ελάτε στο κατάστημα με φωτογραφία ή βίντεο · η Λαμπρινή θα σας βοηθήσει να αναγνωρίσετε την πάθηση.'},
-  {cat:'health',q:'Τι είναι το ich (white spot) και πώς θεραπεύεται;',a:'Το ich (Ichthyophthirius multifiliis) εμφανίζεται ως λευκά σπυριά σαν αλάτι στο σώμα. Θεραπεία: αυξήστε θερμοκρασία στους 28-30°C (επιταχύνει κύκλο) και χρησιμοποιήστε anti-ich φάρμακο. Θεραπεύεται πλήρως αν αντιμετωπιστεί νωρίς.',tip:'Το ich δεν αγγίζει τα ψάρια στο στάδιο που κολυμπά ελεύθερο στο νερό · εκεί χτυπούν τα φάρμακα.'},
+  {cat:'water',
+    q:{el:'Πόσο συχνά πρέπει να αλλάζω το νερό στο ενυδρείο;',en:'How often should I change the water in my aquarium?'},
+    a:{el:'Γενικά συνιστάται αλλαγή 20-30% του νερού κάθε εβδομάδα. Σε πυκνοκατοικημένα ενυδρεία ίσως χρειαστεί πιο συχνά. Το σημαντικό είναι να μετράτε τακτικά αμμωνία, νιτρώδη και νιτρικά.',en:'As a rule, a 20-30% water change every week is recommended. Heavily stocked tanks may need it more often. What matters is testing regularly for ammonia, nitrite and nitrate.'},
+    tip:{el:'Χρησιμοποιείτε πάντα conditioner για να αφαιρέσετε το χλώριο από το νέο νερό.',en:'Always use a conditioner to remove chlorine from the fresh water.'}},
+  {cat:'water',
+    q:{el:'Τι pH χρειάζονται τα περισσότερα τροπικά ψάρια;',en:'What pH do most tropical fish need?'},
+    a:{el:'Τα περισσότερα τροπικά γλυκού νερού ευδοκιμούν σε pH 6.5-7.5. Cichlids Αφρικής προτιμούν 7.8-8.5, ενώ τα discus 6.0-7.0. Σημαντικό είναι να μην αλλάζει απότομα · σταθερότητα πάνω από ακρίβεια.',en:'Most freshwater tropicals thrive at a pH of 6.5-7.5. African cichlids prefer 7.8-8.5, while discus like 6.0-7.0. The key is to avoid sudden swings · stability matters more than an exact number.'},
+    tip:{el:'Μετράτε το pH κάθε εβδομάδα, πριν και μετά την αλλαγή νερού.',en:'Test your pH every week, both before and after a water change.'}},
+  {cat:'water',
+    q:{el:'Τι είναι το cycling του ενυδρείου και γιατί είναι σημαντικό;',en:'What is cycling an aquarium and why does it matter?'},
+    a:{el:'Το cycling (ή nitrogen cycle) είναι η διαδικασία ανάπτυξης ωφέλιμων βακτηρίων που μετατρέπουν την τοξική αμμωνία σε νιτρώδη και μετά σε λιγότερο επικίνδυνα νιτρικά. Διαρκεί 4-8 εβδομάδες. Χωρίς cycling, τα ψάρια κινδυνεύουν.',en:'Cycling (the nitrogen cycle) is the process of growing beneficial bacteria that turn toxic ammonia into nitrite and then into far less harmful nitrate. It takes 4-8 weeks. Without cycling, your fish are at serious risk.'},
+    tip:{el:'Μπορείτε να επιταχύνετε το cycling με βακτηριακά supplements (π.χ. Seachem Prime + Stability).',en:'You can speed up cycling with bacterial supplements (e.g. Seachem Prime + Stability).'}},
+  {cat:'fish',
+    q:{el:'Ποια ψάρια είναι κατάλληλα για αρχάριους;',en:'Which fish are suitable for beginners?'},
+    a:{el:'Εξαιρετικές επιλογές για αρχάριους: guppies (ανθεκτικά, πολύχρωμα), platies, mollies, zebra danios, corydoras (καθαριστές πυθμένα), και βέβαια goldfish για ψυχρό νερό. Αποφύγετε αρχικά discus, arrowana και marine ψάρια.',en:'Great choices for beginners: guppies (hardy and colourful), platies, mollies, zebra danios, corydoras (bottom cleaners) and, of course, goldfish for cold water. Steer clear of discus, arowana and marine fish at first.'},
+    tip:{el:'Ξεκινήστε με 5-6 ψάρια για ένα 60L ενυδρείο και περιμένετε να σταθεροποιηθεί πριν προσθέσετε άλλα.',en:'Start with 5-6 fish in a 60L tank and let it settle before adding any more.'}},
+  {cat:'fish',
+    q:{el:'Πόσα ψάρια χωράνε σε ένα ενυδρείο 60 λίτρων;',en:'How many fish fit in a 60-litre aquarium?'},
+    a:{el:'Ο γενικός κανόνας είναι 1cm ψαριού ανά λίτρο νερού, αλλά αυτό είναι υπεραπλούστευση. Για 60L με tropical ψάρια, 10-15 μικρά ψάρια (3-4cm) είναι λογικό ξεκίνημα. Πάντα σε συνδυασμό με καλό φίλτρο.',en:'The common rule is 1cm of fish per litre of water, but that is an oversimplification. For a 60L tank with tropical fish, 10-15 small fish (3-4cm) is a sensible start · always paired with a good filter.'},
+    tip:{el:'Πυκνοκατοίκηση αυξάνει άμεσα τη νιτρική επιβάρυνση · μετράτε πιο συχνά.',en:'Overstocking quickly raises the nitrate load · test more often.'}},
+  {cat:'fish',
+    q:{el:'Γιατί ψάρι μου ανεβαίνει στην επιφάνεια και αναπνέει;',en:'Why is my fish gasping at the surface?'},
+    a:{el:'Αυτό είναι σημάδι χαμηλού οξυγόνου ή αμμωνίας/νιτρωδών. Ελέγξτε αμέσως τη χημεία. Αυξήστε αερισμό, κάντε μερική αλλαγή νερού (25-30%) και ελέγξτε αν το φίλτρο λειτουργεί σωστά.',en:'This is a sign of low oxygen or high ammonia/nitrite. Check your water chemistry right away. Increase aeration, do a partial water change (25-30%) and make sure the filter is working properly.'},
+    tip:{el:'Μετράτε αμμωνία πρώτα · είναι ο πιο συνηθισμένος ένοχος.',en:'Test for ammonia first · it is the most common culprit.'}},
+  {cat:'plants',
+    q:{el:'Τι φωτισμό χρειάζονται τα φυτά ενυδρείου;',en:'What lighting do aquarium plants need?'},
+    a:{el:'Τα περισσότερα φυτά χρειάζονται 8-10 ώρες φωτισμού ανά ημέρα. Για χαμηλές απαιτήσεις (anubias, java fern) αρκεί απλό LED. Για demanding φυτά (HC Cuba, glosso) χρειάζεστε high-par φωτιστικό. Χρησιμοποιείτε timer για σταθερό πρόγραμμα.',en:'Most plants need 8-10 hours of light a day. For low-demand species (anubias, java fern) a simple LED is enough. For demanding plants (HC Cuba, glosso) you need a high-PAR light. Use a timer to keep the schedule consistent.'},
+    tip:{el:'Υπερβολικό φως χωρίς CO2 προκαλεί φύκια · ισορροπία είναι το κλειδί.',en:'Too much light without CO2 causes algae · balance is the key.'}},
+  {cat:'plants',
+    q:{el:'Χρειάζεται CO2 για φυτά ενυδρείου;',en:'Do aquarium plants need CO2?'},
+    a:{el:'Εξαρτάται. Anubias, java fern, vallisneria, cryptocoryne ευδοκιμούν χωρίς CO2. Για demanding φυτά (ludwigia, rotala, HC Cuba) το CO2 κάνει τεράστια διαφορά. Υπάρχουν επίσης liquid carbon ως εναλλακτική.',en:'It depends. Anubias, java fern, vallisneria and cryptocoryne thrive without CO2. For demanding plants (ludwigia, rotala, HC Cuba) CO2 makes a huge difference. Liquid carbon is also an option as an alternative.'},
+    tip:{el:'Αν αρχίσετε με easy plants χωρίς CO2, μπορείτε να αναβαθμίσετε αργότερα.',en:'If you start with easy plants and no CO2, you can always upgrade later.'}},
+  {cat:'plants',
+    q:{el:'Γιατί τα φυτά μου κιτρινίζουν;',en:'Why are my plants turning yellow?'},
+    a:{el:'Κίτρινα φύλλα συνήθως σημαίνουν έλλειψη σιδήρου (iron deficiency) ή azote. Δοκιμάστε liquid fertilizer με σίδηρο. Μπορεί επίσης να είναι έλλειψη φωτός ή CO2. Ελέγξτε πρώτα το φωτισμό.',en:'Yellow leaves usually mean an iron deficiency or a lack of nitrogen. Try a liquid fertiliser with iron. It can also be a shortage of light or CO2. Check your lighting first.'},
+    tip:{el:'Χρησιμοποιείτε all-in-one fertilizer (π.χ. Seachem Flourish Comprehensive) για εύκολη λύση.',en:'Use an all-in-one fertiliser (e.g. Seachem Flourish Comprehensive) for an easy fix.'}},
+  {cat:'setup',
+    q:{el:'Πώς να στήσω το πρώτο μου ενυδρείο;',en:'How do I set up my first aquarium?'},
+    a:{el:'1. Επιλέξτε μέγεθος (τουλάχιστον 60L για αρχάριους). 2. Τοποθετήστε substrate. 3. Εγκαταστήστε φίλτρο, θερμαντήρα, φωτισμό. 4. Γεμίστε με conditioned νερό. 5. Κάντε cycling 4-6 εβδομάδες. 6. Μόλις η αμμωνία=0, νιτρώδη=0, προσθέστε ψάρια σταδιακά.',en:'1. Choose a size (at least 60L for beginners). 2. Lay down the substrate. 3. Install the filter, heater and lighting. 4. Fill it with conditioned water. 5. Cycle it for 4-6 weeks. 6. Once ammonia = 0 and nitrite = 0, add fish gradually.'},
+    tip:{el:'Μη βιαστείτε στο cycling · είναι η πιο σημαντική φάση!',en:'Do not rush the cycling · it is the most important stage!'}},
+  {cat:'setup',
+    q:{el:'Τι substrate να επιλέξω για planted tank;',en:'Which substrate should I choose for a planted tank?'},
+    a:{el:'Για φυτά: active substrate (ADA Amazonia, Fluval Stratum, Tropica Soil) είναι άριστα · χαμηλώνουν pH και θρέφουν ρίζες. Για απλά decorative aquaria: fine gravel ή sand. Για θαλάσσιο: aragonite sand.',en:'For plants: an active substrate (ADA Amazonia, Fluval Stratum, Tropica Soil) is excellent · it lowers pH and feeds the roots. For simple decorative tanks: fine gravel or sand. For marine setups: aragonite sand.'},
+    tip:{el:'Για planted tank με demanding φυτά, επενδύστε σε καλό substrate · η διαφορά είναι τεράστια.',en:'For a planted tank with demanding plants, invest in a good substrate · the difference is huge.'}},
+  {cat:'health',
+    q:{el:'Τι να κάνω αν ψάρι μου αρρωστήσει;',en:'What should I do if my fish gets sick?'},
+    a:{el:'Πρώτα: απομονώστε το άρρωστο ψάρι σε quarantine tank αν έχετε. Δεύτερο: ελέγξτε water quality · πολλές "αρρώστιες" είναι στην πραγματικότητα stress από κακή χημεία. Τρίτο: αναγνωρίστε τα συμπτώματα και επιλέξτε κατάλληλη θεραπεία.',en:'First: isolate the sick fish in a quarantine tank if you have one. Second: check the water quality · many "illnesses" are actually stress from poor chemistry. Third: identify the symptoms and choose the right treatment.'},
+    tip:{el:'Ελάτε στο κατάστημα με φωτογραφία ή βίντεο · η Λαμπρινή θα σας βοηθήσει να αναγνωρίσετε την πάθηση.',en:'Come to the store with a photo or video · Lambrini will help you identify the condition.'}},
+  {cat:'health',
+    q:{el:'Τι είναι το ich (white spot) και πώς θεραπεύεται;',en:'What is ich (white spot) and how is it treated?'},
+    a:{el:'Το ich (Ichthyophthirius multifiliis) εμφανίζεται ως λευκά σπυριά σαν αλάτι στο σώμα. Θεραπεία: αυξήστε θερμοκρασία στους 28-30°C (επιταχύνει κύκλο) και χρησιμοποιήστε anti-ich φάρμακο. Θεραπεύεται πλήρως αν αντιμετωπιστεί νωρίς.',en:'Ich (Ichthyophthirius multifiliis) shows up as white, salt-like spots on the body. Treatment: raise the temperature to 28-30°C (this speeds up its cycle) and use an anti-ich medication. It clears up completely if caught early.'},
+    tip:{el:'Το ich δεν αγγίζει τα ψάρια στο στάδιο που κολυμπά ελεύθερο στο νερό · εκεί χτυπούν τα φάρμακα.',en:'Ich is only vulnerable while it is free-swimming in the water · that is the stage the medication targets.'}},
 ];
 </script>
 <script>
 initPage({faq:true});
 </script>
 <nav class="bottom-nav" aria-label="Mobile navigation">
-  <a href="index.html"><span class="bn-icon">🏠</span><span>Αρχική</span></a>
-  <a href="about.html"><span class="bn-icon">🐠</span><span>Σχετικά</span></a>
-  <a href="products.html"><span class="bn-icon">🛍️</span><span>Προϊόντα</span></a>
-  <a href="faq.html" class="active"><span class="bn-icon">💬</span><span>FAQ</span></a>
-  <a href="contact.html"><span class="bn-icon">📍</span><span>Επικοινωνία</span></a>
+  <a href="index.html"><span class="bn-icon">🏠</span><span data-i18n="bnav.home">Αρχική</span></a>
+  <a href="about.html"><span class="bn-icon">🐠</span><span data-i18n="bnav.about">Σχετικά</span></a>
+  <a href="products.html"><span class="bn-icon">🛍️</span><span data-i18n="bnav.products">Προϊόντα</span></a>
+  <a href="faq.html" class="active"><span class="bn-icon">💬</span><span data-i18n="bnav.faq">FAQ</span></a>
+  <a href="contact.html"><span class="bn-icon">📍</span><span data-i18n="bnav.contact">Επικοινωνία</span></a>
 </nav>
 </body>
 </html>

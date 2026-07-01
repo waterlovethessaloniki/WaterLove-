@@ -13,6 +13,8 @@ const CAT_LABELS = {fish:'Ψάρια',marine:'Θαλάσσιο',tanks:'Ενυδ�
 let GALLERY = [];
 let PRODUCTS = [];
 let lbIndex = 0;
+let PROD_CAT = 'all';
+let FAQ_CAT = 'all';
 
 // ═══════════════════════════════════════════════════════
 // I18N (GR / EN language toggle) — pilot on index.html
@@ -54,7 +56,50 @@ const I18N = {
     'footer.tag':'Ενυδρεία · Ψάρια · Ζωντανά Φυτά · Αξεσουάρ · Θεσσαλονίκη',
     'footer.linkHome':'Αρχική','footer.linkAbout':'Σχετικά','footer.linkProducts':'Προϊόντα','footer.linkFaq':'FAQ','footer.linkContact':'Επικοινωνία',
     'footer.copy':'© 2026 Water Love · Λαμπρινή Μπιζίκη · Λεων. Ιασωνίδου 15, Θεσσαλονίκη · 6906 461 622',
-    'bnav.home':'Αρχική','bnav.about':'Σχετικά','bnav.products':'Προϊόντα','bnav.faq':'FAQ','bnav.contact':'Επικοινωνία'
+    'bnav.home':'Αρχική','bnav.about':'Σχετικά','bnav.products':'Προϊόντα','bnav.faq':'FAQ','bnav.contact':'Επικοινωνία',
+    // ── about.html ──
+    'ab.heroTitle':'Η <em>Ιστορία μας</em>',
+    'ab.heroSub':'Γνωρίστε τη Λαμπρινή και ανακαλύψτε γιατί το Water Love είναι κάτι παραπάνω από κατάστημα',
+    'ab.portraitQuote':'"Η αγάπη για τα ψάρια ξεκινά από την πρώτη ματιά · κι έπειτα δεν σταματά ποτέ."',
+    'ab.portraitAuthor':'Λαμπρινή Μπιζίκη · Ιδιοκτήτρια',
+    'ab.badge':'<big>20</big>χρόνια εμπειρία',
+    'ab.secLabel':'Σχετικά με εμάς',
+    'ab.secTitle':'Λαμπρινή Μπιζίκη ·<br><em>Η ψυχή του Water Love</em>',
+    'ab.p1':'Το Water Love ξεκίνησε πριν από δύο δεκαετίες από μια γυναίκα με αδυναμία στα ενυδρεία και στον κόσμο που ζει μέσα τους. Η Λαμπρινή Μπιζίκη δεν άνοιξε απλώς ένα κατάστημα · δημιούργησε έναν χώρο όπου κάθε ερώτηση βρίσκει απάντηση, κάθε αμφιβολία λύση.',
+    'ab.p2':'Σε δύο δεκαετίες στο επάγγελμα, έχει βοηθήσει αρχάριους να φτιάξουν το πρώτο τους ενυδρείο και έμπειρους collectors να βρουν σπάνια είδη. Η εξυπηρέτησή της ξεχωρίζει γιατί συνδυάζει τεχνογνωσία με ειλικρίνεια · δίνει την απάντηση που χρειάζεσαι, όχι αυτή που θέλεις ν\' ακούσεις.',
+    'ab.p3':'Το κατάστημα μόλις ανακαινίστηκε · ο χώρος άλλαξε, αλλά η φιλοσοφία παραμένει ίδια: προσωπική εξυπηρέτηση, ειλικρινής συμβουλή, αγάπη για κάθε υδρόβιο πλάσμα.',
+    'ab.stat1':'<big>20+</big><small>Χρόνια στο επάγγελμα</small>',
+    'ab.stat2':'<big>⭐ 5/5</big><small>Αξιολογήσεις Google</small>',
+    'ab.stat3':'<big>630+</big><small>Facebook followers</small>',
+    'ab.stat4':'<big>📍 Κέντρο</big><small>Θεσσαλονίκη</small>',
+    'ab.reno':'Ανακαινισμένο κατάστημα · ελάτε να δείτε τον νέο μας χώρο!',
+    'ab.reviewCite':'Αξιολογήσεις πελατών στο Google Maps · Λεων. Ιασωνίδου 15, Θεσσαλονίκη',
+    'ab.contactBtn':'Επικοινωνήστε μαζί μας',
+    'ab.galTitle':'Εικόνες από το <em>κατάστημά μας</em>',
+    // ── products.html ──
+    'pr.heroTitle':'Τα <em>Προϊόντά μας</em>',
+    'pr.heroSub':'Από ψάρια και φυτά μέχρι εξοπλισμό και φάρμακα · ό,τι χρειάζεται το ενυδρείο σας',
+    'pr.catAll':'Όλα','pr.catFish':'🐠 Ψάρια','pr.catMarine':'🌊 Θαλάσσιο','pr.catTanks':'🪸 Ενυδρεία','pr.catPlants':'🌿 Φυτά','pr.catAcc':'⚙️ Αξεσουάρ','pr.catChem':'🧪 Χημεία','pr.catMed':'💊 Φαρμακευτικά',
+    'prod.askBtn':'Ρωτήστε για αυτό →',
+    'prod.empty':'Δεν υπάρχουν προϊόντα σε αυτή την κατηγορία',
+    'gal.empty':'Σύντομα νέες φωτογραφίες',
+    // ── faq.html ──
+    'fq.heroTitle':'Συχνές <em>Ερωτήσεις</em>',
+    'fq.heroSub':'Οι πιο συνηθισμένες απορίες για ψάρια, ενυδρεία και φυτά · με απαντήσεις από 20 χρόνια εμπειρίας',
+    'fq.catAll':'Όλα','fq.catWater':'💧 Νερό & Χημεία','fq.catFish':'🐠 Ψάρια','fq.catPlants':'🌿 Φυτά','fq.catSetup':'🪸 Εγκατάσταση','fq.catHealth':'💊 Υγεία',
+    'fq.notFound':'Δεν βρήκατε την απάντηση που ψάχνετε;',
+    'fq.askBtn':'Ρωτήστε τη Λαμπρινή →',
+    // ── contact.html ──
+    'ct.heroTitle':'Βρείτε μας · <em>Μιλήστε μας</em>',
+    'ct.heroSub':'Ζωντανά στο κατάστημα, στο τηλέφωνο ή online · είμαστε πάντα εδώ',
+    'ct.secLabel':'Κανάλια επικοινωνίας',
+    'ct.secTitle':'Ελάτε να <em>μιλήσουμε</em>',
+    'ct.intro':'Η καλύτερη συμβουλή για το ενυδρείο σας είναι μια συζήτηση μακριά. Ρωτήστε μας για οτιδήποτε · αρχάριοι ή έμπειροι, είμαστε εδώ.',
+    'ct.chPhone':'Καλέστε μας άμεσα',
+    'ct.chFb':'Water Love · Στείλτε μήνυμα',
+    'ct.chMapsAddr':'Λεων. Ιασωνίδου 15',
+    'ct.chMapsCity':'Θεσσαλονίκη 546 35 · Google Maps',
+    'ct.mapInfo':'Λεων. Ιασωνίδου 15, Θεσσαλονίκη 546 35'
   },
   en: {
     'nav.home':'Home','nav.about':'About','nav.products':'Products','nav.faq':'FAQ','nav.contact':'Contact',
@@ -89,7 +134,50 @@ const I18N = {
     'footer.tag':'Aquariums · Fish · Live Plants · Accessories · Thessaloniki',
     'footer.linkHome':'Home','footer.linkAbout':'About','footer.linkProducts':'Products','footer.linkFaq':'FAQ','footer.linkContact':'Contact',
     'footer.copy':'© 2026 Water Love · Lambrini Biziki · 15 Leon. Iasonidou St, Thessaloniki · 6906 461 622',
-    'bnav.home':'Home','bnav.about':'About','bnav.products':'Products','bnav.faq':'FAQ','bnav.contact':'Contact'
+    'bnav.home':'Home','bnav.about':'About','bnav.products':'Products','bnav.faq':'FAQ','bnav.contact':'Contact',
+    // ── about.html ──
+    'ab.heroTitle':'Our <em>Story</em>',
+    'ab.heroSub':'Meet Lambrini and discover why Water Love is so much more than a store',
+    'ab.portraitQuote':'"Love for fish begins at first sight · and after that it never stops."',
+    'ab.portraitAuthor':'Lambrini Biziki · Owner',
+    'ab.badge':'<big>20</big>years of experience',
+    'ab.secLabel':'About us',
+    'ab.secTitle':'Lambrini Biziki ·<br><em>The soul of Water Love</em>',
+    'ab.p1':'Water Love began two decades ago, started by a woman with a soft spot for aquariums and the world that lives inside them. Lambrini Biziki did not simply open a store · she created a place where every question finds an answer and every doubt a solution.',
+    'ab.p2':'Over two decades in the trade, she has helped beginners set up their very first aquarium and seasoned collectors track down rare species. Her service stands out because it pairs real expertise with honesty · she gives you the answer you need, not the one you want to hear.',
+    'ab.p3':'The store has just been renovated · the space has changed, but the philosophy stays the same: personal service, honest advice, and love for every aquatic creature.',
+    'ab.stat1':'<big>20+</big><small>Years in the trade</small>',
+    'ab.stat2':'<big>⭐ 5/5</big><small>Google reviews</small>',
+    'ab.stat3':'<big>630+</big><small>Facebook followers</small>',
+    'ab.stat4':'<big>📍 Central</big><small>Thessaloniki</small>',
+    'ab.reno':'Newly renovated store · come and see our new space!',
+    'ab.reviewCite':'Customer reviews on Google Maps · 15 Leon. Iasonidou St, Thessaloniki',
+    'ab.contactBtn':'Get in touch',
+    'ab.galTitle':'Pictures from <em>our store</em>',
+    // ── products.html ──
+    'pr.heroTitle':'Our <em>Products</em>',
+    'pr.heroSub':'From fish and plants to equipment and medicine · everything your aquarium needs',
+    'pr.catAll':'All','pr.catFish':'🐠 Fish','pr.catMarine':'🌊 Marine','pr.catTanks':'🪸 Aquariums','pr.catPlants':'🌿 Plants','pr.catAcc':'⚙️ Accessories','pr.catChem':'🧪 Chemistry','pr.catMed':'💊 Medications',
+    'prod.askBtn':'Ask about this →',
+    'prod.empty':'There are no products in this category yet',
+    'gal.empty':'New photos coming soon',
+    // ── faq.html ──
+    'fq.heroTitle':'Frequently Asked <em>Questions</em>',
+    'fq.heroSub':'The most common questions about fish, aquariums and plants · answered from 20 years of experience',
+    'fq.catAll':'All','fq.catWater':'💧 Water & Chemistry','fq.catFish':'🐠 Fish','fq.catPlants':'🌿 Plants','fq.catSetup':'🪸 Setup','fq.catHealth':'💊 Health',
+    'fq.notFound':'Didn\'t find the answer you were looking for?',
+    'fq.askBtn':'Ask Lambrini →',
+    // ── contact.html ──
+    'ct.heroTitle':'Find us · <em>Talk to us</em>',
+    'ct.heroSub':'In store, on the phone or online · we are always here',
+    'ct.secLabel':'Ways to reach us',
+    'ct.secTitle':'Let\'s <em>talk</em>',
+    'ct.intro':'The best advice for your aquarium is just one conversation away. Ask us anything · beginners or experts, we are here for you.',
+    'ct.chPhone':'Call us directly',
+    'ct.chFb':'Water Love · Send a message',
+    'ct.chMapsAddr':'15 Leon. Iasonidou St',
+    'ct.chMapsCity':'Thessaloniki 546 35 · Google Maps',
+    'ct.mapInfo':'15 Leon. Iasonidou St, Thessaloniki 546 35'
   }
 };
 
@@ -100,6 +188,10 @@ let CURRENT_LANG = 'el';
 // the in-memory CURRENT_LANG if cookies are disabled.
 function saveLangCookie(v){ try{ document.cookie = 'wl_lang=' + v + ';path=/;max-age=31536000;samesite=lax'; }catch(e){} }
 function readLangCookie(){ try{ const m = document.cookie.match(/(?:^|;\s*)wl_lang=(el|en)\b/); return m ? m[1] : null; }catch(e){ return null; } }
+
+// Translate a single key for strings built inside JS render functions
+// (product cards, gallery placeholders, etc.). Falls back to Greek, then the key.
+function t(key){ const d = I18N[CURRENT_LANG]; return (d && d[key] != null) ? d[key] : (I18N.el[key] != null ? I18N.el[key] : key); }
 
 function setLang(lang) {
   if(lang !== 'en') lang = 'el';
@@ -113,6 +205,9 @@ function setLang(lang) {
   document.querySelectorAll('.ls-opt').forEach(b => {
     b.classList.toggle('active', b.getAttribute('data-setlang') === lang);
   });
+  // Re-render JS-built lists so their translatable chrome follows the language.
+  if(document.getElementById('faqList') && typeof FAQS !== 'undefined') renderFaq(FAQ_CAT);
+  if(document.getElementById('prodGrid')) renderProducts(PROD_CAT);
   saveLangCookie(lang);
 }
 
@@ -237,7 +332,7 @@ function initHomeGallery() {
   if(!el) return;
   el.innerHTML = '';
   const imgs = galleryImages().slice(0,6);
-  if(imgs.length===0){ el.innerHTML = '<p style="color:var(--text3);grid-column:1/-1;text-align:center">Σύντομα νέες φωτογραφίες</p>'; return; }
+  if(imgs.length===0){ el.innerHTML = `<p style="color:var(--text3);grid-column:1/-1;text-align:center">${t('gal.empty')}</p>`; return; }
   imgs.forEach((img,idx) => {
     const item = document.createElement('div');
     item.className = 'gallery-item';
@@ -251,7 +346,7 @@ function initAboutGallery() {
   if(!el) return;
   el.innerHTML = '';
   const imgs = galleryImages();
-  if(imgs.length===0){ el.innerHTML = '<p style="color:var(--text3);grid-column:1/-1;text-align:center">Σύντομα νέες φωτογραφίες</p>'; return; }
+  if(imgs.length===0){ el.innerHTML = `<p style="color:var(--text3);grid-column:1/-1;text-align:center">${t('gal.empty')}</p>`; return; }
   imgs.forEach((img,idx) => {
     const item = document.createElement('div');
     item.className = 'gallery-item';
@@ -292,8 +387,9 @@ document.addEventListener('keydown', e => {
 function renderProducts(cat) {
   const grid = document.getElementById('prodGrid');
   if(!grid) return;
+  PROD_CAT = cat;
   const filtered = cat==='all' ? PRODUCTS : PRODUCTS.filter(p=>p.category===cat);
-  if(filtered.length===0){ grid.innerHTML='<p style="color:var(--text3);grid-column:1/-1;text-align:center;padding:2rem">Δεν υπάρχουν προϊόντα σε αυτή την κατηγορία</p>'; return; }
+  if(filtered.length===0){ grid.innerHTML=`<p style="color:var(--text3);grid-column:1/-1;text-align:center;padding:2rem">${t('prod.empty')}</p>`; return; }
   grid.innerHTML = filtered.map(p => {
     const hasImg = p.image_url && p.image_url.length>0;
     const imgStyle = hasImg ? `background-image:url(${p.image_url});background-color:#C5E8E9` : `background:linear-gradient(135deg,#C5E8E9,#b8dfe0)`;
@@ -306,7 +402,7 @@ function renderProducts(cat) {
       <div class="prod-body">
         <h3>${p.icon||''} ${p.name}</h3>
         <p>${p.desc||''}</p>
-        <a href="contact.html" class="ask-btn">Ρωτήστε για αυτό →</a>
+        <a href="contact.html" class="ask-btn">${t('prod.askBtn')}</a>
       </div>
     </div>`;
   }).join('');
@@ -314,6 +410,7 @@ function renderProducts(cat) {
 function filterProds(cat, btn) {
   document.querySelectorAll('.cat-btn').forEach(b=>b.classList.remove('active'));
   if(btn) btn.classList.add('active');
+  PROD_CAT = cat;
   renderProducts(cat);
 }
 
@@ -321,22 +418,29 @@ function filterProds(cat, btn) {
 function renderFaq(cat) {
   const list = document.getElementById('faqList');
   if(!list || typeof FAQS==='undefined') return;
+  FAQ_CAT = cat;
+  const L = CURRENT_LANG;
+  const pick = (v) => (v && typeof v === 'object') ? (v[L] != null ? v[L] : v.el) : v;
   const filtered = cat==='all' ? FAQS : FAQS.filter(f=>f.cat===cat);
-  list.innerHTML = filtered.map((f,i) => `
+  list.innerHTML = filtered.map((f,i) => {
+    const q = pick(f.q), a = pick(f.a), tip = pick(f.tip);
+    return `
     <div class="faq-item" id="faq-${i}">
       <button class="faq-q" onclick="toggleFaq('faq-${i}')">
-        <span>${f.q}</span><span class="arrow">▼</span>
+        <span>${q}</span><span class="arrow">▼</span>
       </button>
       <div class="faq-a">
-        <p>${f.a}</p>
-        ${f.tip?`<div class="fish-tip"><span>💡</span><span><strong>Tip:</strong> ${f.tip}</div>`:''}
+        <p>${a}</p>
+        ${tip?`<div class="fish-tip"><span>💡</span><span><strong>Tip:</strong> ${tip}</div>`:''}
       </div>
-    </div>`).join('');
+    </div>`;
+  }).join('');
 }
 function toggleFaq(id){ document.getElementById(id).classList.toggle('open'); }
 function filterFaq(cat, btn) {
   document.querySelectorAll('.faq-cat').forEach(b=>b.classList.remove('active'));
   if(btn) btn.classList.add('active');
+  FAQ_CAT = cat;
   renderFaq(cat);
 }
 
