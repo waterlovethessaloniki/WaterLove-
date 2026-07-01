@@ -45,7 +45,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:cen
 .hd-slide{position:absolute;inset:0;background-size:cover;background-position:center;opacity:0;transition:opacity 2.2s ease;transform:scale(1.08);filter:saturate(.9) brightness(1.04)}
 .hd-slide.active{opacity:.28;animation:hdKenburns 6s ease-out forwards}
 @keyframes hdKenburns{0%{transform:scale(1)}100%{transform:scale(1.08)}}
-.hd-photos::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(228,245,246,.6) 0%,rgba(195,235,239,.4) 50%,rgba(168,224,230,.6) 100%)}
+.hd-photos::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(228,245,246,.42) 0%,rgba(195,235,239,.28) 50%,rgba(168,224,230,.42) 100%)}
 
 /* soft light from above */
 .hd-caustics{position:absolute;inset:-20% 0 auto 0;height:65%;pointer-events:none;opacity:.45;z-index:1;background:radial-gradient(60% 80% at 25% 0%,rgba(255,255,255,.85),transparent 60%),radial-gradient(50% 70% at 70% 0%,rgba(255,255,255,.65),transparent 55%);mix-blend-mode:screen;animation:hdShimmer 8s ease-in-out infinite alternate}
