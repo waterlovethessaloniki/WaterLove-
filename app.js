@@ -14,6 +14,115 @@ let GALLERY = [];
 let PRODUCTS = [];
 let lbIndex = 0;
 
+// ═══════════════════════════════════════════════════════
+// I18N (GR / EN language toggle) — pilot on index.html
+// ═══════════════════════════════════════════════════════
+// Values may contain inline markup; they are set via innerHTML.
+// The 'el' dictionary must reproduce the original markup exactly so
+// switching EN -> GR restores the page to its default appearance.
+const I18N = {
+  el: {
+    'nav.home':'Αρχική','nav.about':'Σχετικά','nav.products':'Προϊόντα','nav.faq':'Συχνές Ερωτήσεις','nav.contact':'Επικοινωνία',
+    'hero.tagline':'Κάθε ενυδρείο έχει τη δική του ζωή',
+    'hero.subtitle':'Είκοσι χρόνια αγάπη για τον υδρόβιο κόσμο, στο κέντρο της Θεσσαλονίκης. Ελάτε να μιλήσουμε με την <strong>Λαμπρινή</strong> και να φτιάξουμε μαζί το ενυδρείο των ονείρων σας.',
+    'hero.trust2':'20+ χρόνια εμπειρία',
+    'hero.trust3':'Κέντρο πόλης',
+    'hero.ctaPrimary':'Επικοινωνήστε μαζί μας',
+    'hero.ctaSecondary':'Δείτε τα προϊόντα',
+    'hero.scroll':'Εξερευνήστε',
+    'about.label':'Ποιοι είμαστε',
+    'about.title':'Το Water Love ·<br><em>Εμπειρία που μιλάει</em>',
+    'about.body':'Το Water Love είναι ο χώρος της Λαμπρινής Μπιζίκη · μιας επαγγελματία που συνδυάζει βαθιά γνώση με ειλικρινή διάθεση να βοηθήσει. Κάθε ερώτηση λαμβάνει πραγματική απάντηση. Κάθε επίσκεψη, μια ουσιαστική συμβουλή.',
+    'about.stat1':'Χρόνια εμπειρίας',
+    'about.btn':'Η ιστορία μας →',
+    'about.quote':'"Κάθε ψάρι, κάθε φυτό, κάθε ενυδρείο έχει την ιστορία του. Είμαι εδώ για να σας βοηθήσω να τη γράψετε."',
+    'about.quoteAuthor':'· Λαμπρινή Μπιζίκη, Ιδιοκτήτρια',
+    'about.badge':'✨ Ανακαινισμένο κατάστημα 2024',
+    'prod.label':'Τι θα βρείτε',
+    'prod.title':'Ό,τι χρειάζεται <em>το ενυδρείο σας</em>',
+    'prod.cat1Name':'Ψάρια','prod.cat1Desc':'Tropical, marine, goldfish',
+    'prod.cat2Name':'Ενυδρεία','prod.cat2Desc':'Nano έως μεγάλα',
+    'prod.cat3Name':'Ζωντανά Φυτά','prod.cat3Desc':'Επιλεγμένες ποικιλίες',
+    'prod.cat4Name':'Χημεία Νερού','prod.cat4Desc':'Tests, conditioners',
+    'prod.cat5Name':'Αξεσουάρ','prod.cat5Desc':'Φίλτρα, φωτισμός',
+    'prod.cat6Name':'Φαρμακευτικά','prod.cat6Desc':'Θεραπείες & φάρμακα',
+    'prod.btn':'Δείτε όλα τα προϊόντα →',
+    'gal.label':'Φωτογραφίες',
+    'gal.title':'Από <em>το κατάστημά μας</em>',
+    'gal.btn':'Δείτε περισσότερα →',
+    'hours.mon':'Δευτέρα','hours.tue':'Τρίτη','hours.wed':'Τετάρτη','hours.thu':'Πέμπτη','hours.fri':'Παρασκευή','hours.sat':'Σάββατο','hours.sun':'Κυριακή','hours.closed':'Κλειστά',
+    'footer.tag':'Ενυδρεία · Ψάρια · Ζωντανά Φυτά · Αξεσουάρ · Θεσσαλονίκη',
+    'footer.linkHome':'Αρχική','footer.linkAbout':'Σχετικά','footer.linkProducts':'Προϊόντα','footer.linkFaq':'FAQ','footer.linkContact':'Επικοινωνία',
+    'footer.copy':'© 2026 Water Love · Λαμπρινή Μπιζίκη · Λεων. Ιασωνίδου 15, Θεσσαλονίκη · 6906 461 622',
+    'bnav.home':'Αρχική','bnav.about':'Σχετικά','bnav.products':'Προϊόντα','bnav.faq':'FAQ','bnav.contact':'Επικοινωνία'
+  },
+  en: {
+    'nav.home':'Home','nav.about':'About','nav.products':'Products','nav.faq':'FAQ','nav.contact':'Contact',
+    'hero.tagline':'Every aquarium has a life of its own',
+    'hero.subtitle':'Twenty years of love for the underwater world, in the heart of Thessaloniki. Come talk with <strong>Lambrini</strong> and let us build the aquarium of your dreams together.',
+    'hero.trust2':'20+ years of experience',
+    'hero.trust3':'City centre',
+    'hero.ctaPrimary':'Get in touch',
+    'hero.ctaSecondary':'Browse our products',
+    'hero.scroll':'Explore',
+    'about.label':'Who we are',
+    'about.title':'Water Love ·<br><em>Experience that speaks</em>',
+    'about.body':'Water Love is the space of Lambrini Biziki · a professional who blends deep knowledge with a genuine wish to help. Every question gets a real answer. Every visit, a piece of honest advice.',
+    'about.stat1':'Years of experience',
+    'about.btn':'Our story →',
+    'about.quote':'"Every fish, every plant, every aquarium has its own story. I am here to help you write it."',
+    'about.quoteAuthor':'· Lambrini Biziki, Owner',
+    'about.badge':'✨ Renovated store, 2024',
+    'prod.label':"What you'll find",
+    'prod.title':'Everything <em>your aquarium</em> needs',
+    'prod.cat1Name':'Fish','prod.cat1Desc':'Tropical, marine, goldfish',
+    'prod.cat2Name':'Aquariums','prod.cat2Desc':'Nano to large',
+    'prod.cat3Name':'Live Plants','prod.cat3Desc':'Selected varieties',
+    'prod.cat4Name':'Water Chemistry','prod.cat4Desc':'Tests, conditioners',
+    'prod.cat5Name':'Accessories','prod.cat5Desc':'Filters, lighting',
+    'prod.cat6Name':'Medications','prod.cat6Desc':'Treatments & medicine',
+    'prod.btn':'See all products →',
+    'gal.label':'Photos',
+    'gal.title':'From <em>our store</em>',
+    'gal.btn':'See more →',
+    'hours.mon':'Monday','hours.tue':'Tuesday','hours.wed':'Wednesday','hours.thu':'Thursday','hours.fri':'Friday','hours.sat':'Saturday','hours.sun':'Sunday','hours.closed':'Closed',
+    'footer.tag':'Aquariums · Fish · Live Plants · Accessories · Thessaloniki',
+    'footer.linkHome':'Home','footer.linkAbout':'About','footer.linkProducts':'Products','footer.linkFaq':'FAQ','footer.linkContact':'Contact',
+    'footer.copy':'© 2026 Water Love · Lambrini Biziki · 15 Leon. Iasonidou St, Thessaloniki · 6906 461 622',
+    'bnav.home':'Home','bnav.about':'About','bnav.products':'Products','bnav.faq':'FAQ','bnav.contact':'Contact'
+  }
+};
+
+let CURRENT_LANG = 'el';
+
+// Persistence: a first-party cookie (wl_lang). No Storage API needed, and it
+// carries the choice across pages for the whole site. Falls back silently to
+// the in-memory CURRENT_LANG if cookies are disabled.
+function saveLangCookie(v){ try{ document.cookie = 'wl_lang=' + v + ';path=/;max-age=31536000;samesite=lax'; }catch(e){} }
+function readLangCookie(){ try{ const m = document.cookie.match(/(?:^|;\s*)wl_lang=(el|en)\b/); return m ? m[1] : null; }catch(e){ return null; } }
+
+function setLang(lang) {
+  if(lang !== 'en') lang = 'el';
+  CURRENT_LANG = lang;
+  document.documentElement.lang = (lang === 'en') ? 'en' : 'el';
+  const dict = I18N[lang] || {};
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    if(dict[key] != null) el.innerHTML = dict[key];
+  });
+  document.querySelectorAll('.ls-opt').forEach(b => {
+    b.classList.toggle('active', b.getAttribute('data-setlang') === lang);
+  });
+  saveLangCookie(lang);
+}
+
+function initLang() {
+  document.querySelectorAll('.ls-opt').forEach(b => {
+    b.addEventListener('click', () => setLang(b.getAttribute('data-setlang')));
+  });
+  setLang(readLangCookie() || 'el');
+}
+
 // ─── DATA LOADERS ───
 async function loadGalleryData() {
   try {
@@ -278,6 +387,7 @@ function initFadeUp() {
 // ─── PAGE INIT (καλείται από κάθε σελίδα) ───
 async function initPage(opts={}) {
   initNav();
+  initLang();
   initBubbles();
   highlightToday();
   initFadeUp();
