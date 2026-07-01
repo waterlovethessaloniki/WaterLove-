@@ -222,5 +222,13 @@
     "name": "testing",
     "desc": "testing",
     "image_url": ""
+  },
+  {
+    "id": "prod_1782908113319_f9gi5",
+    "category": "testing",
+    "icon": "🛍️",
+    "name": "testing",
+    "desc": "testing",
+    "image_url": "https://res.cloudinary.com/dwhsqj03w/image/upload/v1782908112/ukfojlobpttahd7cscgc.jpg"
   }
 ]
