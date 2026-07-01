@@ -26,10 +26,10 @@
   {
     "id": "prod_004",
     "category": "fish",
-    "icon": "🐡",
+    "icon": "🐠",
     "name": "Χρυσόψαρα & Koi",
     "desc": "Κλασικά χρυσόψαρα και ποικιλίες koi για εσωτερικά και εξωτερικά ενυδρεία.",
-    "image_url": ""
+    "image_url": "https://res.cloudinary.com/dwhsqj03w/image/upload/v1782902982/zcggtehwlifvaknptm3w.jpg"
   },
   {
     "id": "prod_005",
