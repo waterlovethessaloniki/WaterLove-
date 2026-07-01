@@ -5,23 +5,31 @@
     "icon": "🐠",
     "name": "Tropical Ψάρια",
     "desc": "Guppies, mollies, platies, tetras, barbs, cichlids, angelfish · ζωντανά και υγιή.",
-    "image_url": "https://res.cloudinary.com/dwhsqj03w/image/upload/v1782901741/ahqrx5mt7lsizvwwmlyi.jpg"
+    "image_url": "https://res.cloudinary.com/dwhsqj03w/image/upload/v1782902886/csx060f6m9qxf4kudmon.jpg"
   },
   {
     "id": "prod_002",
     "category": "fish",
-    "icon": "🐠",
+    "icon": "🐟",
     "name": "Goldfish",
     "desc": "Oranda, ryukin, ranchu, shubunkin · επιλεγμένα goldfish κάθε είδους.",
-    "image_url": "https://res.cloudinary.com/dwhsqj03w/image/upload/v1782902240/irarynv9uqiydof0dsfr.jpg"
+    "image_url": ""
   },
   {
     "id": "prod_003",
     "category": "fish",
-    "icon": "🐠",
+    "icon": "🔵",
     "name": "Betta Splendens",
     "desc": "Halfmoon, crowntail, plakat · εκπληκτικά betta σε πλούσιες ποικιλίες χρωμάτων.",
-    "image_url": "https://res.cloudinary.com/dwhsqj03w/image/upload/v1782902215/b92l3e5f5pjdeivbxtmh.jpg"
+    "image_url": ""
+  },
+  {
+    "id": "prod_004",
+    "category": "fish",
+    "icon": "🐡",
+    "name": "Χρυσόψαρα & Koi",
+    "desc": "Κλασικά χρυσόψαρα και ποικιλίες koi για εσωτερικά και εξωτερικά ενυδρεία.",
+    "image_url": ""
   },
   {
     "id": "prod_005",
@@ -29,23 +37,23 @@
     "icon": "🌊",
     "name": "Θαλάσσια Ψάρια",
     "desc": "Blue tang, yellow tang, clownfish, damselfish · ό,τι χρειάζεται το reef tank σας.",
-    "image_url": "https://res.cloudinary.com/dwhsqj03w/image/upload/v1782901832/swv0kfzvriy75m4fps2a.jpg"
+    "image_url": ""
   },
   {
     "id": "prod_006",
     "category": "marine",
-    "icon": "🌊",
+    "icon": "🪸",
     "name": "Ζωντανές Πέτρες",
     "desc": "Live rock με coralline algae · η βάση κάθε θαλάσσιου ενυδρείου.",
-    "image_url": "https://res.cloudinary.com/dwhsqj03w/image/upload/v1782901806/dm3gm8tunh2n4bvmcpez.jpg"
+    "image_url": ""
   },
   {
     "id": "prod_007",
     "category": "marine",
-    "icon": "🌊",
+    "icon": "🐚",
     "name": "Κοράλλια & Anemones",
     "desc": "Επιλεγμένα κοράλλια και anemones για το θαλάσσιο σύστημά σας.",
-    "image_url": "https://res.cloudinary.com/dwhsqj03w/image/upload/v1782901855/xblounvk9ljrozlvyqab.jpg"
+    "image_url": ""
   },
   {
     "id": "prod_008",
@@ -53,23 +61,23 @@
     "icon": "🪸",
     "name": "Ενυδρεία Corner",
     "desc": "Corner aquaria σε ξύλινα έπιπλα · 100L έως 200L με πλήρη εξοπλισμό.",
-    "image_url": "https://res.cloudinary.com/dwhsqj03w/image/upload/v1782902068/s7sb7j1ntqndid7h2svo.jpg"
+    "image_url": ""
   },
   {
     "id": "prod_009",
     "category": "tanks",
-    "icon": "🪸",
+    "icon": "⬡",
     "name": "Hexagonal Ενυδρεία",
     "desc": "Εξαγωνικά ενυδρεία AQUAEL · ιδανικά για μικρούς χώρους, εντυπωσιακή παρουσία.",
-    "image_url": "https://res.cloudinary.com/dwhsqj03w/image/upload/v1782902298/gzwtjjdjznzscqm9entr.jpg"
+    "image_url": ""
   },
   {
     "id": "prod_010",
     "category": "tanks",
-    "icon": "🪸",
+    "icon": "🟦",
     "name": "Classic Ενυδρεία",
     "desc": "Ορθογώνιες δεξαμενές από 30L έως 500L για κάθε ανάγκη.",
-    "image_url": "https://res.cloudinary.com/dwhsqj03w/image/upload/v1782902135/sfphysfuburomjekhjhp.jpg"
+    "image_url": ""
   },
   {
     "id": "prod_011",
@@ -77,7 +85,7 @@
     "icon": "🌿",
     "name": "Ζωντανά Φυτά",
     "desc": "Anubias, java fern, cryptocoryne, vallisneria, ludwigia, bucephalandra και πολλά άλλα.",
-    "image_url": "https://res.cloudinary.com/dwhsqj03w/image/upload/v1782902612/zo5oun8j0beo9aq0dom0.jpg"
+    "image_url": ""
   },
   {
     "id": "prod_012",
@@ -166,13 +174,5 @@
     "name": "Αντιπαρασιτικά",
     "desc": "Θεραπείες για ich, velvet, flukes, worms · ασφαλείς και αποτελεσματικές.",
     "image_url": ""
-  },
-  {
-    "id": "prod_1782902715742_she30",
-    "category": "tanks",
-    "icon": "🪸",
-    "name": "Nano Ενυδρεια 8L",
-    "desc": "Ορθογώνιες δεξαμενές από 5L έως 10L για κάθε ανάγκη.",
-    "image_url": "https://res.cloudinary.com/dwhsqj03w/image/upload/v1782902715/yclr2rz9s0f78yr6xeq0.jpg"
   }
 ]
