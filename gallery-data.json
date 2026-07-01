@@ -5,15 +5,15 @@
     "icon": "🐠",
     "name": "Tropical Ψάρια",
     "desc": "Guppies, mollies, platies, tetras, barbs, cichlids, angelfish · ζωντανά και υγιή.",
-    "image_url": "https://res.cloudinary.com/dwhsqj03w/image/upload/v1782902886/csx060f6m9qxf4kudmon.jpg"
+    "image_url": "https://res.cloudinary.com/dwhsqj03w/image/upload/v1782902976/glkeiamsyd5lfzjmifsf.jpg"
   },
   {
     "id": "prod_002",
     "category": "fish",
-    "icon": "🐠",
+    "icon": "🐟",
     "name": "Goldfish",
     "desc": "Oranda, ryukin, ranchu, shubunkin · επιλεγμένα goldfish κάθε είδους.",
-    "image_url": "https://res.cloudinary.com/dwhsqj03w/image/upload/v1782902893/rirdnvpoyfbdepnacecj.jpg"
+    "image_url": ""
   },
   {
     "id": "prod_003",
