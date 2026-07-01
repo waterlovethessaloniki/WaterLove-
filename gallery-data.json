@@ -80,14 +80,6 @@
     "image_url": ""
   },
   {
-    "id": "prod_017",
-    "category": "chemistry",
-    "icon": "🧪",
-    "name": "Test Kits",
-    "desc": "pH, ammonia, nitrite, nitrate, KH, GH, phosphate · tests για τέλεια χημεία.",
-    "image_url": ""
-  },
-  {
     "id": "prod_018",
     "category": "chemistry",
     "icon": "💧",
