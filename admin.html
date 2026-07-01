@@ -248,6 +248,11 @@ body{font-family:var(--sans);background:var(--cream);color:var(--text1);min-heig
           </div>
         </div>
         <div class="form-group" style="margin-bottom:1rem">
+          <label class="form-label">Νέα κατηγορία (προαιρετικό)</label>
+          <input class="form-input" type="text" id="pNewCategory" placeholder="π.χ. Ζωοτροφές"/>
+          <div class="section-desc" style="margin-top:.35rem">Αν συμπληρωθεί, δημιουργείται νέα κατηγορία και αγνοείται η παραπάνω επιλογή.</div>
+        </div>
+        <div class="form-group" style="margin-bottom:1rem">
           <label class="form-label">Περιγραφή</label>
           <textarea class="form-textarea" id="pDesc" placeholder="Σύντομη περιγραφή του προϊόντος..."></textarea>
         </div>
@@ -269,16 +274,7 @@ body{font-family:var(--sans);background:var(--cream);color:var(--text1);min-heig
         <div><div class="section-title">Προϊόντα</div><div class="section-desc">Επεξεργαστείτε ή διαγράψτε</div></div>
         <button class="btn btn-outline btn-sm" onclick="reloadProducts()">🔄 Ανανέωση</button>
       </div>
-      <div class="filter-row" id="pFilterRow">
-        <button class="filter-btn active" onclick="setPFilter('all',this)">Όλα</button>
-        <button class="filter-btn" onclick="setPFilter('fish',this)">🐠 Ψάρια</button>
-        <button class="filter-btn" onclick="setPFilter('marine',this)">🌊 Θαλάσσιο</button>
-        <button class="filter-btn" onclick="setPFilter('tanks',this)">🪸 Ενυδρεία</button>
-        <button class="filter-btn" onclick="setPFilter('plants',this)">🌿 Φυτά</button>
-        <button class="filter-btn" onclick="setPFilter('accessories',this)">⚙️ Αξεσουάρ</button>
-        <button class="filter-btn" onclick="setPFilter('chemistry',this)">🧪 Χημεία</button>
-        <button class="filter-btn" onclick="setPFilter('medicine',this)">💊 Φαρμακευτικά</button>
-      </div>
+      <div class="filter-row" id="pFilterRow"></div>
       <div class="spinner" id="pSpinner"><div class="spinner-circle"></div></div>
       <div class="empty-state" id="pEmpty" style="display:none"><div class="es-icon">🛍️</div><p>Δεν υπάρχουν προϊόντα ακόμα.</p></div>
       <div class="card-grid" id="pGrid"></div>
@@ -332,6 +328,10 @@ const GH_REPO = 'WaterLove-';
 const PRODUCTS_RAW = `https://raw.githubusercontent.com/${GH_OWNER}/${GH_REPO}/main/products-data.json`;
 
 const CAT_LABELS = {fish:'🐠 Ψάρια',marine:'🌊 Θαλάσσιο',tanks:'🪸 Ενυδρεία',plants:'🌿 Φυτά',accessories:'⚙️ Αξεσουάρ',chemistry:'🧪 Χημεία',medicine:'💊 Φαρμακευτικά',other:'📦 Άλλο'};
+// Fixed categories with predefined icons/labels. Anything else is a custom
+// category typed in when adding a product; it is shown exactly as typed.
+const KNOWN_CATS = ['fish','marine','tanks','plants','accessories','chemistry','medicine'];
+const CAT_ICONS = {fish:'🐠',marine:'🌊',tanks:'🪸',plants:'🌿',accessories:'⚙️',chemistry:'🧪',medicine:'💊'};
 
 let products = [];
 let pFilter = 'all';
@@ -393,6 +393,7 @@ async function reloadProducts() {
   renderProducts(); updatePStats();
 }
 function renderProducts() {
+  renderPFilters();
   const grid=document.getElementById('pGrid'), empty=document.getElementById('pEmpty');
   const filtered = pFilter==='all'?products:products.filter(p=>p.category===pFilter);
   if(products.length===0){ empty.style.display='block'; grid.innerHTML=''; return; }
@@ -419,7 +420,24 @@ function updatePStats(){
   document.getElementById('pStatNoPhotos').textContent=products.filter(p=>!p.image_url).length;
   document.getElementById('pStatCats').textContent=new Set(products.map(p=>p.category)).size;
 }
-function setPFilter(cat,btn){ pFilter=cat; document.querySelectorAll('#pFilterRow .filter-btn').forEach(b=>b.classList.remove('active')); btn.classList.add('active'); renderProducts(); }
+// Build the filter chips from data: fixed categories (always) + any custom
+// categories found in the products, first-seen order. No HTML injection.
+function renderPFilters(){
+  const wrap=document.getElementById('pFilterRow');
+  if(!wrap) return;
+  wrap.innerHTML='';
+  const custom=[];
+  products.forEach(p=>{ const c=p.category; if(c && !KNOWN_CATS.includes(c) && !custom.includes(c)) custom.push(c); });
+  const make=(cat,label)=>{
+    const b=document.createElement('button');
+    b.className='filter-btn'+(pFilter===cat?' active':'');
+    b.textContent=label;
+    b.addEventListener('click',()=>{ pFilter=cat; renderProducts(); });
+    wrap.appendChild(b);
+  };
+  make('all','Όλα');
+  [...KNOWN_CATS,...custom].forEach(cat=>make(cat, CAT_LABELS[cat]||cat));
+}
 
 // Add product
 let pNewImg = null;
@@ -435,7 +453,8 @@ pUz.addEventListener('drop',e=>{e.preventDefault();pUz.classList.remove('drag');
 
 async function addProduct(){
   const name=document.getElementById('pName').value.trim();
-  const category=document.getElementById('pCategory').value;
+  const newCat=document.getElementById('pNewCategory').value.trim();
+  const category=newCat||document.getElementById('pCategory').value;
   const desc=document.getElementById('pDesc').value.trim();
   if(!name){ showToast('Προσθέστε όνομα προϊόντος','error'); return; }
   const btn=document.getElementById('pAddBtn'), wrap=document.getElementById('pProgress'), bar=document.getElementById('pProgBar');
@@ -444,11 +463,10 @@ async function addProduct(){
     let url='';
     if(pNewImg){ document.getElementById('pProgLabel').textContent='Ανέβασμα φωτογραφίας...'; url=await uploadToCloudinary(pNewImg); bar.style.width='70%'; }
     document.getElementById('pProgLabel').textContent='Αποθήκευση στο GitHub...';
-    const icons={fish:'🐠',marine:'🌊',tanks:'🪸',plants:'🌿',accessories:'⚙️',chemistry:'🧪',medicine:'💊'};
-    const item={id:'prod_'+Date.now()+'_'+Math.random().toString(36).slice(2,7),category,icon:icons[category]||'🛍️',name,desc,image_url:url};
+    const item={id:'prod_'+Date.now()+'_'+Math.random().toString(36).slice(2,7),category,icon:CAT_ICONS[category]||'🛍️',name,desc,image_url:url};
     await workerCall({target:'products',action:'add',item});
     products.push(item); bar.style.width='100%';
-    document.getElementById('pName').value=''; document.getElementById('pDesc').value=''; pNewImg=null; pFileInput.value='';
+    document.getElementById('pName').value=''; document.getElementById('pDesc').value=''; document.getElementById('pNewCategory').value=''; pNewImg=null; pFileInput.value='';
     renderProducts(); updatePStats();
     showToast('✓ Προστέθηκε το προϊόν','success');
   }catch(err){ showToast('Σφάλμα: '+err.message,'error'); }
@@ -460,7 +478,15 @@ function openPEdit(id){
   pEditId=id; pEditNewImg=null;
   document.getElementById('pEditPreview').src=item.image_url||'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="400" height="180"><rect width="100%" height="100%" fill="%23C5E8E9"/><text x="50%" y="50%" text-anchor="middle" dy=".3em" font-size="50">🛍️</text></svg>';
   document.getElementById('pEditName').value=item.name||'';
-  document.getElementById('pEditCategory').value=item.category||'fish';
+  // Preserve custom categories: if the product's category is not one of the fixed
+  // options, add it as a temporary option so editing does not silently overwrite it.
+  const sel=document.getElementById('pEditCategory');
+  sel.querySelectorAll('option[data-custom]').forEach(o=>o.remove());
+  const cat=item.category||'fish';
+  if(!Array.from(sel.options).some(o=>o.value===cat)){
+    const o=document.createElement('option'); o.value=cat; o.textContent=cat; o.setAttribute('data-custom','1'); sel.appendChild(o);
+  }
+  sel.value=cat;
   document.getElementById('pEditDesc').value=item.desc||'';
   document.getElementById('pEditFileInput').value='';
   document.getElementById('pEditOverlay').classList.add('open');
@@ -480,8 +506,7 @@ async function savePEdit(){
     item.name=document.getElementById('pEditName').value.trim();
     item.category=document.getElementById('pEditCategory').value;
     item.desc=document.getElementById('pEditDesc').value.trim();
-    const icons={fish:'🐠',marine:'🌊',tanks:'🪸',plants:'🌿',accessories:'⚙️',chemistry:'🧪',medicine:'💊'};
-    item.icon=icons[item.category]||'🛍️';
+    item.icon=CAT_ICONS[item.category]||'🛍️';
     await workerCall({target:'products',action:'replace',data:products});
     showToast('✓ Αποθηκεύτηκε','success');
     document.getElementById('pEditOverlay').classList.remove('open');

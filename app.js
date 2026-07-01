@@ -9,6 +9,12 @@ const PRODUCTS_RAW = `https://raw.githubusercontent.com/${GH_OWNER}/${GH_REPO}/m
 
 const CAT_LABELS = {fish:'Ψάρια',marine:'Θαλάσσιο',tanks:'Ενυδρεία',plants:'Φυτά',accessories:'Αξεσουάρ',chemistry:'Χημεία',medicine:'Φαρμακευτικά',other:'Άλλο'};
 
+// Fixed (known) product categories: canonical order + i18n keys for bilingual chip
+// labels. Any category value NOT in this list is a custom one (created from admin)
+// and is shown exactly as typed (single language).
+const KNOWN_CATS = ['fish','marine','tanks','plants','accessories','chemistry','medicine'];
+const CAT_I18N = {fish:'pr.catFish',marine:'pr.catMarine',tanks:'pr.catTanks',plants:'pr.catPlants',accessories:'pr.catAcc',chemistry:'pr.catChem',medicine:'pr.catMed'};
+
 let PRODUCTS = [];
 let PROD_CAT = 'all';
 let FAQ_CAT = 'all';
@@ -194,7 +200,7 @@ function setLang(lang) {
   });
   // Re-render JS-built lists so their translatable chrome follows the language.
   if(document.getElementById('faqList') && typeof FAQS !== 'undefined') renderFaq(FAQ_CAT);
-  if(document.getElementById('prodGrid')) renderProducts(PROD_CAT);
+  if(document.getElementById('prodGrid')){ renderProductCats(); renderProducts(PROD_CAT); }
   saveLangCookie(lang);
 }
 
@@ -303,6 +309,36 @@ function initHero() {
 }
 
 // ─── PRODUCTS RENDER ───
+// Chip label: bilingual for known categories, raw text for custom ones.
+function catLabel(cat) {
+  return CAT_I18N[cat] ? t(CAT_I18N[cat]) : cat;
+}
+// The category list powering the filter chips: the fixed known set (always shown)
+// followed by any custom categories discovered in the product data, first-seen order.
+function productCategories() {
+  const custom = [];
+  PRODUCTS.forEach(p => {
+    const c = p.category;
+    if(c && !KNOWN_CATS.includes(c) && !custom.includes(c)) custom.push(c);
+  });
+  return [...KNOWN_CATS, ...custom];
+}
+// Build the filter chips from data instead of hardcoded HTML, so admin-created
+// categories appear automatically. Uses textContent + listeners (no HTML injection).
+function renderProductCats() {
+  const wrap = document.getElementById('prodCats');
+  if(!wrap) return;
+  wrap.innerHTML = '';
+  const make = (cat, label) => {
+    const b = document.createElement('button');
+    b.className = 'cat-btn' + (PROD_CAT === cat ? ' active' : '');
+    b.textContent = label;
+    b.addEventListener('click', () => filterProds(cat, b));
+    wrap.appendChild(b);
+  };
+  make('all', t('pr.catAll'));
+  productCategories().forEach(cat => make(cat, catLabel(cat)));
+}
 function renderProducts(cat) {
   const grid = document.getElementById('prodGrid');
   if(!grid) return;
@@ -419,5 +455,5 @@ async function initPage(opts={}) {
   const needProducts = opts.products || opts.hero;
   if(needProducts) PRODUCTS = await loadProductsData();
   if(opts.hero) initHero();
-  if(opts.products) renderProducts('all');
+  if(opts.products){ renderProductCats(); renderProducts('all'); }
 }
