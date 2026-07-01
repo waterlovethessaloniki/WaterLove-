@@ -10,10 +10,10 @@
   {
     "id": "prod_002",
     "category": "fish",
-    "icon": "🐟",
+    "icon": "🐠",
     "name": "Goldfish",
     "desc": "Oranda, ryukin, ranchu, shubunkin · επιλεγμένα goldfish κάθε είδους.",
-    "image_url": ""
+    "image_url": "https://res.cloudinary.com/dwhsqj03w/image/upload/v1782903004/mzeulolqyhsynj5yoig8.jpg"
   },
   {
     "id": "prod_003",
