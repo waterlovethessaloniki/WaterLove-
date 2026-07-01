@@ -621,6 +621,20 @@ function initFadeUp() {
   setTimeout(revealVisible, 1500);
 }
 
+// ─── HOME CATEGORY CARDS: staggered scroll-reveal ───
+function initHomeCats() {
+  const grid = document.getElementById('home-cats-grid');
+  if(!grid) return;
+  const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion:reduce)').matches;
+  // Reduced motion or no observer support: just show the cards, no animation.
+  if(reduce || !('IntersectionObserver' in window)) { grid.classList.add('revealed'); return; }
+  const obs = new IntersectionObserver((entries, o) => {
+    entries.forEach(e => { if(e.isIntersecting){ grid.classList.add('revealed'); o.disconnect(); }});
+  }, {threshold:0.12});
+  // Fires immediately if the strip is already in view on load, otherwise on scroll-in.
+  obs.observe(grid);
+}
+
 // ─── PAGE INIT (καλείται από κάθε σελίδα) ───
 async function initPage(opts={}) {
   initNav();
@@ -628,6 +642,7 @@ async function initPage(opts={}) {
   initBubbles();
   highlightToday();
   initFadeUp();
+  initHomeCats();
   if(opts.faq) renderFaq('all');
   if(opts.contact) initContactForm();
   // Load remote data as needed

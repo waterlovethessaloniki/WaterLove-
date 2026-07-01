@@ -130,7 +130,9 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:cen
 
 /* WAVE */
 .wave-sep{display:block;width:100%;overflow:hidden;line-height:0}
-.wave-sep svg{display:block}
+/* margin-bottom:-1px overlaps the wave onto the next (same-coloured) section so no
+   hairline of page background shows through the sub-pixel seam under the wave */
+.wave-sep svg{display:block;margin-bottom:-1px}
 
 /* ── SECTION BASE ── */
 section{padding:5rem 5%}
@@ -395,6 +397,42 @@ footer{background:var(--jade);padding:3rem 5% 2rem;text-align:center}
 @media(prefers-reduced-motion:reduce){.fade-up{opacity:1;transform:none;transition:none}.bubble{animation:none}}
 /* On touch/mobile, never hide content behind animations (reliability first) */
 @media(max-width:820px){.fade-up{opacity:1 !important;transform:none !important}}
+
+/* HOME CATEGORY CARDS (jade "Τι θα βρείτε" strip) */
+.home-cat-card{
+  background:rgba(255,255,255,.05);
+  border:1px solid rgba(137,206,209,.12);
+  border-radius:1.1rem;
+  padding:1.4rem 1.2rem;
+  cursor:pointer;
+  opacity:0;
+  transform:translateY(16px);
+  transition:opacity .55s ease var(--d,0s), transform .55s ease var(--d,0s), box-shadow .25s ease, background .25s ease;
+}
+.home-cats.revealed .home-cat-card{opacity:1;transform:translateY(0)}
+/* staggered cascade: ~70ms between cards */
+.home-cat-card:nth-child(1){--d:0s}
+.home-cat-card:nth-child(2){--d:.07s}
+.home-cat-card:nth-child(3){--d:.14s}
+.home-cat-card:nth-child(4){--d:.21s}
+.home-cat-card:nth-child(5){--d:.28s}
+.home-cat-card:nth-child(6){--d:.35s}
+.home-cat-card:nth-child(7){--d:.42s}
+/* hover: subtle lift + soft shadow, no reveal delay (equal specificity, later in source) */
+.home-cats .home-cat-card:hover{
+  transform:translateY(-4px);
+  background:rgba(137,206,209,.1);
+  box-shadow:0 10px 24px rgba(0,0,0,.22);
+  transition:transform .25s ease, box-shadow .25s ease, background .25s ease;
+}
+.home-cat-card .hcc-icon{font-size:1.8rem;margin-bottom:.7rem;transition:transform .3s cubic-bezier(.34,1.56,.64,1)}
+.home-cats .home-cat-card:hover .hcc-icon{transform:scale(1.18) translateY(-2px)}
+.home-cat-card .hcc-name{font-family:var(--serif);color:var(--jade-ink);font-size:1rem;margin-bottom:.3rem;font-weight:500}
+.home-cat-card .hcc-desc{font-size:.78rem;color:var(--jade-ink)}
+@media(prefers-reduced-motion:reduce){
+  .home-cat-card{opacity:1 !important;transform:none !important;transition:none !important}
+  .home-cat-card .hcc-icon{transition:none !important}
+}
 
 /* RESPONSIVE - comprehensive mobile overhaul */
 
