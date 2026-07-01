@@ -72,14 +72,6 @@
     "image_url": ""
   },
   {
-    "id": "prod_016",
-    "category": "accessories",
-    "icon": "🌡️",
-    "name": "Αξεσουάρ & Εξοπλισμός",
-    "desc": "Θερμόμετρα, αερατέρ, timers, gravel cleaners, nets και ό,τι άλλο χρειαστείτε.",
-    "image_url": ""
-  },
-  {
     "id": "prod_018",
     "category": "chemistry",
     "icon": "💧",
