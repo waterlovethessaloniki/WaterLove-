@@ -104,14 +104,6 @@
     "image_url": ""
   },
   {
-    "id": "prod_020",
-    "category": "chemistry",
-    "icon": "🌱",
-    "name": "Λιπάσματα Φυτών",
-    "desc": "Liquid & substrate fertilizers · για πλούσια ανάπτυξη φυτών.",
-    "image_url": ""
-  },
-  {
     "id": "prod_022",
     "category": "medicine",
     "icon": "🩺",
