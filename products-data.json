@@ -18,10 +18,10 @@
   {
     "id": "prod_003",
     "category": "fish",
-    "icon": "🔵",
+    "icon": "🐠",
     "name": "Betta Splendens",
     "desc": "Halfmoon, crowntail, plakat · εκπληκτικά betta σε πλούσιες ποικιλίες χρωμάτων.",
-    "image_url": ""
+    "image_url": "https://res.cloudinary.com/dwhsqj03w/image/upload/v1782916832/owagwjcbsdwefgaf5o9u.jpg"
   },
   {
     "id": "prod_004",
