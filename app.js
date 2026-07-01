@@ -40,9 +40,10 @@ const I18N = {
     'about.title':'Το Water Love ·<br><em>Εμπειρία που μιλάει</em>',
     'about.body':'Το Water Love είναι ο χώρος της Λαμπρινής Μπιζίκη · μιας επαγγελματία που συνδυάζει βαθιά γνώση με ειλικρινή διάθεση να βοηθήσει. Κάθε ερώτηση λαμβάνει πραγματική απάντηση. Κάθε επίσκεψη, μια ουσιαστική συμβουλή.',
     'about.stat1':'Χρόνια εμπειρίας',
+    'about.stat2':'Google',
+    'about.stat3':'Κέντρο Θεσσαλονίκης',
+    'about.ctaPrimary':'Επικοινωνήστε μαζί μας',
     'about.btn':'Η ιστορία μας →',
-    'about.quote':'"Κάθε ψάρι, κάθε φυτό, κάθε ενυδρείο έχει την ιστορία του. Είμαι εδώ για να σας βοηθήσω να τη γράψετε."',
-    'about.quoteAuthor':'· Λαμπρινή Μπιζίκη, Ιδιοκτήτρια',
     'about.badge':'✨ Ανακαινισμένο κατάστημα 2024',
     'prod.label':'Τι θα βρείτε',
     'prod.title':'Ό,τι χρειάζεται <em>το ενυδρείο σας</em>',
@@ -137,9 +138,10 @@ const I18N = {
     'about.title':'Water Love ·<br><em>Experience that speaks</em>',
     'about.body':'Water Love is the space of Lambrini Biziki · a professional who blends deep knowledge with a genuine wish to help. Every question gets a real answer. Every visit, a piece of honest advice.',
     'about.stat1':'Years of experience',
+    'about.stat2':'Google',
+    'about.stat3':'Central Thessaloniki',
+    'about.ctaPrimary':'Contact us',
     'about.btn':'Our story →',
-    'about.quote':'"Every fish, every plant, every aquarium has its own story. I am here to help you write it."',
-    'about.quoteAuthor':'· Lambrini Biziki, Owner',
     'about.badge':'✨ Renovated store, 2024',
     'prod.label':"What you'll find",
     'prod.title':'Everything <em>your aquarium</em> needs',
@@ -427,6 +429,23 @@ function initHero() {
   }
 }
 
+// ─── HOME · WHO WE ARE VISUAL ───
+// Fill the right-column visual with the first available product photo (fresh
+// from PRODUCTS). If none exists, keep the aqua gradient + fish placeholder so
+// no broken image ever shows.
+function initAboutVisual() {
+  const v = document.getElementById('whoVisual');
+  if(!v) return;
+  const hit = PRODUCTS.find(p => p && p.image_url && p.image_url.length > 0);
+  if(hit){
+    v.style.backgroundImage = `url("${hit.image_url}")`;
+    v.classList.add('has-photo');
+  } else {
+    v.style.backgroundImage = '';
+    v.classList.remove('has-photo');
+  }
+}
+
 // ─── HOME CATEGORY TILES ───
 // Fill each homepage tile with the first product photo found in its category
 // (fresh from PRODUCTS). Categories without a product photo keep the gradient
@@ -606,7 +625,7 @@ async function initPage(opts={}) {
   // Load remote data as needed
   const needProducts = opts.products || opts.hero;
   if(needProducts) PRODUCTS = await loadProductsData();
-  if(opts.hero){ initHero(); initCategoryTiles(); }
+  if(opts.hero){ initHero(); initCategoryTiles(); initAboutVisual(); }
   if(opts.products){
     // Honour a ?cat= deep link from the homepage tiles: pre-select the matching
     // chip and show only that category, exactly as a chip click would.

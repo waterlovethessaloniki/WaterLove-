@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
-<link rel="stylesheet" href="styles.css?v=22"/>
+<link rel="stylesheet" href="styles.css?v=23"/>
 
 </head>
 <body>
@@ -146,25 +146,33 @@
   <!-- Wave -->
   <div class="wave-sep" style="background:var(--jade)"><svg viewBox="0 0 1440 70" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" style="fill:var(--warm)"><path d="M0,35 C240,70 480,0 720,35 C960,70 1200,0 1440,35 L1440,70 L0,70 Z"/></svg></div>
 
-  <!-- Mini about strip -->
-  <section style="background:var(--warm);padding:4rem 5%">
-    <div class="home-split" style="max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center">
-      <div class="fade-up">
+  <!-- Who we are -->
+  <section class="who" style="padding:4rem 5%">
+    <div class="who-grid">
+      <div class="who-copy fade-up">
         <p class="sec-label" data-i18n="about.label">Ποιοι είμαστε</p>
         <h2 class="sec-title" data-i18n="about.title">Το Water Love ·<br><em>Εμπειρία που μιλάει</em></h2>
-        <p style="color:var(--text2);font-size:.97rem;line-height:1.8;margin-bottom:1.4rem" data-i18n="about.body">Το Water Love είναι ο χώρος της Λαμπρινής Μπιζίκη · μιας επαγγελματία που συνδυάζει βαθιά γνώση με ειλικρινή διάθεση να βοηθήσει. Κάθε ερώτηση λαμβάνει πραγματική απάντηση. Κάθε επίσκεψη, μια ουσιαστική συμβουλή.</p>
-        <div class="home-stats-inline" style="display:flex;gap:2rem;margin-bottom:1.6rem">
-          <div style="text-align:center"><div style="font-family:var(--serif);font-size:2.2rem;color:var(--navy);font-weight:600">20+</div><div style="font-size:.78rem;color:var(--text3)" data-i18n="about.stat1">Χρόνια εμπειρίας</div></div>
-          <div style="text-align:center"><div style="font-family:var(--serif);font-size:2.2rem;color:var(--navy);font-weight:600">⭐5.0</div><div style="font-size:.78rem;color:var(--text3)">Google Reviews</div></div>
-          <div style="text-align:center"><div style="font-family:var(--serif);font-size:2.2rem;color:var(--navy);font-weight:600">630+</div><div style="font-size:.78rem;color:var(--text3)">Facebook Followers</div></div>
+        <p class="who-desc" data-i18n="about.body">Το Water Love είναι ο χώρος της Λαμπρινής Μπιζίκη · μιας επαγγελματία που συνδυάζει βαθιά γνώση με ειλικρινή διάθεση να βοηθήσει. Κάθε ερώτηση λαμβάνει πραγματική απάντηση. Κάθε επίσκεψη, μια ουσιαστική συμβουλή.</p>
+        <div class="who-cta">
+          <a href="contact.html" class="hd-btn hd-btn-primary" data-i18n="about.ctaPrimary">Επικοινωνήστε μαζί μας</a>
+          <a href="about.html" class="hd-btn hd-btn-secondary" data-i18n="about.btn">Η ιστορία μας →</a>
         </div>
-        <button class="hd-btn hd-btn-primary" onclick="location.href='about.html'" data-i18n="about.btn">Η ιστορία μας →</button>
+        <div class="who-stats">
+          <div class="who-stat"><b>20+</b><span data-i18n="about.stat1">Χρόνια εμπειρίας</span></div>
+          <div class="who-stat"><b>5★</b><span data-i18n="about.stat2">Google</span></div>
+          <div class="who-stat"><b>📍</b><span data-i18n="about.stat3">Κέντρο Θεσσαλονίκης</span></div>
+        </div>
       </div>
-      <div class="fade-up home-quote" style="background:linear-gradient(135deg,var(--aqua-light),#b8dfe0);border-radius:2rem;padding:2.5rem;text-align:center">
-        <div style="font-size:5rem;margin-bottom:1.2rem">🐠</div>
-        <p style="font-family:var(--serif);font-style:italic;font-size:1.05rem;color:var(--navy);line-height:1.6;margin-bottom:.8rem" data-i18n="about.quote">"Κάθε ψάρι, κάθε φυτό, κάθε ενυδρείο έχει την ιστορία του. Είμαι εδώ για να σας βοηθήσω να τη γράψετε."</p>
-        <span style="font-size:.78rem;color:var(--aqua-text);letter-spacing:.06em" data-i18n="about.quoteAuthor">· Λαμπρινή Μπιζίκη, Ιδιοκτήτρια</span>
-        <div style="margin-top:1.2rem;display:inline-block;background:var(--coral);color:#fff;border-radius:2rem;padding:.4rem 1rem;font-size:.78rem;font-weight:500" data-i18n="about.badge">✨ Ανακαινισμένο κατάστημα 2024</div>
+      <div class="who-visual fade-up" id="whoVisual">
+        <div class="who-deco" aria-hidden="true">
+          <svg width="210" height="150" viewBox="0 0 54 40" fill="none">
+            <path d="M4 18 C12 8 32 8 42 14 C46 10 50 10 52 8 C50 13 50 23 52 28 C50 26 46 26 42 22 C32 28 12 28 4 18Z" fill="#3AA693"/>
+            <circle cx="12" cy="17" r="1.6" fill="#0D1B2A"/>
+            <circle cx="44" cy="6" r="2.2" fill="none" stroke="#ffffff" stroke-width=".9" opacity=".8"/>
+            <circle cx="49" cy="2.5" r="1.4" fill="none" stroke="#ffffff" stroke-width=".7" opacity=".7"/>
+          </svg>
+        </div>
+        <span class="who-badge" data-i18n="about.badge">✨ Ανακαινισμένο κατάστημα 2024</span>
       </div>
     </div>
   </section>
@@ -251,7 +259,7 @@
   <p class="f-copy" data-i18n="footer.copy">© 2026 Water Love · Λαμπρινή Μπιζίκη · Λεων. Ιασωνίδου 15, Θεσσαλονίκη · 6906 461 622</p>
 </footer>
 
-<script src="app.js?v=22"></script>
+<script src="app.js?v=23"></script>
 
 <script>
 initPage({hero:true});
