@@ -40,14 +40,6 @@
     "image_url": "https://res.cloudinary.com/dwhsqj03w/image/upload/v1782863523/mzbtuub7x8y2kj6c17ss.png"
   },
   {
-    "id": "prod_008",
-    "category": "tanks",
-    "icon": "🪸",
-    "name": "Ενυδρεία Corner",
-    "desc": "Corner aquaria σε ξύλινα έπιπλα · 100L έως 200L με πλήρη εξοπλισμό.",
-    "image_url": ""
-  },
-  {
     "id": "prod_010",
     "category": "tanks",
     "icon": "🟦",
