@@ -30,7 +30,7 @@ const I18N = {
   el: {
     'nav.home':'Αρχική','nav.about':'Σχετικά','nav.products':'Προϊόντα','nav.faq':'Συχνές Ερωτήσεις','nav.contact':'Επικοινωνία',
     'hero.tagline':'Κάθε ενυδρείο έχει τη δική του ζωή',
-    'hero.subtitle':'Είκοσι χρόνια αγάπη για τον υδρόβιο κόσμο, στο κέντρο της Θεσσαλονίκης. Ελάτε να μιλήσουμε με την <strong>Λαμπρινή</strong> και να φτιάξουμε μαζί το ενυδρείο των ονείρων σας.',
+    'hero.subtitle':'«Η εμπειρία και η αγάπη κάνουν τη διαφορά»',
     'hero.trust2':'20+ χρόνια εμπειρία',
     'hero.trust3':'Κέντρο πόλης',
     'hero.ctaPrimary':'Επικοινωνήστε μαζί μας',
@@ -127,7 +127,7 @@ const I18N = {
   en: {
     'nav.home':'Home','nav.about':'About','nav.products':'Products','nav.faq':'FAQ','nav.contact':'Contact',
     'hero.tagline':'Every aquarium has a life of its own',
-    'hero.subtitle':'Twenty years of love for the underwater world, in the heart of Thessaloniki. Come talk with <strong>Lambrini</strong> and let us build the aquarium of your dreams together.',
+    'hero.subtitle':'"Experience and love make the difference"',
     'hero.trust2':'20+ years of experience',
     'hero.trust3':'City centre',
     'hero.ctaPrimary':'Get in touch',
