@@ -66,10 +66,10 @@
   {
     "id": "prod_010",
     "category": "tanks",
-    "icon": "🟦",
+    "icon": "🪸",
     "name": "Classic Ενυδρεία",
     "desc": "Ορθογώνιες δεξαμενές από 30L έως 500L για κάθε ανάγκη.",
-    "image_url": ""
+    "image_url": "https://res.cloudinary.com/dwhsqj03w/image/upload/v1782902135/sfphysfuburomjekhjhp.jpg"
   },
   {
     "id": "prod_011",
