@@ -5,6 +5,7 @@
 // ─── CONFIG ───
 const GH_OWNER = 'waterlovethessaloniki';
 const GH_REPO = 'WaterLove-';
+const WORKER_URL = 'https://waterlove-worker.waterlovethessaloniki.workers.dev';
 const PRODUCTS_RAW = `https://raw.githubusercontent.com/${GH_OWNER}/${GH_REPO}/main/products-data.json`;
 
 const CAT_LABELS = {fish:'Ψάρια',marine:'Θαλάσσιο',tanks:'Ενυδρεία',plants:'Φυτά',accessories:'Αξεσουάρ',chemistry:'Χημεία',medicine:'Φαρμακευτικά',other:'Άλλο'};
@@ -213,6 +214,21 @@ function initLang() {
 
 // ─── DATA LOADERS ───
 async function loadProductsData() {
+  // Prefer the Worker read: it fetches via the GitHub API server-side, so it is
+  // always fresh (the raw.githubusercontent.com CDN ignores ?t= and serves stale
+  // data for ~5 min after a write). Fall back to the raw URL on any Worker error
+  // so a transient failure never blanks the product list.
+  try {
+    const res = await fetch(WORKER_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ action: 'read', target: 'products' })
+    });
+    if(res.ok) {
+      const d = await res.json();
+      if(d && d.success && Array.isArray(d.data)) return d.data;
+    }
+  } catch(e){ /* fall through to raw */ }
   try {
     const res = await fetch(PRODUCTS_RAW + '?t=' + Date.now());
     if(!res.ok) return [];

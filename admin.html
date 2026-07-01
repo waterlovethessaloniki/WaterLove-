@@ -382,7 +382,15 @@ function showToast(msg,type=''){
 }
 
 // ═══════════════ PRODUCTS ═══════════════
-async function loadProductsData(){ try{const r=await fetch(PRODUCTS_RAW+'?t='+Date.now());if(!r.ok)return[];const d=await r.json();return Array.isArray(d)?d:[];}catch(e){return[];} }
+async function loadProductsData(){
+  // Prefer the fresh Worker read (GitHub API server-side); fall back to the raw
+  // CDN (possibly stale) so a transient Worker error never blanks the list.
+  try{
+    const r=await fetch(WORKER_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({action:'read',target:'products'})});
+    if(r.ok){ const d=await r.json(); if(d&&d.success&&Array.isArray(d.data)) return d.data; }
+  }catch(e){}
+  try{const r=await fetch(PRODUCTS_RAW+'?t='+Date.now());if(!r.ok)return[];const d=await r.json();return Array.isArray(d)?d:[];}catch(e){return[];}
+}
 
 async function reloadProducts() {
   document.getElementById('pSpinner').classList.add('show');

@@ -1,7 +1,8 @@
 // ═══════════════════════════════════════════════════════
 // Water Love - Cloudflare Worker
-// Κρατάει το GitHub token κρυφό και γράφει στα αρχεία δεδομένων (products-data.json,
-// gallery-data.json) ανάλογα με το πεδίο target του αιτήματος.
+// Κρατάει το GitHub token κρυφό. Διαβάζει (action:'read') και γράφει (add/replace/
+// delete) στα αρχεία δεδομένων (products-data.json, gallery-data.json) ανάλογα με το
+// πεδίο target. Το read περνάει από το GitHub API, ώστε να είναι πάντα φρέσκο.
 //
 // SETUP:
 //   1. Cloudflare → Workers → Create → paste this code
@@ -67,6 +68,27 @@ export default {
       'Content-Type': 'application/json',
     };
 
+    const action = body.action || 'replace';
+
+    // READ: return the file contents fresh from the GitHub Contents API. This
+    // bypasses raw.githubusercontent.com, whose CDN ignores cache-busting query
+    // params and serves stale data for up to ~5 minutes after a write.
+    if (action === 'read') {
+      try {
+        const getRes = await fetch(`${apiUrl}?ref=${GITHUB_BRANCH}`, { headers: ghHeaders, cf: { cacheTtl: 0 } });
+        if (getRes.status === 404) return json({ success: true, data: [] });
+        if (!getRes.ok) return json({ error: 'GitHub read failed', detail: `status ${getRes.status}` }, 502);
+        const fileInfo = await getRes.json();
+        const decoded = atob(fileInfo.content.replace(/\n/g, ''));
+        const data = JSON.parse(new TextDecoder().decode(
+          Uint8Array.from(decoded, c => c.charCodeAt(0))
+        ));
+        return json({ success: true, data: Array.isArray(data) ? data : [] });
+      } catch (e) {
+        return json({ error: e.message }, 500);
+      }
+    }
+
     try {
       // 1. Read current file (SHA + existing data)
       let sha = null;
@@ -82,7 +104,6 @@ export default {
       }
 
       // 2. Apply action
-      const action = body.action || 'replace';
       if (action === 'replace') {
         currentData = body.data;
       } else if (action === 'add') {
