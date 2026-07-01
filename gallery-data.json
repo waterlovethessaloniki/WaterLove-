@@ -166,5 +166,13 @@
     "name": "Αντιπαρασιτικά",
     "desc": "Θεραπείες για ich, velvet, flukes, worms · ασφαλείς και αποτελεσματικές.",
     "image_url": ""
+  },
+  {
+    "id": "prod_1782902715742_she30",
+    "category": "tanks",
+    "icon": "🪸",
+    "name": "Nano Ενυδρεια 8L",
+    "desc": "Ορθογώνιες δεξαμενές από 5L έως 10L για κάθε ανάγκη.",
+    "image_url": "https://res.cloudinary.com/dwhsqj03w/image/upload/v1782902715/yclr2rz9s0f78yr6xeq0.jpg"
   }
 ]
