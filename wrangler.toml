@@ -1,0 +1,7 @@
+name = "waterlove-worker"
+main = "worker.js"
+compatibility_date = "2024-11-01"
+
+# The GITHUB_TOKEN secret is already set on the deployed Worker.
+# Do NOT re-enter it here or via `wrangler secret put` unless it was rotated.
+# Deploy with:  npx wrangler deploy

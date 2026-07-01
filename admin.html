@@ -465,9 +465,11 @@ async function addProduct(){
     document.getElementById('pProgLabel').textContent='Αποθήκευση στο GitHub...';
     const item={id:'prod_'+Date.now()+'_'+Math.random().toString(36).slice(2,7),category,icon:CAT_ICONS[category]||'🛍️',name,desc,image_url:url};
     await workerCall({target:'products',action:'add',item});
-    products.push(item); bar.style.width='100%';
+    bar.style.width='100%';
     document.getElementById('pName').value=''; document.getElementById('pDesc').value=''; document.getElementById('pNewCategory').value=''; pNewImg=null; pFileInput.value='';
-    renderProducts(); updatePStats();
+    // Reconcile with the server: re-read products-data.json instead of an optimistic
+    // local push, so a misrouted/failed write is visible immediately, not after reload.
+    await reloadProducts();
     showToast('✓ Προστέθηκε το προϊόν','success');
   }catch(err){ showToast('Σφάλμα: '+err.message,'error'); }
   finally{ btn.disabled=false; btn.textContent='+ Προσθήκη προϊόντος'; setTimeout(()=>wrap.classList.remove('show'),1200); }
@@ -508,16 +510,17 @@ async function savePEdit(){
     item.desc=document.getElementById('pEditDesc').value.trim();
     item.icon=CAT_ICONS[item.category]||'🛍️';
     await workerCall({target:'products',action:'replace',data:products});
-    showToast('✓ Αποθηκεύτηκε','success');
     document.getElementById('pEditOverlay').classList.remove('open');
-    renderProducts(); updatePStats();
+    // Reconcile with the server rather than trusting the local mutation.
+    await reloadProducts();
+    showToast('✓ Αποθηκεύτηκε','success');
   }catch(err){ showToast('Σφάλμα: '+err.message,'error'); }
   finally{ btn.disabled=false; btn.textContent='💾 Αποθήκευση'; }
 }
 async function deletePItem(id){
   const item=products.find(p=>p.id===id); if(!item)return;
   if(!confirm(`Διαγραφή προϊόντος;\n"${item.name}"`))return;
-  try{ await workerCall({target:'products',action:'delete',id}); products=products.filter(p=>p.id!==id); renderProducts(); updatePStats(); showToast('🗑️ Διαγράφηκε','success'); }
+  try{ await workerCall({target:'products',action:'delete',id}); await reloadProducts(); showToast('🗑️ Διαγράφηκε','success'); }
   catch(err){ showToast('Σφάλμα: '+err.message,'error'); }
 }
 

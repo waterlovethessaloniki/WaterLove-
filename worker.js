@@ -1,6 +1,7 @@
 // ═══════════════════════════════════════════════════════
 // Water Love - Cloudflare Worker
-// Κρατάει το GitHub token κρυφό και γράφει στο gallery-data.json
+// Κρατάει το GitHub token κρυφό και γράφει στα αρχεία δεδομένων (products-data.json,
+// gallery-data.json) ανάλογα με το πεδίο target του αιτήματος.
 //
 // SETUP:
 //   1. Cloudflare → Workers → Create → paste this code
@@ -49,9 +50,14 @@ export default {
       return json({ error: 'Server not configured' }, 500);
     }
 
-    // Διάλεξε αρχείο: 'gallery' (default) ή 'products'
-    const target = body.target === 'products' ? 'products' : 'gallery';
+    // Route strictly by target. An unknown or missing target is rejected loudly
+    // (400) instead of silently falling back to a file, so a future misroute can
+    // never quietly write to the wrong place.
+    const target = body.target;
     const GITHUB_FILE = ALLOWED_FILES[target];
+    if (!GITHUB_FILE) {
+      return json({ error: 'Unknown target', detail: `target must be one of: ${Object.keys(ALLOWED_FILES).join(', ')}` }, 400);
+    }
 
     const apiUrl = `https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/${GITHUB_FILE}`;
     const ghHeaders = {
@@ -95,7 +101,7 @@ export default {
         method: 'PUT',
         headers: ghHeaders,
         body: JSON.stringify({
-          message: `Update gallery (${action}) - ${new Date().toISOString()}`,
+          message: `Update ${target} (${action}) - ${new Date().toISOString()}`,
           content: newContent,
           sha: sha,
           branch: GITHUB_BRANCH,
