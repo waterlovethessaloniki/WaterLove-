@@ -174,5 +174,13 @@
     "name": "Αντιπαρασιτικά",
     "desc": "Θεραπείες για ich, velvet, flukes, worms · ασφαλείς και αποτελεσματικές.",
     "image_url": ""
+  },
+  {
+    "id": "prod_1782907945226_21d5x",
+    "category": "testfix",
+    "icon": "🛍️",
+    "name": "testfix",
+    "desc": "testfix",
+    "image_url": "https://res.cloudinary.com/dwhsqj03w/image/upload/v1782907944/k3h4djrwgeyll03rpc1u.jpg"
   }
 ]
