@@ -166,5 +166,13 @@
     "name": "Αντιπαρασιτικά",
     "desc": "Θεραπείες για ich, velvet, flukes, worms · ασφαλείς και αποτελεσματικές.",
     "image_url": ""
+  },
+  {
+    "id": "prod_1782903064446_qo0to",
+    "category": "fish",
+    "icon": "🐠",
+    "name": "TEST",
+    "desc": "TEST",
+    "image_url": "https://res.cloudinary.com/dwhsqj03w/image/upload/v1782903063/cublgtcjpolzqd8s1qdh.jpg"
   }
 ]
