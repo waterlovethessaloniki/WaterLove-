@@ -190,5 +190,13 @@
     "name": "testfix",
     "desc": "testfix",
     "image_url": "https://res.cloudinary.com/dwhsqj03w/image/upload/v1782907964/cqq81pdkfjwkvubip8lg.jpg"
+  },
+  {
+    "id": "prod_1782907998793_gmlct",
+    "category": "Tesefe",
+    "icon": "🛍️",
+    "name": "Tesefe",
+    "desc": "Tesefe",
+    "image_url": ""
   }
 ]
