@@ -65,18 +65,6 @@
       </div>
     </div>
   </div>
-  <!-- Gallery in about -->
-  <section class="gallery-section">
-    <span class="sec-label">Gallery</span>
-    <h2 class="sec-title" data-i18n="ab.galTitle">Εικόνες από το <em>κατάστημά μας</em></h2>
-    <div class="gallery-grid" id="aboutGallery"></div>
-  </section>
-</div>
-<div class="lightbox" id="lightbox" onclick="closeLB(event)">
-  <button class="lb-close" onclick="closeLB()">✕</button>
-  <button class="lb-prev" onclick="lbNav(-1);event.stopPropagation()">‹</button>
-  <img id="lbImg" src="" alt="Gallery"/>
-  <button class="lb-next" onclick="lbNav(1);event.stopPropagation()">›</button>
 </div>
 <footer>
   <div class="f-logo">Water <em>Love</em></div>
@@ -97,7 +85,7 @@
 <script src="app.js?v=12"></script>
 
 <script>
-initPage({aboutGallery:true});
+initPage({});
 </script>
 <nav class="bottom-nav" aria-label="Mobile navigation">
   <a href="index.html"><span class="bn-icon">🏠</span><span data-i18n="bnav.home">Αρχική</span></a>

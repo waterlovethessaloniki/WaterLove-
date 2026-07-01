@@ -186,17 +186,6 @@
       <div style="text-align:center;margin-top:2.5rem"><button class="hd-btn hd-btn-primary" onclick="location.href='products.html'" data-i18n="prod.btn">Δείτε όλα τα προϊόντα →</button></div>
     </div>
   </section>
-
-  <!-- Gallery preview -->
-  <div class="wave-sep" style="background:var(--navy)"><svg viewBox="0 0 1440 70" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" style="fill:var(--sand)"><path d="M0,40 C360,0 720,70 1080,30 C1260,10 1380,50 1440,35 L1440,70 L0,70 Z"/></svg></div>
-  <section style="background:var(--sand);padding:4rem 5%">
-    <div style="text-align:center;margin-bottom:2rem">
-      <span class="sec-label" style="display:block" data-i18n="gal.label">Φωτογραφίες</span>
-      <h2 class="sec-title" data-i18n="gal.title">Από <em>το κατάστημά μας</em></h2>
-    </div>
-    <div class="gallery-grid" id="homeGallery"></div>
-    <div style="text-align:center;margin-top:2rem"><button class="hd-btn hd-btn-primary" onclick="location.href='products.html'" data-i18n="gal.btn">Δείτε περισσότερα →</button></div>
-  </section>
 </div>
 <div id="hoursBar" class="hours-bar">
   <div class="h-item" id="hMon"><div class="day" data-i18n="hours.mon">Δευτέρα</div><div class="time">10:30 - 20:30</div></div>
@@ -212,12 +201,6 @@
   <div class="h-item" id="hSat"><div class="day" data-i18n="hours.sat">Σάββατο</div><div class="time">10:30 - 17:00</div></div>
   <div class="h-div"></div>
   <div class="h-item closed" id="hSun"><div class="day" data-i18n="hours.sun">Κυριακή</div><div class="time" data-i18n="hours.closed">Κλειστά</div></div>
-</div>
-<div class="lightbox" id="lightbox" onclick="closeLB(event)">
-  <button class="lb-close" onclick="closeLB()">✕</button>
-  <button class="lb-prev" onclick="lbNav(-1);event.stopPropagation()">‹</button>
-  <img id="lbImg" src="" alt="Gallery"/>
-  <button class="lb-next" onclick="lbNav(1);event.stopPropagation()">›</button>
 </div>
 <footer>
   <div class="f-logo">Water <em>Love</em></div>
@@ -238,7 +221,7 @@
 <script src="app.js?v=12"></script>
 
 <script>
-initPage({hero:true, homeGallery:true});
+initPage({hero:true});
 </script>
 <nav class="bottom-nav" aria-label="Mobile navigation">
   <a href="index.html" class="active"><span class="bn-icon">🏠</span><span data-i18n="bnav.home">Αρχική</span></a>

@@ -213,77 +213,8 @@ body{font-family:var(--sans);background:var(--cream);color:var(--text1);min-heig
       <span>Οι φωτογραφίες ανεβαίνουν στο <strong>Cloudinary</strong> και αποθηκεύονται στο <strong>GitHub</strong>. Οι αλλαγές εμφανίζονται αυτόματα στο website, από οποιαδήποτε συσκευή.</span>
     </div>
 
-    <!-- MAIN TABS -->
-    <div class="main-tabs">
-      <button class="main-tab active" onclick="switchMainTab('gallery',this)">📸 Συλλογή Φωτογραφιών</button>
-      <button class="main-tab" onclick="switchMainTab('products',this)">🛍️ Προϊόντα</button>
-    </div>
-
-    <!-- ════════════ GALLERY TAB ════════════ -->
-    <div class="tab-content active" id="main-gallery">
-      <div class="stats-row">
-        <div class="stat-box"><div class="num" id="gStatTotal">0</div><div class="lbl">Σύνολο φωτογραφιών</div></div>
-        <div class="stat-box"><div class="num" id="gStatFish">0</div><div class="lbl">Ψάρια & Θαλάσσιο</div></div>
-        <div class="stat-box"><div class="num" id="gStatPlants">0</div><div class="lbl">Φυτά & Ενυδρεία</div></div>
-        <div class="stat-box"><div class="num" id="gStatOther">0</div><div class="lbl">Άλλες</div></div>
-      </div>
-
-      <div class="upload-card">
-        <div class="section-head" style="margin-bottom:1rem">
-          <div>
-            <div class="section-title" style="font-size:1.05rem">Ανέβασμα φωτογραφίας στη συλλογή</div>
-            <div class="section-desc">Επιλέξτε κατηγορία, προσθέστε τίτλο, ανεβάστε εικόνα</div>
-          </div>
-        </div>
-        <div class="upload-row">
-          <div class="form-group">
-            <label class="form-label">Κατηγορία</label>
-            <select class="form-select" id="gCategory">
-              <option value="fish">🐠 Ψάρια</option>
-              <option value="marine">🌊 Θαλάσσιο</option>
-              <option value="tanks">🪸 Ενυδρεία</option>
-              <option value="plants">🌿 Φυτά</option>
-              <option value="accessories">⚙️ Αξεσουάρ</option>
-              <option value="other">📦 Άλλο</option>
-            </select>
-          </div>
-          <div class="form-group">
-            <label class="form-label">Τίτλος / Περιγραφή</label>
-            <input class="form-input" type="text" id="gCaption" placeholder="π.χ. Betta splendens, halfmoon"/>
-          </div>
-        </div>
-        <div class="upload-zone" id="gUploadZone">
-          <input type="file" accept="image/*" id="gFileInput" multiple/>
-          <span class="upload-zone-icon">📁</span>
-          <p>Σύρετε φωτογραφίες ή <strong>κάντε κλικ</strong> για επιλογή</p>
-          <p style="margin-top:.3rem;font-size:.75rem">Πολλές μαζί · JPG, PNG, WEBP</p>
-        </div>
-        <div class="progress-wrap" id="gProgress">
-          <div class="progress-info"><span id="gProgLabel">Ανέβασμα...</span><span id="gProgCount">0 / 0</span></div>
-          <div class="progress-bar-bg"><div class="progress-bar" id="gProgBar"></div></div>
-        </div>
-      </div>
-
-      <div class="section-head">
-        <div><div class="section-title">Συλλογή φωτογραφιών</div><div class="section-desc">Επεξεργαστείτε ή διαγράψτε</div></div>
-        <button class="btn btn-outline btn-sm" onclick="reloadGallery()">🔄 Ανανέωση</button>
-      </div>
-      <div class="filter-row" id="gFilterRow">
-        <button class="filter-btn active" onclick="setGFilter('all',this)">Όλα</button>
-        <button class="filter-btn" onclick="setGFilter('fish',this)">🐠 Ψάρια</button>
-        <button class="filter-btn" onclick="setGFilter('marine',this)">🌊 Θαλάσσιο</button>
-        <button class="filter-btn" onclick="setGFilter('tanks',this)">🪸 Ενυδρεία</button>
-        <button class="filter-btn" onclick="setGFilter('plants',this)">🌿 Φυτά</button>
-        <button class="filter-btn" onclick="setGFilter('accessories',this)">⚙️ Αξεσουάρ</button>
-        <button class="filter-btn" onclick="setGFilter('other',this)">📦 Άλλο</button>
-      </div>
-      <div class="spinner" id="gSpinner"><div class="spinner-circle"></div></div>
-      <div class="empty-state" id="gEmpty" style="display:none"><div class="es-icon">🐠</div><p>Δεν υπάρχουν φωτογραφίες ακόμα.</p></div>
-      <div class="card-grid" id="gGrid"></div>
-    </div>
-
-    <!-- ════════════ PRODUCTS TAB ════════════ -->
-    <div class="tab-content" id="main-products">
+    <!-- ════════════ PRODUCTS ════════════ -->
+    <div class="tab-content active" id="main-products">
       <div class="stats-row">
         <div class="stat-box"><div class="num" id="pStatTotal">0</div><div class="lbl">Σύνολο προϊόντων</div></div>
         <div class="stat-box"><div class="num" id="pStatPhotos">0</div><div class="lbl">Με φωτογραφία</div></div>
@@ -355,30 +286,6 @@ body{font-family:var(--sans);background:var(--cream);color:var(--text1);min-heig
   </div>
 </div>
 
-<!-- GALLERY EDIT MODAL -->
-<div class="edit-overlay" id="gEditOverlay" onclick="closeGModal(event)">
-  <div class="edit-modal">
-    <h3>Επεξεργασία Φωτογραφίας</h3>
-    <img class="edit-preview" id="gEditPreview" src="" alt=""/>
-    <div class="form-group" style="margin-bottom:1rem">
-      <label class="form-label">Τίτλος / Περιγραφή</label>
-      <input class="form-input" type="text" id="gEditCaption"/>
-    </div>
-    <div class="form-group">
-      <label class="form-label">Κατηγορία</label>
-      <select class="form-select" id="gEditCategory">
-        <option value="fish">🐠 Ψάρια</option><option value="marine">🌊 Θαλάσσιο</option>
-        <option value="tanks">🪸 Ενυδρεία</option><option value="plants">🌿 Φυτά</option>
-        <option value="accessories">⚙️ Αξεσουάρ</option><option value="other">📦 Άλλο</option>
-      </select>
-    </div>
-    <div class="modal-actions">
-      <button class="btn btn-outline" onclick="closeGModal()">Ακύρωση</button>
-      <button class="btn btn-coral" id="gSaveBtn" onclick="saveGEdit()">💾 Αποθήκευση</button>
-    </div>
-  </div>
-</div>
-
 <!-- PRODUCT EDIT MODAL -->
 <div class="edit-overlay" id="pEditOverlay" onclick="closePModal(event)">
   <div class="edit-modal">
@@ -422,14 +329,13 @@ const CLOUDINARY_PRESET = 'waterlove_preset';
 const WORKER_URL = 'https://waterlove-worker.waterlovethessaloniki.workers.dev';
 const GH_OWNER = 'waterlovethessaloniki';
 const GH_REPO = 'WaterLove-';
-const GALLERY_RAW = `https://raw.githubusercontent.com/${GH_OWNER}/${GH_REPO}/main/gallery-data.json`;
 const PRODUCTS_RAW = `https://raw.githubusercontent.com/${GH_OWNER}/${GH_REPO}/main/products-data.json`;
 
 const CAT_LABELS = {fish:'🐠 Ψάρια',marine:'🌊 Θαλάσσιο',tanks:'🪸 Ενυδρεία',plants:'🌿 Φυτά',accessories:'⚙️ Αξεσουάρ',chemistry:'🧪 Χημεία',medicine:'💊 Φαρμακευτικά',other:'📦 Άλλο'};
 
-let gallery = [], products = [];
-let gFilter = 'all', pFilter = 'all';
-let gEditId = null, pEditId = null, pEditNewImg = null;
+let products = [];
+let pFilter = 'all';
+let pEditId = null, pEditNewImg = null;
 
 // ─── AUTH ───
 function doLogin() {
@@ -437,7 +343,7 @@ function doLogin() {
     sessionStorage.setItem('wl_auth','1');
     document.getElementById('loginScreen').style.display='none';
     document.getElementById('adminLayout').classList.add('active');
-    reloadGallery(); reloadProducts();
+    reloadProducts();
   } else {
     const err = document.getElementById('loginError');
     err.classList.add('show');
@@ -450,14 +356,6 @@ document.getElementById('passInput').addEventListener('keydown',e=>{if(e.key==='
 if(sessionStorage.getItem('wl_auth')==='1'){
   document.getElementById('loginScreen').style.display='none';
   document.getElementById('adminLayout').classList.add('active');
-}
-
-// ─── TABS ───
-function switchMainTab(name, btn) {
-  document.querySelectorAll('.main-tab').forEach(t=>t.classList.remove('active'));
-  document.querySelectorAll('.tab-content').forEach(c=>c.classList.remove('active'));
-  btn.classList.add('active');
-  document.getElementById('main-'+name).classList.add('active');
 }
 
 // ─── HELPERS ───
@@ -481,100 +379,6 @@ function showToast(msg,type=''){
   const t=document.getElementById('toast');
   t.textContent=msg; t.className='toast show'+(type?' '+type:'');
   clearTimeout(t._t); t._t=setTimeout(()=>t.classList.remove('show'),3000);
-}
-
-// ═══════════════ GALLERY ═══════════════
-async function loadGalleryData(){ try{const r=await fetch(GALLERY_RAW+'?t='+Date.now());if(!r.ok)return[];const d=await r.json();return Array.isArray(d)?d:[];}catch(e){return[];} }
-
-async function reloadGallery() {
-  document.getElementById('gSpinner').classList.add('show');
-  document.getElementById('gGrid').innerHTML='';
-  document.getElementById('gEmpty').style.display='none';
-  gallery = await loadGalleryData();
-  document.getElementById('gSpinner').classList.remove('show');
-  renderGallery(); updateGStats();
-}
-function renderGallery() {
-  const grid=document.getElementById('gGrid'), empty=document.getElementById('gEmpty');
-  const filtered = gFilter==='all'?gallery:gallery.filter(g=>g.category===gFilter);
-  if(gallery.length===0){ empty.style.display='block'; grid.innerHTML=''; return; }
-  empty.style.display='none';
-  grid.innerHTML = filtered.map(item=>`
-    <div class="item-card">
-      <div class="item-card-img"><img src="${item.image_url}" alt="${esc(item.caption||'')}" loading="lazy"/></div>
-      <div class="item-card-body">
-        <span class="cat-tag">${CAT_LABELS[item.category]||item.category}</span>
-        <div class="caption-display">${esc(item.caption||'-')}</div>
-        <div class="item-actions">
-          <button class="btn btn-outline btn-sm" onclick="openGEdit('${item.id}')">✏️ Επεξεργασία</button>
-          <button class="btn btn-danger btn-sm" onclick="deleteGItem('${item.id}')">🗑️</button>
-        </div>
-      </div>
-    </div>`).join('');
-}
-function updateGStats(){
-  document.getElementById('gStatTotal').textContent=gallery.length;
-  document.getElementById('gStatFish').textContent=gallery.filter(g=>g.category==='fish'||g.category==='marine').length;
-  document.getElementById('gStatPlants').textContent=gallery.filter(g=>g.category==='plants'||g.category==='tanks').length;
-  document.getElementById('gStatOther').textContent=gallery.filter(g=>!['fish','marine','plants','tanks'].includes(g.category)).length;
-}
-function setGFilter(cat,btn){ gFilter=cat; document.querySelectorAll('#gFilterRow .filter-btn').forEach(b=>b.classList.remove('active')); btn.classList.add('active'); renderGallery(); }
-
-// Gallery upload
-const gFileInput=document.getElementById('gFileInput');
-gFileInput.addEventListener('change',handleGUpload);
-async function handleGUpload(e){
-  const files=Array.from(e.target.files); if(!files.length)return;
-  const category=document.getElementById('gCategory').value;
-  const caption=document.getElementById('gCaption').value.trim();
-  const wrap=document.getElementById('gProgress'),bar=document.getElementById('gProgBar'),cnt=document.getElementById('gProgCount'),lbl=document.getElementById('gProgLabel');
-  wrap.classList.add('show'); cnt.textContent=`0 / ${files.length}`; bar.style.width='0%';
-  let done=0;
-  for(const file of files){
-    try{
-      lbl.textContent='Ανέβασμα στο Cloudinary...';
-      const url=await uploadToCloudinary(file);
-      lbl.textContent='Αποθήκευση στο GitHub...';
-      const item={id:'img_'+Date.now()+'_'+Math.random().toString(36).slice(2,9),created_date:new Date().toISOString(),category,caption:caption||'',image_url:url};
-      await workerCall({target:'gallery',action:'add',item});
-      gallery.push(item); done++;
-      cnt.textContent=`${done} / ${files.length}`; bar.style.width=`${Math.round(done/files.length*100)}%`;
-    }catch(err){ showToast('Σφάλμα: '+err.message,'error'); }
-  }
-  gFileInput.value=''; document.getElementById('gCaption').value='';
-  setTimeout(()=>wrap.classList.remove('show'),1200);
-  renderGallery(); updateGStats();
-  showToast(`✓ Ανέβηκαν ${done} φωτογραφίες`,'success');
-}
-const gUz=document.getElementById('gUploadZone');
-gUz.addEventListener('dragover',e=>{e.preventDefault();gUz.classList.add('drag');});
-gUz.addEventListener('dragleave',()=>gUz.classList.remove('drag'));
-gUz.addEventListener('drop',e=>{e.preventDefault();gUz.classList.remove('drag');if(e.dataTransfer.files.length){gFileInput.files=e.dataTransfer.files;handleGUpload({target:{files:e.dataTransfer.files}});}});
-
-function openGEdit(id){
-  const item=gallery.find(g=>g.id===id); if(!item)return;
-  gEditId=id;
-  document.getElementById('gEditPreview').src=item.image_url;
-  document.getElementById('gEditCaption').value=item.caption||'';
-  document.getElementById('gEditCategory').value=item.category||'fish';
-  document.getElementById('gEditOverlay').classList.add('open');
-}
-function closeGModal(e){ if(e&&e.target!==document.getElementById('gEditOverlay'))return; document.getElementById('gEditOverlay').classList.remove('open'); gEditId=null; }
-async function saveGEdit(){
-  if(!gEditId)return;
-  const btn=document.getElementById('gSaveBtn'), item=gallery.find(g=>g.id===gEditId); if(!item)return;
-  item.caption=document.getElementById('gEditCaption').value.trim();
-  item.category=document.getElementById('gEditCategory').value;
-  btn.disabled=true; btn.textContent='Αποθήκευση...';
-  try{ await workerCall({target:'gallery',action:'replace',data:gallery}); showToast('✓ Αποθηκεύτηκε','success'); document.getElementById('gEditOverlay').classList.remove('open'); renderGallery(); updateGStats(); }
-  catch(err){ showToast('Σφάλμα: '+err.message,'error'); }
-  finally{ btn.disabled=false; btn.textContent='💾 Αποθήκευση'; }
-}
-async function deleteGItem(id){
-  const item=gallery.find(g=>g.id===id); if(!item)return;
-  if(!confirm(`Διαγραφή φωτογραφίας;\n"${item.caption||'(χωρίς τίτλο)'}"`))return;
-  try{ await workerCall({target:'gallery',action:'delete',id}); gallery=gallery.filter(g=>g.id!==id); renderGallery(); updateGStats(); showToast('🗑️ Διαγράφηκε','success'); }
-  catch(err){ showToast('Σφάλμα: '+err.message,'error'); }
 }
 
 // ═══════════════ PRODUCTS ═══════════════
@@ -693,7 +497,7 @@ async function deletePItem(id){
 }
 
 // ─── INIT ───
-if(sessionStorage.getItem('wl_auth')==='1'){ reloadGallery(); reloadProducts(); }
+if(sessionStorage.getItem('wl_auth')==='1'){ reloadProducts(); }
 </script>
 </body>
 </html>

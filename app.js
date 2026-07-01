@@ -5,14 +5,11 @@
 // ─── CONFIG ───
 const GH_OWNER = 'waterlovethessaloniki';
 const GH_REPO = 'WaterLove-';
-const GALLERY_RAW = `https://raw.githubusercontent.com/${GH_OWNER}/${GH_REPO}/main/gallery-data.json`;
 const PRODUCTS_RAW = `https://raw.githubusercontent.com/${GH_OWNER}/${GH_REPO}/main/products-data.json`;
 
 const CAT_LABELS = {fish:'Ψάρια',marine:'Θαλάσσιο',tanks:'Ενυδρεία',plants:'Φυτά',accessories:'Αξεσουάρ',chemistry:'Χημεία',medicine:'Φαρμακευτικά',other:'Άλλο'};
 
-let GALLERY = [];
 let PRODUCTS = [];
-let lbIndex = 0;
 let PROD_CAT = 'all';
 let FAQ_CAT = 'all';
 
@@ -49,9 +46,6 @@ const I18N = {
     'prod.cat5Name':'Αξεσουάρ','prod.cat5Desc':'Φίλτρα, φωτισμός',
     'prod.cat6Name':'Φαρμακευτικά','prod.cat6Desc':'Θεραπείες & φάρμακα',
     'prod.btn':'Δείτε όλα τα προϊόντα →',
-    'gal.label':'Φωτογραφίες',
-    'gal.title':'Από <em>το κατάστημά μας</em>',
-    'gal.btn':'Δείτε περισσότερα →',
     'hours.mon':'Δευτέρα','hours.tue':'Τρίτη','hours.wed':'Τετάρτη','hours.thu':'Πέμπτη','hours.fri':'Παρασκευή','hours.sat':'Σάββατο','hours.sun':'Κυριακή','hours.closed':'Κλειστά',
     'footer.tag':'Ενυδρεία · Ψάρια · Ζωντανά Φυτά · Αξεσουάρ · Θεσσαλονίκη',
     'footer.linkHome':'Αρχική','footer.linkAbout':'Σχετικά','footer.linkProducts':'Προϊόντα','footer.linkFaq':'FAQ','footer.linkContact':'Επικοινωνία',
@@ -75,14 +69,12 @@ const I18N = {
     'ab.reno':'Ανακαινισμένο κατάστημα · ελάτε να δείτε τον νέο μας χώρο!',
     'ab.reviewCite':'Αξιολογήσεις πελατών στο Google Maps · Λεων. Ιασωνίδου 15, Θεσσαλονίκη',
     'ab.contactBtn':'Επικοινωνήστε μαζί μας',
-    'ab.galTitle':'Εικόνες από το <em>κατάστημά μας</em>',
     // ── products.html ──
     'pr.heroTitle':'Τα <em>Προϊόντά μας</em>',
     'pr.heroSub':'Από ψάρια και φυτά μέχρι εξοπλισμό και φάρμακα · ό,τι χρειάζεται το ενυδρείο σας',
     'pr.catAll':'Όλα','pr.catFish':'🐠 Ψάρια','pr.catMarine':'🌊 Θαλάσσιο','pr.catTanks':'🪸 Ενυδρεία','pr.catPlants':'🌿 Φυτά','pr.catAcc':'⚙️ Αξεσουάρ','pr.catChem':'🧪 Χημεία','pr.catMed':'💊 Φαρμακευτικά',
     'prod.askBtn':'Ρωτήστε για αυτό →',
     'prod.empty':'Δεν υπάρχουν προϊόντα σε αυτή την κατηγορία',
-    'gal.empty':'Σύντομα νέες φωτογραφίες',
     // ── faq.html ──
     'fq.heroTitle':'Συχνές <em>Ερωτήσεις</em>',
     'fq.heroSub':'Οι πιο συνηθισμένες απορίες για ψάρια, ενυδρεία και φυτά · με απαντήσεις από 20 χρόνια εμπειρίας',
@@ -127,9 +119,6 @@ const I18N = {
     'prod.cat5Name':'Accessories','prod.cat5Desc':'Filters, lighting',
     'prod.cat6Name':'Medications','prod.cat6Desc':'Treatments & medicine',
     'prod.btn':'See all products →',
-    'gal.label':'Photos',
-    'gal.title':'From <em>our store</em>',
-    'gal.btn':'See more →',
     'hours.mon':'Monday','hours.tue':'Tuesday','hours.wed':'Wednesday','hours.thu':'Thursday','hours.fri':'Friday','hours.sat':'Saturday','hours.sun':'Sunday','hours.closed':'Closed',
     'footer.tag':'Aquariums · Fish · Live Plants · Accessories · Thessaloniki',
     'footer.linkHome':'Home','footer.linkAbout':'About','footer.linkProducts':'Products','footer.linkFaq':'FAQ','footer.linkContact':'Contact',
@@ -153,14 +142,12 @@ const I18N = {
     'ab.reno':'Newly renovated store · come and see our new space!',
     'ab.reviewCite':'Customer reviews on Google Maps · 15 Leon. Iasonidou St, Thessaloniki',
     'ab.contactBtn':'Get in touch',
-    'ab.galTitle':'Pictures from <em>our store</em>',
     // ── products.html ──
     'pr.heroTitle':'Our <em>Products</em>',
     'pr.heroSub':'From fish and plants to equipment and medicine · everything your aquarium needs',
     'pr.catAll':'All','pr.catFish':'🐠 Fish','pr.catMarine':'🌊 Marine','pr.catTanks':'🪸 Aquariums','pr.catPlants':'🌿 Plants','pr.catAcc':'⚙️ Accessories','pr.catChem':'🧪 Chemistry','pr.catMed':'💊 Medications',
     'prod.askBtn':'Ask about this →',
     'prod.empty':'There are no products in this category yet',
-    'gal.empty':'New photos coming soon',
     // ── faq.html ──
     'fq.heroTitle':'Frequently Asked <em>Questions</em>',
     'fq.heroSub':'The most common questions about fish, aquariums and plants · answered from 20 years of experience',
@@ -190,7 +177,7 @@ function saveLangCookie(v){ try{ document.cookie = 'wl_lang=' + v + ';path=/;max
 function readLangCookie(){ try{ const m = document.cookie.match(/(?:^|;\s*)wl_lang=(el|en)\b/); return m ? m[1] : null; }catch(e){ return null; } }
 
 // Translate a single key for strings built inside JS render functions
-// (product cards, gallery placeholders, etc.). Falls back to Greek, then the key.
+// (product cards, etc.). Falls back to Greek, then the key.
 function t(key){ const d = I18N[CURRENT_LANG]; return (d && d[key] != null) ? d[key] : (I18N.el[key] != null ? I18N.el[key] : key); }
 
 function setLang(lang) {
@@ -219,14 +206,6 @@ function initLang() {
 }
 
 // ─── DATA LOADERS ───
-async function loadGalleryData() {
-  try {
-    const res = await fetch(GALLERY_RAW + '?t=' + Date.now());
-    if(!res.ok) return [];
-    const d = await res.json();
-    return Array.isArray(d) ? d : [];
-  } catch(e){ return []; }
-}
 async function loadProductsData() {
   try {
     const res = await fetch(PRODUCTS_RAW + '?t=' + Date.now());
@@ -270,14 +249,14 @@ function initHero() {
   const hero = document.querySelector('.hero');
   if(!hero) return;
 
-  // Cross-fading photo backdrop: combine product + gallery image_urls.
+  // Cross-fading photo backdrop: product image_urls only.
   // If none exist, the light aqua gradient stays as fallback (no broken images).
   const photoLayer = document.getElementById('heroPhotos');
   if(photoLayer){
     photoLayer.innerHTML = '';
     const seen = new Set();
     const photos = [];
-    [...PRODUCTS, ...GALLERY].forEach(x => {
+    PRODUCTS.forEach(x => {
       const url = x && x.image_url;
       if(url && !seen.has(url)){ seen.add(url); photos.push(url); }
     });
@@ -322,66 +301,6 @@ function initHero() {
     };
   }
 }
-
-// ─── GALLERY RENDER ───
-function galleryImages() {
-  return GALLERY.filter(g=>g.image_url).map(g => ({ src:g.image_url, caption:g.caption||'' }));
-}
-function initHomeGallery() {
-  const el = document.getElementById('homeGallery');
-  if(!el) return;
-  el.innerHTML = '';
-  const imgs = galleryImages().slice(0,6);
-  if(imgs.length===0){ el.innerHTML = `<p style="color:var(--text3);grid-column:1/-1;text-align:center">${t('gal.empty')}</p>`; return; }
-  imgs.forEach((img,idx) => {
-    const item = document.createElement('div');
-    item.className = 'gallery-item';
-    item.onclick = () => openLB(idx);
-    item.innerHTML = `<img src="${img.src}" alt="${img.caption}" loading="lazy"/><div class="gallery-caption">${img.caption}</div>`;
-    el.appendChild(item);
-  });
-}
-function initAboutGallery() {
-  const el = document.getElementById('aboutGallery');
-  if(!el) return;
-  el.innerHTML = '';
-  const imgs = galleryImages();
-  if(imgs.length===0){ el.innerHTML = `<p style="color:var(--text3);grid-column:1/-1;text-align:center">${t('gal.empty')}</p>`; return; }
-  imgs.forEach((img,idx) => {
-    const item = document.createElement('div');
-    item.className = 'gallery-item';
-    item.onclick = () => openLB(idx);
-    item.innerHTML = `<img src="${img.src}" alt="${img.caption}" loading="lazy"/><div class="gallery-caption">${img.caption}</div>`;
-    el.appendChild(item);
-  });
-}
-
-// ─── LIGHTBOX ───
-function openLB(idx) {
-  lbIndex = idx;
-  const imgs = galleryImages();
-  document.getElementById('lbImg').src = imgs[idx].src;
-  document.getElementById('lightbox').classList.add('open');
-  document.body.style.overflow = 'hidden';
-}
-function closeLB(e) {
-  if(e && e.target !== document.getElementById('lightbox') && !e.target.classList.contains('lb-close')) return;
-  document.getElementById('lightbox').classList.remove('open');
-  document.body.style.overflow = '';
-}
-function lbNav(dir) {
-  const imgs = galleryImages();
-  lbIndex = (lbIndex + dir + imgs.length) % imgs.length;
-  document.getElementById('lbImg').src = imgs[lbIndex].src;
-}
-document.addEventListener('keydown', e => {
-  const lb = document.getElementById('lightbox');
-  if(lb && lb.classList.contains('open')) {
-    if(e.key==='ArrowLeft') lbNav(-1);
-    if(e.key==='ArrowRight') lbNav(1);
-    if(e.key==='Escape'){ lb.classList.remove('open'); document.body.style.overflow=''; }
-  }
-});
 
 // ─── PRODUCTS RENDER ───
 function renderProducts(cat) {
@@ -497,12 +416,8 @@ async function initPage(opts={}) {
   initFadeUp();
   if(opts.faq) renderFaq('all');
   // Load remote data as needed
-  const needGallery = opts.hero || opts.homeGallery || opts.aboutGallery;
   const needProducts = opts.products || opts.hero;
-  if(needGallery) GALLERY = await loadGalleryData();
   if(needProducts) PRODUCTS = await loadProductsData();
   if(opts.hero) initHero();
-  if(opts.homeGallery) initHomeGallery();
-  if(opts.aboutGallery) initAboutGallery();
   if(opts.products) renderProducts('all');
 }
