@@ -53,6 +53,8 @@ const I18N = {
     'prod.cat5Name':'Αξεσουάρ','prod.cat5Desc':'Φίλτρα, φωτισμός',
     'prod.cat6Name':'Φαρμακευτικά','prod.cat6Desc':'Θεραπείες & φάρμακα',
     'prod.btn':'Δείτε όλα τα προϊόντα →',
+    'home.tilesLabel':'Κατηγορίες','home.tilesTitle':'Ψάξτε ανά <em>κατηγορία</em>',
+    'home.tileFish':'Ψάρια','home.tileTanks':'Ενυδρεία','home.tilePlants':'Φυτά','home.tileAcc':'Αξεσουάρ',
     'hours.mon':'Δευτέρα','hours.tue':'Τρίτη','hours.wed':'Τετάρτη','hours.thu':'Πέμπτη','hours.fri':'Παρασκευή','hours.sat':'Σάββατο','hours.sun':'Κυριακή','hours.closed':'Κλειστά',
     'footer.tag':'Ενυδρεία · Ψάρια · Ζωντανά Φυτά · Αξεσουάρ · Θεσσαλονίκη',
     'footer.linkHome':'Αρχική','footer.linkAbout':'Σχετικά','footer.linkProducts':'Προϊόντα','footer.linkFaq':'FAQ','footer.linkContact':'Επικοινωνία',
@@ -148,6 +150,8 @@ const I18N = {
     'prod.cat5Name':'Accessories','prod.cat5Desc':'Filters, lighting',
     'prod.cat6Name':'Medications','prod.cat6Desc':'Treatments & medicine',
     'prod.btn':'See all products →',
+    'home.tilesLabel':'Categories','home.tilesTitle':'Browse by <em>category</em>',
+    'home.tileFish':'Fish','home.tileTanks':'Aquariums','home.tilePlants':'Plants','home.tileAcc':'Accessories',
     'hours.mon':'Monday','hours.tue':'Tuesday','hours.wed':'Wednesday','hours.thu':'Thursday','hours.fri':'Friday','hours.sat':'Saturday','hours.sun':'Sunday','hours.closed':'Closed',
     'footer.tag':'Aquariums · Fish · Live Plants · Accessories · Thessaloniki',
     'footer.linkHome':'Home','footer.linkAbout':'About','footer.linkProducts':'Products','footer.linkFaq':'FAQ','footer.linkContact':'Contact',
@@ -423,6 +427,38 @@ function initHero() {
   }
 }
 
+// ─── HOME CATEGORY TILES ───
+// Fill each homepage tile with the first product photo found in its category
+// (fresh from PRODUCTS). Categories without a product photo keep the gradient
+// placeholder (via the .placeholder class) so no broken image ever shows.
+function initCategoryTiles() {
+  const grid = document.getElementById('catTiles');
+  if(!grid) return;
+  grid.querySelectorAll('.cat-tile').forEach(tile => {
+    const cat = tile.getAttribute('data-cat');
+    const bg = tile.querySelector('.ct-bg');
+    if(!bg) return;
+    const hit = PRODUCTS.find(p => p.category === cat && p.image_url && p.image_url.length > 0);
+    if(hit){
+      bg.style.backgroundImage = `url("${hit.image_url}")`;
+      bg.classList.remove('placeholder');
+    } else {
+      bg.style.backgroundImage = '';
+      bg.classList.add('placeholder');
+    }
+  });
+}
+
+// Read a ?cat= filter from the URL and return it only if it is a real category
+// (fixed or custom, discovered in PRODUCTS). Anything else falls back to 'all'.
+function getUrlCat() {
+  try {
+    const c = new URLSearchParams(location.search).get('cat');
+    if(c && productCategories().includes(c)) return c;
+  } catch(e){}
+  return 'all';
+}
+
 // ─── PRODUCTS RENDER ───
 // Chip label: bilingual for known categories, raw text for custom ones.
 function catLabel(cat) {
@@ -570,6 +606,12 @@ async function initPage(opts={}) {
   // Load remote data as needed
   const needProducts = opts.products || opts.hero;
   if(needProducts) PRODUCTS = await loadProductsData();
-  if(opts.hero) initHero();
-  if(opts.products){ renderProductCats(); renderProducts('all'); }
+  if(opts.hero){ initHero(); initCategoryTiles(); }
+  if(opts.products){
+    // Honour a ?cat= deep link from the homepage tiles: pre-select the matching
+    // chip and show only that category, exactly as a chip click would.
+    PROD_CAT = getUrlCat();
+    renderProductCats();
+    renderProducts(PROD_CAT);
+  }
 }
