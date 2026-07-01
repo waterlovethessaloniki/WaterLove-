@@ -29,7 +29,6 @@ let FAQ_CAT = 'all';
 const I18N = {
   el: {
     'nav.home':'Αρχική','nav.about':'Σχετικά','nav.products':'Προϊόντα','nav.faq':'Συχνές Ερωτήσεις','nav.contact':'Επικοινωνία',
-    'hero.tagline':'Κάθε ενυδρείο έχει τη δική του ζωή',
     'hero.subtitle':'«Η εμπειρία και η αγάπη κάνουν τη διαφορά»',
     'hero.trust2':'20+ χρόνια εμπειρία',
     'hero.trust3':'Κέντρο πόλης',
@@ -103,6 +102,7 @@ const I18N = {
     'ct.intro':'Η καλύτερη συμβουλή για το ενυδρείο σας είναι μια συζήτηση μακριά. Ρωτήστε μας για οτιδήποτε · αρχάριοι ή έμπειροι, είμαστε εδώ.',
     'ct.chPhone':'Καλέστε μας άμεσα',
     'ct.chFb':'Water Love · Στείλτε μήνυμα',
+    'ct.chViber':'Στείλτε μας μήνυμα στο Viber',
     'ct.chMapsAddr':'Λεων. Ιασωνίδου 15',
     'ct.chMapsCity':'Θεσσαλονίκη 546 35 · Google Maps',
     'ct.mapInfo':'Λεων. Ιασωνίδου 15, Θεσσαλονίκη 546 35',
@@ -131,7 +131,6 @@ const I18N = {
   },
   en: {
     'nav.home':'Home','nav.about':'About','nav.products':'Products','nav.faq':'FAQ','nav.contact':'Contact',
-    'hero.tagline':'Every aquarium has a life of its own',
     'hero.subtitle':'"Experience and love make the difference"',
     'hero.trust2':'20+ years of experience',
     'hero.trust3':'City centre',
@@ -205,6 +204,7 @@ const I18N = {
     'ct.intro':'The best advice for your aquarium is just one conversation away. Ask us anything · beginners or experts, we are here for you.',
     'ct.chPhone':'Call us directly',
     'ct.chFb':'Water Love · Send a message',
+    'ct.chViber':'Message us on Viber',
     'ct.chMapsAddr':'15 Leon. Iasonidou St',
     'ct.chMapsCity':'Thessaloniki 546 35 · Google Maps',
     'ct.mapInfo':'15 Leon. Iasonidou St, Thessaloniki 546 35',
