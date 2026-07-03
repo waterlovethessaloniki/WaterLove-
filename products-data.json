@@ -90,10 +90,10 @@
   {
     "id": "prod_012",
     "category": "plants",
-    "icon": "🌱",
+    "icon": "🌿",
     "name": "Tissue Culture Φυτά",
     "desc": "Φυτά in-vitro · χωρίς παράσιτα, ιδανικά για νέα ενυδρεία.",
-    "image_url": ""
+    "image_url": "https://res.cloudinary.com/dwhsqj03w/image/upload/v1783070660/wz6yzdp8rrqhoyzmk902.jpg"
   },
   {
     "id": "prod_013",
