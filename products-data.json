@@ -26,10 +26,10 @@
   {
     "id": "prod_004",
     "category": "fish",
-    "icon": "🐡",
-    "name": "Χρυσόψαρα & Koi",
-    "desc": "Κλασικά χρυσόψαρα και ποικιλίες koi για εσωτερικά και εξωτερικά ενυδρεία.",
-    "image_url": ""
+    "icon": "🐠",
+    "name": "Clownfish",
+    "desc": "Γνώστο αλλα και διάσημο Clownfish για το φωτεινό πορτοκαλί χρώμα του με τρεις χαρακτηριστικές λευκές γραμμές και τη συμβιωτική του σχέση με τις θαλάσσιες ανεμώνες",
+    "image_url": "https://res.cloudinary.com/dwhsqj03w/image/upload/v1783070519/hmweit0wbr6mbpkxepti.jpg"
   },
   {
     "id": "prod_005",
@@ -50,10 +50,10 @@
   {
     "id": "prod_007",
     "category": "marine",
-    "icon": "🌊",
+    "icon": "🐚",
     "name": "Κοράλλια & Anemones",
     "desc": "Επιλεγμένα κοράλλια και anemones για το θαλάσσιο σύστημά σας.",
-    "image_url": "https://res.cloudinary.com/dwhsqj03w/image/upload/v1783070350/mgegu12jfmbnjpfy476k.jpg"
+    "image_url": ""
   },
   {
     "id": "prod_008",
