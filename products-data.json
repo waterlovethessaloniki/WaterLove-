@@ -50,10 +50,10 @@
   {
     "id": "prod_007",
     "category": "marine",
-    "icon": "🐚",
+    "icon": "🌊",
     "name": "Κοράλλια & Anemones",
     "desc": "Επιλεγμένα κοράλλια και anemones για το θαλάσσιο σύστημά σας.",
-    "image_url": ""
+    "image_url": "https://res.cloudinary.com/dwhsqj03w/image/upload/v1783070577/epeosc4l3tc3yknlylnn.jpg"
   },
   {
     "id": "prod_008",
